@@ -1,0 +1,29 @@
+<main class="main-wrapper">
+  <h1>{{pageName}}</h1>
+
+  <section class="section-wrapper">
+    <h2 class="section-title">{{title}}</h2>
+    <form class="page-form">
+      {{#each formInputs}}
+      <div class="input-wrapper">
+        <input type={{this.type}} name={{this.text}} required={{this.required}} value={{this.value}}>
+        <label> {{this.text}}</label>
+      </div>
+      {{/each}}
+
+    </form>
+
+    <a class="link-btn" href="../register/index.html">
+      Create account
+    </a>
+
+    <a class="link-btn" href="/">
+      Sign In
+    </a>
+
+    <a class="link-btn" href="../profile/index.html">
+      Profile
+    </a>
+
+  </section>
+</main>
