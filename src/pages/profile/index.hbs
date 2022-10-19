@@ -1,0 +1,53 @@
+<main class="main-wrapper">
+  <h1>{{pageName}}</h1>
+
+  <section class="section-wrapper">
+    <h2 class="section-title">My Profile</h2>
+
+    <div class="settings-wrapper">
+      <div class="avatar">
+        <input class="input-avatar" type="file">
+      </div>
+      <div class="info-field">
+        <div>First Name</div>
+        <input class="edit-inputs" value={{userInfo.fname}} />
+        <label class="edit-labels">{{userInfo.fname}}</label>
+      </div>
+      <div class="info-field">
+        <div>Second Name</div>
+        <input class="edit-inputs" value={{userInfo.sname}} />
+        <label class="edit-labels">{{userInfo.sname}}</label>
+      </div>
+      <div class="info-field">
+        <div>Login</div>
+        <input class="edit-inputs" value={{userInfo.login}} />
+        <label class="edit-labels">{{userInfo.login}}</label>
+      </div>
+      <div class="info-field">
+        <div>Email</div>
+        <input class="edit-inputs" value={{userInfo.email}} />
+        <label class="edit-labels">{{userInfo.email}}</label>
+      </div>
+      <div class="info-field">
+        <div>Phone</div>
+        <input class="edit-inputs" value={{userInfo.phone}} />
+        <label class="edit-labels">{{userInfo.phone}}</label>
+      </div>
+      <div class="info-field">
+        <div>Password</div>
+        <input class="edit-inputs" value="old password" />
+        <input class="edit-inputs" value="new password" />
+        <label class="edit-labels">{{userInfo.password}}</label>
+      </div>
+
+      <button class="button">
+        edit profile
+      </button>
+    </div>
+
+    <a class="link-btn" href="../auth/index.html">
+      Sign Out
+    </a>
+
+  </section>
+</main>
