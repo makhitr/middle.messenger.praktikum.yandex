@@ -1,3 +1,11 @@
+
+$bgColor: linear-gradient(#14301a, #6fb878);
+$prFontColor: #fff;
+$scFontColor: #02fc55;
+$innerBgPrColor: #19a748;
+$innerBgScColor: #0f632b;
+$bgColorDark: #1d5024;
+
 * {
   margin: 0;
   padding: 0;
@@ -8,12 +16,12 @@ html {
 }
 body {
   font-family: "Roboto", sans-serif;
-  background: linear-gradient(#14301a, #6fb878);
+  background: $bgColor;
 }
 
 .main-wrapper {
   text-align: center;
-  color: #fff;
+  color: $prFontColor;
   margin-top: 20px;
 }
 
@@ -39,7 +47,7 @@ body {
 .section-wrapper h2 {
   margin-bottom: 20px;
   text-align: center;
-  color: #fff;
+  color: $prFontColor;
 }
 
 .page-form {
@@ -55,11 +63,10 @@ body {
   width: 100%;
   padding: 10px 0;
   font-size: 16px;
-  color: #fff;
+  color: $prFontColor;
   margin-bottom: 30px;
   border: none;
-  border-bottom: 1px solid #fff;
-  outline: none;
+  border-bottom: 1px solid $prFontColor;
   background: transparent;
 }
 
@@ -70,7 +77,7 @@ body {
   left: 0;
   padding: 10px 0;
   font-size: 20px;
-  color: #fff;
+  color: $prFontColor;
   pointer-events: none;
   transition: 0.6s;
 }
@@ -80,7 +87,7 @@ body {
   top: -20px;
   left: 0;
   font-size: 14px;
-  color: #02fc55;
+  color: $scFontColor;
 }
 
 .input-wrapper input[type=submit],
@@ -88,7 +95,7 @@ body {
   cursor: pointer;
   display: inline-block;
   padding: 10px 20px;
-  color: #02fc55;
+  color: $scFontColor;
   font-size: 16px;
   text-decoration: none;
   text-transform: uppercase;
@@ -96,7 +103,7 @@ body {
   transition: 0.5s;
   margin-top: 40px;
   letter-spacing: 4px;
-  border: 2px solid #19a748;
+  border: 2px solid $innerBgPrColor;
   border-radius: 5px;
   background-color: transparent;
   align-self: flex-start;
@@ -105,22 +112,22 @@ body {
 
 .input-wrapper input[type=submit]:hover,
 .button:hover {
-  background: #19a748;
-  color: #fff;
-  border: 2px solid #02fc55;
+  background: $innerBgPrColor;
+  color: $prFontColor;
+  border: 2px solid $scFontColor;
   border-radius: 5px;
 }
 .input-wrapper input[type=submit]:active,
 .button:active {
-  background: #0f632b;
-  color: #fff;
-  border: 2px solid #1d5024;
+  background: $innerBgPrColor;
+  color: $prFontColor;
+  border: 2px solid $bgColorDark;
   border-radius: 5px;
 }
 
 .link-btn {
   text-decoration: none;
-  color: #fff;
+  color: $prFontColor;
   font-size: 14px;
   letter-spacing: 2px;
   align-self: flex-end;
@@ -128,13 +135,13 @@ body {
 
 .link-btn:hover {
   font-size: 16px;
-  color: #02fc55;
+  color: $scFontColor;
 }
 
 .link-btn:active {
-  color: #1d5024;
+  color: $bgColorDark;
 }
-/************settings***********/
+
 
 .settings-wrapper {
   display: flex;
@@ -161,15 +168,13 @@ body {
   padding: 10px;
   margin-bottom: 20px;
   font-size: 18px;
-  border-bottom: 1px solid #fff;
+  border-bottom: 1px solid $prFontColor;
 }
 
 .change-avatar {
   background-image: none;
 }
 
-
-/**************/
 .edit-inputs,
 .input-avatar {
   display: none;
