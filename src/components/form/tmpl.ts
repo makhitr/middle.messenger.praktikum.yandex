@@ -1,4 +1,5 @@
-const tmpl = `
+
+const tmpl: string = `
   <form class="page-form">
       {{#each formInputs}}
       <div class="input-wrapper">

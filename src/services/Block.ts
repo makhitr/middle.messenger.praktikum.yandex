@@ -1,3 +1,4 @@
+import Handlebars = require('handlebars');
 import { v4 as makeUUID } from 'uuid';
 import EventBus from './EventBus'
 
@@ -13,7 +14,7 @@ interface IBlock {
   _meta: null | Meta;
   _id: null | string;
   _eventBus: Function;
-  props: any
+  _props: any
 }
 
 type Meta = {
@@ -31,7 +32,7 @@ class Block implements IBlock {
   _meta;
   _id;
   _eventBus;
-  props: any;
+  _props: any;
 
   // /** JSDoc
   //  * @param {string} tagName
@@ -47,10 +48,13 @@ class Block implements IBlock {
       tagName,
       props,
     };
+    console.log("🚀 ~ file: Block.ts ~ line 47 ~ Block ~ constructor ~    this._meta ", this._meta)
+
+
 
     this._id = makeUUID(); // Генерируем уникальный UUID V4
 
-    this.props = this._makePropsProxy({ ...props, __id: this._id });
+    this._props = this._makePropsProxy({ ...props, __id: this._id });
 
     this._eventBus = () => eventBus;
 
@@ -118,10 +122,10 @@ class Block implements IBlock {
       return;
     }
     if (
-      JSON.stringify(Object.entries(this.props)) !==
+      JSON.stringify(Object.entries(this._props)) !==
       JSON.stringify(Object.entries(nextProps))
     ) {
-      this._eventBus().emit(EVENTS.FLOW_CDU, this.props, nextProps);
+      this._eventBus().emit(EVENTS.FLOW_CDU, this._props, nextProps);
     }
   };
 
@@ -131,11 +135,15 @@ class Block implements IBlock {
 
   _render() {
     const block = this.render();
+    console.log('block', block)
+    this._removeEvents() //????????????
+    
     // Это небезопасный метод для упрощения логики
     // Используйте шаблонизатор из npm или напишите свой безопасный
     // Нужно компилировать не в строку (или делать это правильно),
     // либо сразу превращать в DOM-элементы и возвращать из compile DOM-ноду
-    this._element.innerHTML = block
+    this._element.innerHTML = '';
+    this._element.appendChild(block);
 
     this._addEvents();
   }
@@ -144,14 +152,14 @@ class Block implements IBlock {
   render() { }
 
   _addEvents() {
-    const { events = {} } = this.props;
+    const { events = {} } = this._props;
     Object.keys(events).forEach((eventName) => {
       this._element?.addEventListener(eventName, events[eventName]);
     });
   }
 
   _removeEvents() {
-    const { events = {} } = this.props;
+    const { events = {} } = this._props;
     Object.keys(events).forEach((eventName) => {
       this._element?.removeEventListener(eventName, events[eventName]);
     });
@@ -183,6 +191,30 @@ class Block implements IBlock {
     const element = document.createElement(tagName);
     element.setAttribute("data-id", this._id);
     return element;
+  }
+
+  compile(template: any, props?: any): any { //!!!!!!!дописать, не полная из урока
+
+    if (typeof props === "undefined") {
+      props = this._props
+    }
+    // const propsAndStubs = { ...props };
+
+    // Object.entries(this.children).forEach(([key, child]) => {
+    //   propsAndStubs[key] = `<div data-id="${child.id}"></div>`
+    // });
+
+    const fragment= this._createDocumentElement('template') as HTMLTemplateElement
+    fragment.innerHTML = template(this._props)
+  
+
+    // Object.values(this.children).forEach(child => {
+    //   const stub = fragment.content.querySelector(`[data-id="${child.id}"]`);
+
+    //   stub.replaceWith(child.getContent());
+    // });
+
+    return fragment.content
   }
 
   show() {
