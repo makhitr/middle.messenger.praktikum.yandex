@@ -1,10 +1,10 @@
 import formTemplate from "./index.hbs";
 import errorTemplate from "./pages/errorPages/index.hbs";
 import template from "./pages/profile/index.hbs";
-import * as profilePage from "../src/pages/profile/index.js";
-import * as registerPage from "../src/pages/register/index.js";
-import * as authPage from "../src/pages/auth/index.js";
-import * as errorPage from "../src/pages/errorPages/index.js";
+import * as profilePage from "./pages/profile/index";
+import * as registerPage from "./pages/register/index";
+import * as authPage from "./pages/auth/index";
+import * as errorPage from "./pages/errorPages/index";
 
 
 window.addEventListener("DOMContentLoaded", () => {
