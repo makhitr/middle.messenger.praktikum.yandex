@@ -1,23 +1,24 @@
 import Block from "../../services/Block";
+import template from './index.hbs'
 
 
 type InputProps = {
 
 }
 
-class Input extends Block {
+class CustomInput extends Block {
 
   constructor(props: InputProps) {
-    super('input', 'input', props)
+    super('div', 'input-wrapper', props)
   }
 
   render() {
     console.log('Render Form')
 
     
-    // return this.compile(template);
+    return this.compile(template);
   }
   
 }
 
-export default Input
+export default CustomInput
