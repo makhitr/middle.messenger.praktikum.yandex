@@ -1,4 +1,3 @@
-import Handlebars = require('handlebars');
 import { v4 as makeUUID } from 'uuid';
 import EventBus from './EventBus'
 
@@ -14,7 +13,8 @@ interface IBlock {
   _meta: null | Meta;
   _id: null | string;
   _eventBus: Function;
-  _props: any
+  _props: any;
+  _children: any;
 }
 
 type Meta = {
@@ -33,6 +33,7 @@ class Block implements IBlock {
   _id;
   _eventBus;
   _props: any;
+  _children: any;
 
   // /** JSDoc
   //  * @param {string} tagName
@@ -40,21 +41,22 @@ class Block implements IBlock {
   //  *
   //  * @returns {void}
   //  */
-  constructor(tagName: string = "div", props: Props = {}) {
+  constructor(tagName: string = "div", className: string, propsAndChildren: Props = {}) {
     const eventBus: EventBus = new EventBus();
-    // const { children, props } = this._getChildren(propsAndChildren);
+    const { children, props } = this._getChildren(propsAndChildren);
+
+    this._children = children;
+    this._props = this._makePropsProxy({ ...props, __id: this._id });
 
     this._meta = {
       tagName,
+      className,
       props,
     };
-    console.log("🚀 ~ file: Block.ts ~ line 47 ~ Block ~ constructor ~    this._meta ", this._meta)
-
-
 
     this._id = makeUUID(); // Генерируем уникальный UUID V4
 
-    this._props = this._makePropsProxy({ ...props, __id: this._id });
+    // this._props = this._makePropsProxy({ ...propsAndChildren, __id: this._id });
 
     this._eventBus = () => eventBus;
 
@@ -62,18 +64,21 @@ class Block implements IBlock {
     eventBus.emit(EVENTS.INIT);
   }
 
-  // _getChildren(propsAndChildren) {
-  //   const children = {};
-  //   const props = {};
-  //   Object.entries(propsAndChildren).forEach(([key, value]) => {
-  //     if (value instanceof Block) {
-  //       children[key] = value;
-  //     } else {
-  //       props[key] = value;
-  //     }
-  //   });
-  //   return { children, props };
-  // }
+  _getChildren(propsAndChildren: Props): any {
+    const children: any = {};
+    const props: any = {};
+    Object.entries(propsAndChildren).forEach(([key, value]) => {
+      if (value instanceof Block) {
+        children[key] = value;
+      } else {
+        props[key] = value;
+      }
+    });
+    // console.log("🚀 children", children)
+
+    // console.log("🚀 props", props)
+    return { children, props };
+  }
 
   _registerEvents(eventBus: EventBus) {
     eventBus.on(EVENTS.INIT, this.init.bind(this));
@@ -83,8 +88,10 @@ class Block implements IBlock {
   }
 
   _createResources() {
-    const { tagName } = this._meta;
-    this._element = this._createDocumentElement(tagName);
+    const { tagName, className } = this._meta;
+    console.log('className', className)
+    this._element = this._createDocumentElement(tagName, className);
+    console.log('thisEl', this._element)
   }
 
   init() {
@@ -95,6 +102,9 @@ class Block implements IBlock {
 
   _componentDidMount() {
     this.componentDidMount();
+    Object.values(this._children).forEach((child: any) => {
+      child.dispatchComponentDidMount();
+    });
   }
 
   // componentDidMount(oldProps) { }
@@ -137,7 +147,7 @@ class Block implements IBlock {
     const block = this.render();
     console.log('block', block)
     this._removeEvents() //????????????
-    
+
     // Это небезопасный метод для упрощения логики
     // Используйте шаблонизатор из npm или напишите свой безопасный
     // Нужно компилировать не в строку (или делать это правильно),
@@ -186,33 +196,36 @@ class Block implements IBlock {
     return proxyProps;
   }
 
-  _createDocumentElement(tagName: string) {
+  _createDocumentElement(tagName: string, className: string): HTMLElement {
     // Можно сделать метод, который через фрагменты в цикле создаёт сразу несколько блоков
     const element = document.createElement(tagName);
     element.setAttribute("data-id", this._id);
+    element.classList.add(className)
     return element;
   }
 
-  compile(template: any, props?: any): any { //!!!!!!!дописать, не полная из урока
+  compile(template: any, props?: Props): any { //!!!!!!!дописать, не полная из урока
 
     if (typeof props === "undefined") {
       props = this._props
     }
-    // const propsAndStubs = { ...props };
 
-    // Object.entries(this.children).forEach(([key, child]) => {
-    //   propsAndStubs[key] = `<div data-id="${child.id}"></div>`
-    // });
+    const propsAndStubs: any = { ...props };
 
-    const fragment= this._createDocumentElement('template') as HTMLTemplateElement
-    fragment.innerHTML = template(this._props)
-  
+    Object.entries(this._children).forEach(([key, child]: any) => {
+      propsAndStubs[key] = `<div data-id="${child.id}"></div>`
+    });
 
-    // Object.values(this.children).forEach(child => {
-    //   const stub = fragment.content.querySelector(`[data-id="${child.id}"]`);
+    const fragment = this._createDocumentElement('template', 'template') as HTMLTemplateElement
+    fragment.innerHTML = template(propsAndStubs)
+    console.log("fr", fragment)
 
-    //   stub.replaceWith(child.getContent());
-    // });
+    Object.values(this._children).forEach((child: any) => {
+      const stub = fragment.content.querySelector(`[data-id="${child.id}"]`);
+    
+      stub && stub.replaceWith(child.getContent()); 
+      
+    });
 
     return fragment.content
   }

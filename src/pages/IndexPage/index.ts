@@ -3,7 +3,7 @@ import template from './index.hbs'
 
 class Page extends Block {
   constructor(props: any) {
-    super('div', props)
+    super('section', 'section-wrapper', props)
   }
 
   render() {

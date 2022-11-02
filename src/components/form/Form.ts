@@ -1,5 +1,5 @@
-import Handlebars = require("handlebars");
 import Block from "../../services/Block";
+import template from './index.hbs'
 
 type FormProps = {
 [key: string]: any
@@ -7,17 +7,16 @@ type FormProps = {
 
 
 class Form extends Block {
+
   constructor(props: FormProps) {
-    super('form', props)
+    super('form', 'page-form', props)
   }
 
   render() {
-    const { text, events } = this.props;
-    console.log(text)
+  
 
-    const template = Handlebars.compile("{{text}}");
     
-    return template({ text });
+    return this.compile(template);
   }
   
 }

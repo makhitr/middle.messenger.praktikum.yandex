@@ -4,7 +4,7 @@ import template from './index.hbs'
 class Index extends Block {
 
   constructor(props: any) {
-    super('main', props)
+    super('main', 'main-wrapper', props)
   }
 
   render() {
