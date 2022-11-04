@@ -73,8 +73,6 @@ class Block implements IBlock {
         props[key] = value;
       }
     });
-    // console.log("🚀 ~ file: Block.ts ~ line 68 ~ Block ~ _getChildren ~ children", children)
-    // console.log("🚀 ~ file: Block.ts ~ line 68 ~ Block ~ _getChildren ~ props", props)
     return { children, props };
   }
 

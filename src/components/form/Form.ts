@@ -13,10 +13,7 @@ class Form extends Block {
   }
 
   render() {
-  
-
-    
-    return this.compile(template);
+        return this.compile(template);
   }
   
 }

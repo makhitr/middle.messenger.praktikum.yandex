@@ -8,17 +8,14 @@ type InputProps = {
 
 class CustomInput extends Block {
 
-  constructor(props: InputProps) {
-    super('div', 'input-wrapper', props)
+  constructor(props: InputProps, className: string = "input-wrapper") {
+    super('div', className, props)
   }
 
   render() {
-    console.log('Render Form')
-
-    
     return this.compile(template);
   }
-  
+
 }
 
 export default CustomInput
