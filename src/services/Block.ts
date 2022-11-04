@@ -56,8 +56,6 @@ class Block implements IBlock {
 
     this._id = makeUUID(); // Генерируем уникальный UUID V4
 
-    // this._props = this._makePropsProxy({ ...propsAndChildren, __id: this._id });
-
     this._eventBus = () => eventBus;
 
     this._registerEvents(eventBus);
@@ -67,6 +65,7 @@ class Block implements IBlock {
   _getChildren(propsAndChildren: Props): any {
     const children: any = {};
     const props: any = {};
+    
     Object.entries(propsAndChildren).forEach(([key, value]) => {
       if (value instanceof Block) {
         children[key] = value;
@@ -74,9 +73,8 @@ class Block implements IBlock {
         props[key] = value;
       }
     });
-    // console.log("🚀 children", children)
-
-    // console.log("🚀 props", props)
+    // console.log("🚀 ~ file: Block.ts ~ line 68 ~ Block ~ _getChildren ~ children", children)
+    // console.log("🚀 ~ file: Block.ts ~ line 68 ~ Block ~ _getChildren ~ props", props)
     return { children, props };
   }
 
@@ -89,9 +87,7 @@ class Block implements IBlock {
 
   _createResources() {
     const { tagName, className } = this._meta;
-    console.log('className', className)
-    this._element = this._createDocumentElement(tagName, className);
-    console.log('thisEl', this._element)
+     this._element = this._createDocumentElement(tagName, className);
   }
 
   init() {
@@ -145,7 +141,6 @@ class Block implements IBlock {
 
   _render() {
     const block = this.render();
-    console.log('block', block)
     this._removeEvents() //????????????
 
     // Это небезопасный метод для упрощения логики
@@ -186,7 +181,6 @@ class Block implements IBlock {
         return typeof value === "function" ? value.bind(target) : value;
       },
       set(target, property, value) {
-        console.log("someone set props");
         target[property] = value;
         // this._eventBus().emit(EVENTS.FLOW_CDU, property, value);
         return true;
@@ -218,7 +212,6 @@ class Block implements IBlock {
 
     const fragment = this._createDocumentElement('template', 'template') as HTMLTemplateElement
     fragment.innerHTML = template(propsAndStubs)
-    console.log("fr", fragment)
 
     Object.values(this._children).forEach((child: any) => {
       const stub = fragment.content.querySelector(`[data-id="${child.id}"]`);
