@@ -3,12 +3,8 @@ import Form from "../../components/form/Form";
 import CustomInput from "../../components/input/Input";
 import CustomInputs from "../../components/inputs/inputs";
 import IndexLayout from "../../layouts/IndexLayout";
-import validateForm from '../../utils/validateForm';
+import { events } from '../../utils/validateForm';
 
-const events = {
-  // focus: (e) => validateForm(e),
-  blur: (e) => validateForm(e)
-}
 
 const inputLogin = new CustomInput({
   type: "text", required: true, value: "", text: "Login", name: "login", className: "input",

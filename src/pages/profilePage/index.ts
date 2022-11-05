@@ -5,6 +5,7 @@ import CustomInputs from "../../components/inputs/inputs";
 import IndexLayout from "../../layouts/IndexLayout";
 import Button from "../../components/button/Button";
 
+
 const className = "info-field"
 
 const profileAvatar = new CustomInput({
@@ -16,7 +17,8 @@ const profileName = new CustomInput({
   required: true,
   value: "Peter",
   text: "First Name",
-  className: "edit-inputs"
+  className: "edit-inputs",
+
 },
   className);
 
@@ -26,7 +28,8 @@ const profileSName = new CustomInput({
   required: true,
   value: "Pan",
   text: "Second Name",
-  className: "edit-inputs"
+  className: "edit-inputs",
+
 },
   className);
 const profileLogin = new CustomInput({
@@ -35,7 +38,8 @@ const profileLogin = new CustomInput({
   required: true,
   value: "PeterPan",
   text: "Login",
-  className: "edit-inputs"
+  className: "edit-inputs",
+
 },
   className);
 const profileEmail = new CustomInput({
@@ -44,7 +48,8 @@ const profileEmail = new CustomInput({
   required: true,
   value: "peter@scottish.com",
   text: "E-mail",
-  className: "edit-inputs"
+  className: "edit-inputs",
+
 },
   className);
 const profilePhone = new CustomInput({
@@ -53,7 +58,8 @@ const profilePhone = new CustomInput({
   required: true,
   value: "+1902-1922-11",
   text: "Phone",
-  className: "edit-inputs"
+  className: "edit-inputs",
+
 },
   className);
 const profilePassword = new CustomInput({
@@ -62,7 +68,8 @@ const profilePassword = new CustomInput({
   required: true,
   value: "",
   text: "Password",
-  className: "edit-inputs"
+  className: "edit-inputs",
+
 },
   className);
 
@@ -80,7 +87,7 @@ const inputs = new CustomInputs({
 const button = new Button({
   text: "Edit Profile", events: {
     click: event => {
-    console.log(event)
+      console.log(event)
     },
   }
 })
