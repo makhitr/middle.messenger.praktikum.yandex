@@ -1,4 +1,3 @@
-
 $bgColor: linear-gradient(#14301a, #6fb878);
 $prFontColor: #fff;
 $scFontColor: #02fc55;
@@ -70,7 +69,6 @@ body {
   background: transparent;
 }
 
-
 .input-wrapper label {
   position: absolute;
   top: 0;
@@ -90,7 +88,7 @@ body {
   color: $scFontColor;
 }
 
-.input-wrapper input[type=submit],
+.input-wrapper input[type="submit"],
 .button {
   cursor: pointer;
   display: inline-block;
@@ -109,15 +107,14 @@ body {
   align-self: flex-start;
 }
 
-
-.input-wrapper input[type=submit]:hover,
+.input-wrapper input[type="submit"]:hover,
 .button:hover {
   background: $innerBgPrColor;
   color: $prFontColor;
   border: 2px solid $scFontColor;
   border-radius: 5px;
 }
-.input-wrapper input[type=submit]:active,
+.input-wrapper input[type="submit"]:active,
 .button:active {
   background: $innerBgPrColor;
   color: $prFontColor;
@@ -142,7 +139,6 @@ body {
   color: $bgColorDark;
 }
 
-
 .settings-wrapper {
   display: flex;
   flex-direction: column;
@@ -154,7 +150,7 @@ body {
   height: 100px;
   width: 100px;
   background-color: rgba(0, 0, 0, 0.4);
-  background-image: url('../../static/images/avatar.png');
+  background-image: url("../../static/images/avatar.png");
   background-position: center;
   background-repeat: no-repeat;
   border-radius: 50%;
@@ -178,4 +174,29 @@ body {
 .edit-inputs,
 .input-avatar {
   display: none;
+}
+
+.message-page-wrapper {
+  height: 100vh;
+  width: 100vw;
+  color: $bgColorDark;
+  display: flex;
+}
+.message-wrapper {
+  width: 70%;
+  height: 100%;
+  background-color: aliceblue;
+}
+
+.aside-wrapper {
+  width: 30%;
+  height: 100%;
+  background-color: antiquewhite;
+}
+
+.input-wrapper .find-input {
+  border: 1px solid $innerBgScColor;
+}
+.message-page-wrapper .input-wrapper label {
+  color: $bgColorDark;
 }

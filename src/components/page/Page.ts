@@ -3,8 +3,8 @@ import template from './index.hbs'
 
 
 class Page extends Block {
-  constructor(props: any) {
-    super('section', 'section-wrapper', props)
+  constructor(props: any, className = "section-wrapper") {
+    super('section', className, props)
   }
 
   render() {

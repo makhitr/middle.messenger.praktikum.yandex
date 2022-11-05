@@ -15,7 +15,10 @@ const inputPassword = new CustomInput({
   events: events
 })
 
-const inputSubmit = new CustomInput({ type: "submit", required: true, name: "submit", value: "SignIn", text: "", className: "input", },)
+const inputSubmit = new CustomInput({
+  type: "submit", required: true, name: "submit", value: "SignIn",
+  text: "", className: "input", events: events
+})
 
 const inputs = new CustomInputs({ inputLogin: inputLogin, passwordLogin: inputPassword, inputSubmit: inputSubmit, inputLoginTEST: inputLogin })
 
