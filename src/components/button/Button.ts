@@ -5,6 +5,7 @@ class Button extends Block {
   constructor(props, className: string = "button") {
 
     super('button',  className, props)
+    
   }
 
   render() {

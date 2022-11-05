@@ -1,4 +1,5 @@
 import { v4 as makeUUID } from 'uuid';
+import Form from '../components/form/Form';
 import EventBus from './EventBus'
 
 enum EVENTS {
@@ -65,7 +66,7 @@ class Block implements IBlock {
   _getChildren(propsAndChildren: Props): any {
     const children: any = {};
     const props: any = {};
-    
+
     Object.entries(propsAndChildren).forEach(([key, value]) => {
       if (value instanceof Block) {
         children[key] = value;
@@ -85,7 +86,7 @@ class Block implements IBlock {
 
   _createResources() {
     const { tagName, className } = this._meta;
-     this._element = this._createDocumentElement(tagName, className);
+    this._element = this._createDocumentElement(tagName, className);
   }
 
   init() {
@@ -156,6 +157,7 @@ class Block implements IBlock {
 
   _addEvents() {
     const { events = {} } = this._props;
+
     Object.keys(events).forEach((eventName) => {
       this._element?.addEventListener(eventName, events[eventName]);
     });
@@ -213,9 +215,9 @@ class Block implements IBlock {
 
     Object.values(this._children).forEach((child: any) => {
       const stub = fragment.content.querySelector(`[data-id="${child.id}"]`);
-    
-      stub && stub.replaceWith(child.getContent()); 
-      
+
+      stub && stub.replaceWith(child.getContent());
+
     });
 
     return fragment.content

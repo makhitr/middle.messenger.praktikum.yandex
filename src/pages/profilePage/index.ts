@@ -68,18 +68,26 @@ const profilePassword = new CustomInput({
 
 
 
-const inputs = new CustomInputs({ profileAvatar: profileAvatar, 
+const inputs = new CustomInputs({
+  profileAvatar: profileAvatar,
   inputName: profileName, inputSName: profileSName,
   inputLogin: profileLogin,
   inputEmail: profileEmail,
   inputPhone: profilePhone,
   inputPassword: profilePassword
- })
+})
 
- const button = new Button({text: "Edit Profile"})
- console.log(button)
+const button = new Button({
+  text: "Edit Profile", events: {
+    click: event => {
+    console.log(event)
+    },
+  }
+})
 
-const form = new Form({ title: "Profile Form", inputs: inputs, button: button});
+console.log(button)
+
+const form = new Form({ title: "Profile Form", inputs: inputs, button: button });
 const content = new Page({ title: "My Profile", form: form });
 
 export const profilePage = new IndexLayout({
