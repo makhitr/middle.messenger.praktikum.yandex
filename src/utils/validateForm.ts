@@ -16,7 +16,7 @@ const user = {}
 
 const validateForm = (event) => {
   const target = event.currentTarget;
-  if (target.name === 'submit') {
+ if (target.name === 'submit') {
     event.preventDefault();
     console.log(user)
   } else {

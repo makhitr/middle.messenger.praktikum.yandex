@@ -1,5 +1,4 @@
 import { v4 as makeUUID } from 'uuid';
-import Form from '../components/form/Form';
 import EventBus from './EventBus'
 
 enum EVENTS {

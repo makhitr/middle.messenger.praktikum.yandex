@@ -8,8 +8,8 @@ type FormProps = {
 
 class Form extends Block {
 
-  constructor(props: FormProps) {
-    super('form', 'page-form', props)
+  constructor(props: FormProps, className='page-form') {
+    super('form', className, props)
   }
 
   render() {
