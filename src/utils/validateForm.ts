@@ -2,7 +2,7 @@ export const events = {
   blur: (e: Event) => validateForm(e)
 }
 
-const objValidator = {
+const objValidator: {[key:string]: RegExp} = {
   login: /^[a-zA-Z][a-zA-Z0-9-_\.]{3,20}$/,
   password: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,40}$/,
   email: /^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$/,
@@ -14,19 +14,22 @@ const objValidator = {
 
 const user = {}
 
-const validateForm = (event) => {
-  const target = event.currentTarget;
- if (target.name === 'submit') {
-    event.preventDefault();
-    console.log(user)
-  } else {
-    if (!objValidator[target.name].test(target.value)) {
-      target.style.background = "red";
-      target.focus();
-    } else {
-      user[target.name] = target.value
-      target.style.background = "none";
-    }
+const validateForm = (event: Event) => {
+  const target: HTMLInputElement = event.currentTarget;
+  if (target) {
+
+    if (target.name === 'submit') {
+       event.preventDefault();
+       console.log(user)
+     } else {
+       if (!objValidator[target.name].test(target.value)) {
+         target.style.background = "red";
+         target.focus();
+       } else {
+         user[target.name] = target.value
+         target.style.background = "none";
+       }
+     }
   }
 
 };

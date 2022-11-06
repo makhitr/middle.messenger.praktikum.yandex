@@ -35,12 +35,12 @@ class Block implements IBlock {
   _props: any;
   _children: any;
 
-  // /** JSDoc
-  //  * @param {string} tagName
-  //  * @param {Object} props
-  //  *
-  //  * @returns {void}
-  //  */
+  /** JSDoc
+   * @param {string} tagName
+   * @param {Object} props
+   *
+   * @returns {void}
+   */
   constructor(tagName: string = "div", className: string, propsAndChildren: Props = {}) {
     const eventBus: EventBus = new EventBus();
     const { children, props } = this._getChildren(propsAndChildren);
@@ -54,7 +54,7 @@ class Block implements IBlock {
       props,
     };
 
-    this._id = makeUUID(); // Генерируем уникальный UUID V4
+    this._id = makeUUID();  
 
     this._eventBus = () => eventBus;
 
@@ -101,7 +101,7 @@ class Block implements IBlock {
     });
   }
 
-  // componentDidMount(oldProps) { }
+
   componentDidMount() { }
 
   dispatchComponentDidMount() {
@@ -110,7 +110,6 @@ class Block implements IBlock {
 
   _componentDidUpdate(oldProps: any, newProps: any) {
     this.componentDidUpdate(oldProps, newProps);
-    // ...
   }
 
   componentDidUpdate(oldProps: any, newProps: any) {
@@ -139,19 +138,15 @@ class Block implements IBlock {
 
   _render() {
     const block = this.render();
-    this._removeEvents() //????????????
+    this._removeEvents() 
 
-    // Это небезопасный метод для упрощения логики
-    // Используйте шаблонизатор из npm или напишите свой безопасный
-    // Нужно компилировать не в строку (или делать это правильно),
-    // либо сразу превращать в DOM-элементы и возвращать из compile DOM-ноду
     this._element.innerHTML = '';
     this._element.appendChild(block);
 
     this._addEvents();
   }
 
-  // Переопределяется пользователем. Необходимо вернуть разметку
+
   render() { }
 
   _addEvents() {
@@ -181,7 +176,6 @@ class Block implements IBlock {
       },
       set(target, property, value) {
         target[property] = value;
-        // this._eventBus().emit(EVENTS.FLOW_CDU, property, value);
         return true;
       },
     });
@@ -190,14 +184,13 @@ class Block implements IBlock {
   }
 
   _createDocumentElement(tagName: string, className: string): HTMLElement {
-    // Можно сделать метод, который через фрагменты в цикле создаёт сразу несколько блоков
     const element = document.createElement(tagName);
     element.setAttribute("data-id", this._id);
     element.classList.add(className)
     return element;
   }
 
-  compile(template: any, props?: Props): any { //!!!!!!!дописать, не полная из урока
+  compile(template: any, props?: Props): any { 
 
     if (typeof props === "undefined") {
       props = this._props

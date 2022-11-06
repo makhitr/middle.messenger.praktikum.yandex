@@ -3,7 +3,7 @@ import Form from "../form";
 import template from './index.hbs'
 
 class MessageForm extends Form {
-  constructor(props, id = 'mss-form') {
+  constructor(props: { [x: string]: any; }, id = 'mss-form') {
     super(props, 'message-form')
     this._element.setAttribute('id', id)
   }

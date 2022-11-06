@@ -3,7 +3,7 @@ import Form from "../../components/form";
 import CustomInput from "../../components/input";
 import CustomInputs from "../../components/inputs/inputs";
 import IndexLayout from "../../layouts/IndexLayout";
-import Button from "../../components/button/Button";
+import Button from "../../components/button";
 
 
 const className = "info-field"

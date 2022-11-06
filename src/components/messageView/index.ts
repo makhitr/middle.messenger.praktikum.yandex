@@ -3,7 +3,7 @@ import template from './index.hbs'
 
 
 class MessageView extends Block {
-  constructor(props, className = "message-view-wrapper") {
+  constructor(props: {} | undefined, className = "message-view-wrapper") {
     console.log('pr', props)
     super('div', className, props)
   }

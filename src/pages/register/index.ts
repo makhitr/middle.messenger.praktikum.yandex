@@ -1,6 +1,3 @@
-// import Form from "../../components/form/Form";
-// import IndexLayout from "../../layouts/IndexLayout";
-// import Page from "../IndexPage";
 
 export const pageRegisterInfo = {
   link: "register",
@@ -54,11 +51,3 @@ export const pageRegisterInfo = {
 
 
 
-// // const inputs = new CustomInputs({ inputLogin: inputLogin, passwordLogin: inputPassword, inputSubmit: inputSubmit, inputLoginTEST: inputLogin })
-// const form = new Form({ title: "Register Form", inputs: inputs })
-// const content = new Page({ title: pageRegisterInfo.title, form: form })
-
-// export const RegisterPage = new IndexLayout({
-//   title: pageRegisterInfo.pageName,
-//   content: content
-// })
