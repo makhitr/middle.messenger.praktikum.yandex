@@ -1,3 +1,4 @@
+
 export const pageRegisterInfo = {
   link: "register",
   pageName: "Register Page",
@@ -5,7 +6,7 @@ export const pageRegisterInfo = {
   formInputs: [
     {
       type: "text",
-      text: "First Name",
+      text: "First Form Name",
       required: true,
       value: "",
     },
@@ -47,3 +48,6 @@ export const pageRegisterInfo = {
     },
   ],
 };
+
+
+
