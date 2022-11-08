@@ -2,7 +2,7 @@ import Form from "../../components/form";
 import CustomInput from "../../components/input";
 import CustomInputs from "../../components/inputs/inputs";
 import MessageForm from "../../components/messageForm";
-import MessagePreview from "../../components/MessagePreview";
+import MessagePreview from "../../components/messagePreview";
 import Messages from "../../components/messages";
 import MessageView from "../../components/messageView";
 import Page from "../../components/page";
