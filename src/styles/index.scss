@@ -1,26 +1,29 @@
-$bgColor: linear-gradient(#14301a, #6fb878);
-$prFontColor: #fff;
-$scFontColor: #02fc55;
-$innerBgPrColor: #19a748;
-$innerBgScColor: #0f632b;
-$bgColorDark: #1d5024;
+$bg-color: linear-gradient(#14301a, #6fb878);
+$pr-font-color: #fff;
+$sc-font-color: #02fc55;
+$inner-bg-pr-color: #19a748;
+$inner-bg-sc-color: #0f632b;
+$bg-color-dark: #1d5024;
+$dark-transparent: rgb(0 0 0 / 40%);
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
 html {
   height: 100%;
 }
+
 body {
-  font-family: "Roboto", sans-serif;
-  background: $bgColor;
+  font-family: Roboto, sans-serif;
+  background: $bg-color;
 }
 
 .main-wrapper {
   text-align: center;
-  color: $prFontColor;
+  color: $pr-font-color;
   margin-top: 20px;
 }
 
@@ -38,15 +41,15 @@ body {
   width: 500px;
   padding: 60px;
   transform: translate(-50%, -50%);
-  background: rgba(0, 0, 0, 0.5);
-  box-shadow: 0 12px 22px rgba(0, 0, 0, 0.4);
+  background: rgb(0 0 0 / 50%);
+  box-shadow: 0 12px 22px $dark-transparent;
   border-radius: 8px;
 }
 
 .section-wrapper h2 {
   margin-bottom: 20px;
   text-align: center;
-  color: $prFontColor;
+  color: $pr-font-color;
 }
 
 .page-form {
@@ -62,10 +65,10 @@ body {
   width: 100%;
   padding: 10px 0;
   font-size: 16px;
-  color: $prFontColor;
+  color: $pr-font-color;
   margin-bottom: 30px;
   border: none;
-  border-bottom: 1px solid $prFontColor;
+  border-bottom: 1px solid $pr-font-color;
   background: transparent;
 }
 
@@ -75,9 +78,13 @@ body {
   left: 0;
   padding: 10px 0;
   font-size: 20px;
-  color: $prFontColor;
+  color: $pr-font-color;
   pointer-events: none;
   transition: 0.6s;
+}
+
+.message-page-wrapper .input-wrapper label {
+  color: $bg-color-dark;
 }
 
 .input-wrapper input:focus ~ label,
@@ -85,7 +92,7 @@ body {
   top: -20px;
   left: 0;
   font-size: 14px;
-  color: $scFontColor;
+  color: $sc-font-color;
 }
 
 .input-wrapper input[type="submit"],
@@ -93,7 +100,7 @@ body {
   cursor: pointer;
   display: inline-block;
   padding: 10px 20px;
-  color: $scFontColor;
+  color: $sc-font-color;
   font-size: 16px;
   text-decoration: none;
   text-transform: uppercase;
@@ -101,7 +108,7 @@ body {
   transition: 0.5s;
   margin-top: 40px;
   letter-spacing: 4px;
-  border: 2px solid $innerBgPrColor;
+  border: 2px solid $inner-bg-pr-color;
   border-radius: 5px;
   background-color: transparent;
   align-self: flex-start;
@@ -109,22 +116,23 @@ body {
 
 .input-wrapper input[type="submit"]:hover,
 .button:hover {
-  background: $innerBgPrColor;
-  color: $prFontColor;
-  border: 2px solid $scFontColor;
+  background: $inner-bg-pr-color;
+  color: $pr-font-color;
+  border: 2px solid $sc-font-color;
   border-radius: 5px;
 }
+
 .input-wrapper input[type="submit"]:active,
 .button:active {
-  background: $innerBgPrColor;
-  color: $prFontColor;
-  border: 2px solid $bgColorDark;
+  background: $inner-bg-pr-color;
+  color: $pr-font-color;
+  border: 2px solid $bg-color-dark;
   border-radius: 5px;
 }
 
 .link-btn {
   text-decoration: none;
-  color: $prFontColor;
+  color: $pr-font-color;
   font-size: 14px;
   letter-spacing: 2px;
   align-self: flex-end;
@@ -132,24 +140,25 @@ body {
 
 .link-btn:hover {
   font-size: 16px;
-  color: $scFontColor;
+  color: $sc-font-color;
 }
 
 .link-btn:active {
-  color: $bgColorDark;
+  color: $bg-color-dark;
 }
 
 .settings-wrapper {
   display: flex;
   flex-direction: column;
 }
+
 .avatar {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100px;
   width: 100px;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: $dark-transparent;
   background-image: url("../../static/images/avatar.png");
   background-position: center;
   background-repeat: no-repeat;
@@ -164,7 +173,7 @@ body {
   padding: 10px;
   margin-bottom: 20px;
   font-size: 18px;
-  border-bottom: 1px solid $prFontColor;
+  border-bottom: 1px solid $pr-font-color;
 }
 
 .change-avatar {
@@ -179,9 +188,10 @@ body {
 .message-page-wrapper {
   height: 100vh;
   width: 100vw;
-  color: $bgColorDark;
+  color: $bg-color-dark;
   display: flex;
 }
+
 .message-wrapper {
   width: 70%;
   height: 100%;
@@ -195,10 +205,7 @@ body {
 }
 
 .input-wrapper .find-input {
-  border: 1px solid $innerBgScColor;
-}
-.message-page-wrapper .input-wrapper label {
-  color: $bgColorDark;
+  border: 1px solid $inner-bg-sc-color;
 }
 
 .message-pr-wrapper {
@@ -210,9 +217,10 @@ body {
 .message-unread {
   width: 20px;
   height: 20px;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: $dark-transparent;
   border-radius: 50%;
 }
+
 .messages {
   display: flex;
   flex-direction: column;
@@ -220,8 +228,8 @@ body {
 
 .message-view-wrapper,
 .message-view-wrapper-user {
-  border: 1px solid $innerBgScColor;
-  color: $bgColorDark;
+  border: 1px solid $inner-bg-sc-color;
+  color: $bg-color-dark;
   width: 70%;
   background-color: grey;
   margin: 20px;
@@ -232,7 +240,7 @@ body {
 }
 
 .message-view-wrapper-user {
-  background-color: rgb(125, 198, 225);
+  background-color: rgb(125 198 225);
   align-self: flex-end;
   margin-right: 30px;
 }
