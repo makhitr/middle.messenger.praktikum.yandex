@@ -6,7 +6,7 @@ import MessagePreview from "../../components/messagePreview";
 import Messages from "../../components/messages";
 import MessageView from "../../components/messageView";
 import Page from "../../components/page";
-import MessageLayout from "../../layouts/MessageLayout";
+import MessageLayout from "../../layouts/messageLayout";
 
 const input = new CustomInput({
   type: "text", required: false, value: "", text: "Find", name: "find", className: "find-input",
