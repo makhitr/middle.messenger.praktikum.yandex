@@ -21,11 +21,16 @@
     "@anikin/parcel-transformer-handlebars": "1.0.9",
     "@anikin/parcel-transformer-handlebars-precompile": "1.0.1",
     "@types/hbs": "4.0.1",
-    "@typescript-eslint/eslint-plugin": "5.13.0",
+    "@typescript-eslint/eslint-plugin": "5.42.1",
     "@typescript-eslint/parser": "5.0.0",
+    "eslint": "8.27.0",
     "eslint-config-airbnb-typescript": "17.0.0",
-    "stylelint": "^14.14.1",
-    "stylelint-config-standard-scss": "^6.1.0",
-    "typescript": "4.8.4"
+    "eslint-config-standard-with-typescript": "23.0.0",
+    "eslint-plugin-import": "2.26.0",
+    "eslint-plugin-n": "15.5.0",
+    "eslint-plugin-promise": "6.1.1",
+    "stylelint": "14.14.1",
+    "stylelint-config-standard-scss": "6.1.0",
+    "typescript": "^4.8.4"
   }
 }
