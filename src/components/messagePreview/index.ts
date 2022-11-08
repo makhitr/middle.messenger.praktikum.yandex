@@ -12,5 +12,3 @@ class MessagePreview extends Block {
 }
 
 export default MessagePreview;
-
-
