@@ -1,8 +1,8 @@
-import Page from "../../components/page";
-import Form from "../../components/form";
-import CustomInput from "../../components/input";
-import CustomInputs from "../../components/inputs/inputs";
-import IndexLayout from "../../layouts/IndexLayout";
+import {Page} from "../../components/page";
+import {Form} from "../../components/form";
+import {CustomInput} from "../../components/input";
+import {CustomInputs} from "../../components/inputs/inputs";
+import {IndexLayout} from "../../layouts/IndexLayout";
 import { events } from "../../utils/validateForm";
 
 const inputName = new CustomInput(

@@ -1,5 +1,5 @@
 
-import Form from "../form";
+import {Form} from "../form";
 import template from './index.hbs'
 
 class MessageForm extends Form {
@@ -14,4 +14,4 @@ class MessageForm extends Form {
 
 }
 
-export default MessageForm;
+export  {MessageForm};

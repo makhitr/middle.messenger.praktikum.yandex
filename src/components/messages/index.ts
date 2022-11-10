@@ -1,4 +1,4 @@
-import Block from "../../services/Block";
+import { Block } from "../../services/Block";
 import template from './index.hbs'
 
 class Messages extends Block  {
@@ -13,4 +13,4 @@ class Messages extends Block  {
   }
 } 
 
-export default Messages;
+export {Messages};

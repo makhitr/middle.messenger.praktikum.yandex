@@ -1,9 +1,9 @@
-import Page from '../../components/page'
-import Form from "../../components/form";
-import CustomInput from "../../components/input";
-import CustomInputs from "../../components/inputs/inputs";
-import IndexLayout from "../../layouts/IndexLayout";
-import { events, formEvents, formSubmitEvent } from '../../utils/validateForm';
+import { Page } from '../../components/page'
+import { Form } from "../../components/form";
+import { CustomInput } from "../../components/input";
+import { CustomInputs } from "../../components/inputs/inputs";
+import { IndexLayout } from "../../layouts/IndexLayout";
+import { formEvents } from '../../utils/validateForm';
 
 
 const inputLogin = new CustomInput({

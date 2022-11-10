@@ -46,8 +46,8 @@ const validateOnFocus = (target: HTMLInputElement, message: HTMLElement) => {
 const validateOnSubmit = (event: Event, inputsNumber: NodeList, target: HTMLInputElement) => {
   event.preventDefault();
   if (inputsNumber.length - 1 === Object.keys(user).length) {
-   console.log('form is submitted')
-   console.log(user)
+    console.log('form is submitted')
+    console.log(user)
   } else {
     alert('please check the form')
   }
@@ -69,4 +69,4 @@ const validateForm = (event: Event) => {
     }
   }
 };
-export default validateForm;
+export { validateForm };

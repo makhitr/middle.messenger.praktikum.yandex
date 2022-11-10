@@ -8,4 +8,4 @@ const renderDOM = (query: string, block: HTMLElement | any): HTMLElement => {
   return root  as HTMLElement;
 }
 
-export default renderDOM;
+export {renderDOM};
