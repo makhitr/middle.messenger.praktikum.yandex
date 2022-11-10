@@ -15,13 +15,6 @@ export const formEvents = {
   focus: (e: Event) => validateForm(e),
   submit: (e: Event) => validateForm(e)
 }
-// const test = (e) => { console.log("Pls submit") }
-
-// const submitForm = (e) => {
-//   console.log(e.target)
-//   e.preventDefault()
-//   console.log('submit')
-// }
 
 const objValidator: { [key: string]: RegExp } = {
   login: /^[a-zA-Z][a-zA-Z0-9-_\.]{3,20}$/,
