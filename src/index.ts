@@ -1,6 +1,6 @@
 import { mainPage } from './pages/mainPage'
 import { registerPage } from './pages/registerPage'
-import renderDOM from './utils/renderDOM'
+import { renderDOM } from './utils/renderDOM'
 import { profilePage } from './pages/profilePage'
 import { messagePage } from './pages/messagePage'
 

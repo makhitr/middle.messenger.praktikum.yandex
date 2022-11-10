@@ -1,5 +1,5 @@
 import { v4 as makeUUID } from 'uuid';
-import EventBus from './EventBus'
+import {EventBus} from './EventBus'
 
 enum EVENTS {
   INIT = "init",
@@ -227,4 +227,4 @@ class Block implements IBlock {
   }
 }
 
-export default Block;
+export { Block }

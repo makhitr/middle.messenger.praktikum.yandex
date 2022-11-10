@@ -1,11 +1,11 @@
-import Block from "../../services/Block";
+import { Block } from "../../services/Block";
 import template from './index.hbs'
 
 class Button extends Block {
   constructor(props, className: string = "button") {
 
-    super('button',  className, props)
-    
+    super('button', className, props)
+
   }
 
   render() {
@@ -13,4 +13,4 @@ class Button extends Block {
   }
 }
 
-export default Button
+export { Button } 

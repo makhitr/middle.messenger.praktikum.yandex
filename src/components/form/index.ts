@@ -1,4 +1,4 @@
-import Block from "../../services/Block";
+import { Block } from "../../services/Block";
 import template from './index.hbs'
 
 type FormProps = {
@@ -18,4 +18,4 @@ class Form extends Block {
   
 }
 
-export default Form
+export {Form}

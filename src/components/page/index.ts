@@ -1,4 +1,4 @@
-import Block from "../../services/Block";
+import { Block } from "../../services/Block";
 import template from './index.hbs'
 
 
@@ -12,4 +12,4 @@ class Page extends Block {
   }
 }
 
-export default Page
+export {Page}
