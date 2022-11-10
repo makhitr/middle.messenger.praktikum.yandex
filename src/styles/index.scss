@@ -244,3 +244,12 @@ body {
   align-self: flex-end;
   margin-right: 30px;
 }
+
+.form-error-message {
+  display: none;
+  color: rgb(183, 26, 26);
+  font-size: 85%;
+  text-align: left;
+  margin-top: -20px;
+  margin-bottom: 10px;
+}

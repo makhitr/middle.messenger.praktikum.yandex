@@ -3,26 +3,26 @@ import Form from "../../components/form";
 import CustomInput from "../../components/input";
 import CustomInputs from "../../components/inputs/inputs";
 import IndexLayout from "../../layouts/IndexLayout";
-import { events } from '../../utils/validateForm';
+import { events, formEvents, formSubmitEvent } from '../../utils/validateForm';
 
 
 const inputLogin = new CustomInput({
   type: "text", required: true, value: "", text: "Login", name: "login", className: "input",
-  events: events
+  // events: events
 })
 const inputPassword = new CustomInput({
   type: "password", text: "Password", name: "password", required: true, value: "", className: "input",
-  events: events
+  // events: events
 })
 
 const inputSubmit = new CustomInput({
   type: "submit", required: true, name: "submit", value: "SignIn",
-  text: "", className: "input", events: events
+  text: "", className: "input"
 })
 
 const inputs = new CustomInputs({ inputLogin: inputLogin, passwordLogin: inputPassword, inputSubmit: inputSubmit, inputLoginTEST: inputLogin })
 
-const form = new Form({ title: "Login Form", inputs: inputs })
+const form = new Form({ title: "Login Form", inputs: inputs, events: formEvents, capture: true })
 const content = new Page({ title: "My messenger", form: form })
 
 export const mainPage = new IndexLayout({

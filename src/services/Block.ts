@@ -151,9 +151,10 @@ class Block implements IBlock {
 
   _addEvents() {
     const { events = {} } = this._props;
+    const {capture} = this._props
 
     Object.keys(events).forEach((eventName) => {
-      this._element?.addEventListener(eventName, events[eventName]);
+      this._element?.addEventListener(eventName, events[eventName], capture);
     });
   }
 
