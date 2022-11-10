@@ -38,7 +38,7 @@ body {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 500px;
+  width: 600px;
   padding: 60px;
   transform: translate(-50%, -50%);
   background: rgb(0 0 0 / 50%);
@@ -234,7 +234,7 @@ body {
   background-color: grey;
   margin: 20px;
   padding: 20px;
-  text-align: left;
+  text-align: leflink-btnt;
   border-radius: 5px;
   align-self: flex-start;
 }
@@ -243,4 +243,21 @@ body {
   background-color: rgb(125 198 225);
   align-self: flex-end;
   margin-right: 30px;
+}
+
+.form-error-message {
+  display: none;
+  color: rgb(183 26 26);
+  font-size: 85%;
+  text-align: left;
+  margin-top: -20px;
+  margin-bottom: 10px;
+}
+
+.main-navigation {
+  list-style-type: none;
+  display: flex;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
 }

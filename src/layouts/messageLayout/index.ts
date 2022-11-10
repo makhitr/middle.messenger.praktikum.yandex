@@ -8,8 +8,6 @@ class MessageLayout extends Block {
   }
 
   render() {
-    console.log('Layout render', this._props)
-
     return this.compile(template)
 
   }

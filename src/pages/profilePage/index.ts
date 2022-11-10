@@ -92,8 +92,6 @@ const button = new Button({
   }
 })
 
-console.log(button)
-
 const form = new Form({ title: "Profile Form", inputs: inputs, button: button });
 const content = new Page({ title: "My Profile", form: form });
 

@@ -8,8 +8,6 @@ class Page extends Block {
   }
 
   render() {
-    console.log("Page is rendered")
-
     return this.compile(template)
   }
 }
