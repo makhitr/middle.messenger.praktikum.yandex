@@ -22,17 +22,14 @@ type Meta = {
   props: {}
 }
 
-type Props = {
 
-}
-
-class Block implements IBlock {
+class Block<Props> implements IBlock {
 
   _element: null | HTMLDivElement | any;
   _meta;
   _id;
   _eventBus;
-  _props: any;
+  _props: Props;
   _children: any;
 
   /** JSDoc
@@ -41,7 +38,7 @@ class Block implements IBlock {
    *
    * @returns {void}
    */
-  constructor(tagName: string = "div", className: string, propsAndChildren: Props = {}) {
+  constructor(tagName = "div", className: string, propsAndChildren = {}) {
     const eventBus: EventBus = new EventBus();
     const { children, props } = this._getChildren(propsAndChildren);
 
@@ -62,7 +59,7 @@ class Block implements IBlock {
     eventBus.emit(EVENTS.INIT);
   }
 
-  _getChildren(propsAndChildren: Props): any {
+  _getChildren(propsAndChildren): any {
     const children: any = {};
     const props: any = {};
 
