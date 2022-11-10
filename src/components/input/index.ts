@@ -21,12 +21,12 @@ class CustomInput extends Block {
   }
 
 
-  _removeEvents() {
-    const { events = {} } = this._props;
-    Object.keys(events).forEach((eventName) => {
-      this._element?.childNodes[1].addEventListener(eventName, events[eventName]);
-    });
-  }
+  // _removeEvents() {
+  //   const { events = {} } = this._props;
+  //   Object.keys(events).forEach((eventName) => {
+  //     this._element?.childNodes[1].addEventListener(eventName, events[eventName]);
+  //   });
+  // }
 
   render() {
     return this.compile(template);
