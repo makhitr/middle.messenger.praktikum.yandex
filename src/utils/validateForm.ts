@@ -17,7 +17,7 @@ export const formEvents = {
 }
 
 const objValidator: { [key: string]: RegExp } = {
-  login: /^[a-zA-Z][a-zA-Z0-9-_\.]{3,20}$/,
+  login: /^[a-zA-Z][a-zA-Z0-9-_.]{3,20}$/,
   password: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,40}$/,
   email: /^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$/,
   first_name: /^[A-ZА-Я][a-zA-Zа-яА-Я-]/,
