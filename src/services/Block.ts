@@ -17,17 +17,18 @@ interface IBlock {
   _children: Children;
 }
 type PropsEvents = {
-  [key: string] : {[key: string] :( (e: Event) => void)}
-}
+  [key: string]: (e: Event) => void;
+};
+
 type Props = {
-  [key: string]: string | boolean | PropsEvents;
+  [key: string]: string | boolean;
 };
 
 type Children = {
   [key: string]: Block;
 };
 
-export type AllProps = Props | Children;
+export type AllProps = Props | Children | PropsEvents;
 
 type Meta = {
   tagName: string;
