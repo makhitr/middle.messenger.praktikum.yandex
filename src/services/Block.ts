@@ -1,5 +1,5 @@
-import { v4 as makeUUID } from 'uuid';
-import {EventBus} from './EventBus'
+import { v4 as makeUUID } from "uuid";
+import { EventBus } from "./EventBus";
 
 enum EVENTS {
   INIT = "init",
@@ -12,25 +12,36 @@ interface IBlock {
   _element: null | HTMLDivElement | any;
   _meta: null | Meta;
   _id: null | string;
-  _eventBus: Function;
-  _props: any;
-  _children: any;
+  _eventBus: () => EventBus;
+  _props: Props;
+  _children: Children;
 }
+type PropsEvents = {
+  [key: string] : {[key: string] :( (e: Event) => void)}
+}
+type Props = {
+  [key: string]: string | boolean | PropsEvents;
+};
+
+type Children = {
+  [key: string]: Block;
+};
+
+export type AllProps = Props | Children;
 
 type Meta = {
-  tagName: string,
-  props: {}
-}
+  tagName: string;
+  className: string;
+  props: { [key: string]: string };
+};
 
-
-class Block<Props> implements IBlock {
-
+class Block implements IBlock {
   _element: null | HTMLDivElement | any;
   _meta;
   _id;
   _eventBus;
-  _props: Props;
-  _children: any;
+  _props;
+  _children;
 
   /** JSDoc
    * @param {string} tagName
@@ -38,7 +49,11 @@ class Block<Props> implements IBlock {
    *
    * @returns {void}
    */
-  constructor(tagName = "div", className: string, propsAndChildren = {}) {
+  constructor(
+    tagName = "div",
+    className: string,
+    propsAndChildren: AllProps = {}
+  ) {
     const eventBus: EventBus = new EventBus();
     const { children, props } = this._getChildren(propsAndChildren);
 
@@ -51,7 +66,7 @@ class Block<Props> implements IBlock {
       props,
     };
 
-    this._id = makeUUID();  
+    this._id = makeUUID();
 
     this._eventBus = () => eventBus;
 
@@ -59,9 +74,9 @@ class Block<Props> implements IBlock {
     eventBus.emit(EVENTS.INIT);
   }
 
-  _getChildren(propsAndChildren): any {
-    const children: any = {};
-    const props: any = {};
+  _getChildren(propsAndChildren: AllProps): { [key: string]: any } {
+    const children: Children = {};
+    const props: Props = {};
 
     Object.entries(propsAndChildren).forEach(([key, value]) => {
       if (value instanceof Block) {
@@ -70,6 +85,7 @@ class Block<Props> implements IBlock {
         props[key] = value;
       }
     });
+
     return { children, props };
   }
 
@@ -98,8 +114,7 @@ class Block<Props> implements IBlock {
     });
   }
 
-
-  componentDidMount() { }
+  componentDidMount() {}
 
   dispatchComponentDidMount() {
     this._eventBus().emit(EVENTS.FLOW_CDM);
@@ -118,7 +133,7 @@ class Block<Props> implements IBlock {
   }
 
   setProps = (nextProps: any) => {
-    if (!nextProps) {
+    if (nextProps === null) {
       return;
     }
     if (
@@ -135,20 +150,19 @@ class Block<Props> implements IBlock {
 
   _render() {
     const block = this.render();
-    this._removeEvents() 
+    this._removeEvents();
 
-    this._element.innerHTML = '';
+    this._element.innerHTML = "";
     this._element.appendChild(block);
 
     this._addEvents();
   }
 
-
-  render() { }
+  render() {}
 
   _addEvents() {
     const { events = {} } = this._props;
-    const {capture} = this._props
+    const { capture } = this._props;
 
     Object.keys(events).forEach((eventName) => {
       this._element?.addEventListener(eventName, events[eventName], capture);
@@ -184,44 +198,45 @@ class Block<Props> implements IBlock {
   _createDocumentElement(tagName: string, className: string): HTMLElement {
     const element = document.createElement(tagName);
     element.setAttribute("data-id", this._id);
-    element.classList.add(className)
+    element.classList.add(className);
     return element;
   }
 
-  compile(template: any, props?: Props): any { 
-
+  compile(template: any, props?: Props): any {
     if (typeof props === "undefined") {
-      props = this._props
+      props = this._props;
     }
 
     const propsAndStubs: any = { ...props };
 
     Object.entries(this._children).forEach(([key, child]: any) => {
-      propsAndStubs[key] = `<div data-id="${child.id}"></div>`
+      propsAndStubs[key] = `<div data-id="${child.id}"></div>`;
     });
 
-    const fragment = this._createDocumentElement('template', 'template') as HTMLTemplateElement
-    fragment.innerHTML = template(propsAndStubs)
+    const fragment = this._createDocumentElement(
+      "template",
+      "template"
+    ) as HTMLTemplateElement;
+    fragment.innerHTML = template(propsAndStubs);
 
-    Object.values(this._children).forEach((child: any) => {
+    Object.values(this._children).forEach((child: HTMLElement) => {
       const stub = fragment.content.querySelector(`[data-id="${child.id}"]`);
 
       stub && stub.replaceWith(child.getContent());
-
     });
 
-    return fragment.content
+    return fragment.content;
   }
 
   show() {
-    const content = this.getContent()
+    const content = this.getContent();
     content!.style.display = "block";
   }
 
   hide() {
-    const content = this.getContent()
+    const content = this.getContent();
     content!.style.display = "none";
   }
 }
 
-export { Block }
+export { Block };

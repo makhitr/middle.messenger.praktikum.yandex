@@ -1,9 +1,9 @@
-import { Page } from "../../components/page";
-import { Form } from "../../components/form";
-import { CustomInput } from "../../components/input";
-import { CustomInputs } from "../../components/inputs/inputs";
-import { IndexLayout } from "../../layouts/IndexLayout";
-import { Button } from "../../components/button";
+import {Page} from "../../components/page";
+import {Form} from "../../components/form";
+import {CustomInput} from "../../components/input";
+import {CustomInputs} from "../../components/inputs/inputs";
+import {IndexLayout} from "../../layouts/IndexLayout";
+import {Button} from "../../components/button";
 
 
 const className = "info-field"
@@ -11,7 +11,7 @@ const className = "info-field"
 const profileAvatar = new CustomInput({
   className: "input-avatar",
   type: "file",
-  required: false,
+  required: false, 
   value: "image",
   name: "avatar-img"
 }, "avatar")

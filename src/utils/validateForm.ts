@@ -16,6 +16,10 @@ export const formEvents = {
   submit: (e: Event) => validateForm(e)
 }
 
+type User = {
+  [key: string]: string
+}
+
 const objValidator: { [key: string]: RegExp } = {
   login: /^[a-zA-Z][a-zA-Z0-9-_.]{3,20}$/,
   password: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,40}$/,
@@ -26,7 +30,7 @@ const objValidator: { [key: string]: RegExp } = {
   message: /[\w]{5}/
 };
 
-const user = {}
+const user: User = {}
 
 const validateOnBlur = (target: HTMLInputElement, message: HTMLElement) => {
   if (!objValidator[target.name].test(target.value)) {
@@ -34,7 +38,7 @@ const validateOnBlur = (target: HTMLInputElement, message: HTMLElement) => {
     message.style.display = "block"
     // target.focus();
   } else {
-    user[target.name] = target.value
+    user[target.name as keyof User] = target.value
   }
 }
 
@@ -43,13 +47,13 @@ const validateOnFocus = (target: HTMLInputElement, message: HTMLElement) => {
   message.style.display = 'none'
 }
 
-const validateOnSubmit = (event: Event, inputsNumber: NodeList, target: HTMLInputElement) => {
+const validateOnSubmit = (event: Event, inputsNumber: NodeList) => {
   event.preventDefault();
   if (inputsNumber.length - 1 === Object.keys(user).length) {
     console.log('form is submitted')
     console.log(user)
   } else {
-    alert('please check the form')
+    console.log('please check the form')
   }
 }
 
@@ -59,7 +63,7 @@ const validateForm = (event: Event) => {
   const inputsNumber: NodeList = form.querySelectorAll('input') as NodeList
 
   if (target.type === "submit") {
-    validateOnSubmit(event, inputsNumber, target)
+    validateOnSubmit(event, inputsNumber)
   } else {
     const message: HTMLElement = target.parentElement?.nextElementSibling as HTMLElement
     if (event.type === 'blur') {

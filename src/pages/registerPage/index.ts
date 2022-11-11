@@ -3,7 +3,7 @@ import {Form} from "../../components/form";
 import {CustomInput} from "../../components/input";
 import {CustomInputs} from "../../components/inputs/inputs";
 import {IndexLayout} from "../../layouts/IndexLayout";
-import { events } from "../../utils/validateForm";
+import { formEvents } from "../../utils/validateForm";
 
 const inputName = new CustomInput(
   {
@@ -13,7 +13,6 @@ const inputName = new CustomInput(
     required: true,
     value: "",
     text: "First Name",
-    events: events
   });
 const inputSName = new CustomInput({
   className: "input",
@@ -22,7 +21,6 @@ const inputSName = new CustomInput({
   text: "Second Name",
   required: true,
   value: "",
-  events: events
 });
 const inputLogin = new CustomInput({
   className: "input",
@@ -31,8 +29,6 @@ const inputLogin = new CustomInput({
   text: "Login",
   required: true,
   value: "",
-  events: events
-
 });
 const inputEmail = new CustomInput({
   className: "input",
@@ -41,8 +37,6 @@ const inputEmail = new CustomInput({
   text: "Email",
   required: true,
   value: "",
-  events: events
-
 });
 const inputPassword = new CustomInput({
   className: "input",
@@ -51,8 +45,6 @@ const inputPassword = new CustomInput({
   text: "Password",
   required: true,
   value: "",
-  events: events
-
 });
 const inputPhone = new CustomInput({
   className: "input",
@@ -61,8 +53,6 @@ const inputPhone = new CustomInput({
   text: "Phone",
   required: true,
   value: "",
-  events: events
-
 });
 const inputSubmit = new CustomInput({
   className: "input",
@@ -71,7 +61,6 @@ const inputSubmit = new CustomInput({
   text: "",
   required: true,
   value: "Register",
-  events: events
 });
 
 const inputs = new CustomInputs({
@@ -85,7 +74,7 @@ const inputs = new CustomInputs({
 });
 
 
-const form = new Form({ title: "Register Form", inputs: inputs });
+const form = new Form({ title: "Register Form", inputs: inputs, events: formEvents, capture: true  });
 const content = new Page({ title: "My messenger", form: form });
 
 export const registerPage = new IndexLayout({

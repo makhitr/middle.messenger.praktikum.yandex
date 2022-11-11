@@ -30,11 +30,11 @@ function queryStringify(data: Data) {
 }
 
 class HTTPTransport {
-    get = (url: string, options: OptionsWithoutMethod = {})  => {
+    get = (url: string, options: OptionsWithoutMethod = {}) => {
         return this.request(url, { ...options, method: METHOD.GET }, options.timeout);
     };
 
-    post = (url: string, options: Options = {method: METHOD.GET}) => {
+    post = (url: string, options: Options = { method: METHOD.GET }) => {
         return this.request(url, { ...options, method: METHOD.POST }, options.timeout);
     };
 
@@ -46,11 +46,11 @@ class HTTPTransport {
         return this.request(url, { ...options, method: METHOD.DELETE }, options.timeout);
     };
 
-    request = (url: string, options: Options = {method: METHOD.GET}, timeout = 5000) => {
+    request = (url: string, options: Options = { method: METHOD.GET }, timeout = 5000) => {
         const { headers = {}, method, data } = options;
 
         return new Promise(function (resolve, reject) {
-            if (!method) {
+            if (method === undefined) {
                 reject('No method');
                 return;
             }
@@ -60,7 +60,7 @@ class HTTPTransport {
 
             xhr.open(
                 method,
-                isGet && !!data
+                isGet && !!(data)
                     ? `${url}${queryStringify(data)}`
                     : url,
             );
@@ -79,7 +79,7 @@ class HTTPTransport {
             xhr.timeout = timeout;
             xhr.ontimeout = reject;
 
-            if (isGet || !data) {
+            if (isGet || data === "undefined") {
                 xhr.send();
             } else {
                 xhr.send(data);
@@ -87,3 +87,4 @@ class HTTPTransport {
         });
     };
 }
+export { HTTPTransport }
