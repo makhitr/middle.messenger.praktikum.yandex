@@ -1,7 +1,3 @@
-export const events = {
-  blur: (e: Event) => validateForm(e)
-}
-
 export const formSubmitEvent = {
   submit: (event: Event) => {
 
