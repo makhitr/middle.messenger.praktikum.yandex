@@ -8,11 +8,9 @@ import { formEvents } from '../../utils/validateForm';
 
 const inputLogin = new CustomInput({
   type: "text", required: true, value: "", text: "Login", name: "login", className: "input",
-  // events: events
 })
 const inputPassword = new CustomInput({
   type: "password", text: "Password", name: "password", required: true, value: "", className: "input",
-  // events: events
 })
 
 const inputSubmit = new CustomInput({
