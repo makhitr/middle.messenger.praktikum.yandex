@@ -151,12 +151,9 @@ class Block implements IBlock {
 
   _render() {
     const block = this.render();
-    console.log('render', block)
     this._removeEvents();
-
     this._element.innerHTML = "";
     this._element.appendChild(block);
-
     this._addEvents();
   }
 
@@ -165,15 +162,12 @@ class Block implements IBlock {
   _addEvents() {
     const { events = {} } = this._props;
     const { capture } = this._props;
-    // console.log(events, "from _addEL");
     Object.keys(events).forEach((eventName) => {
-      console.log(this._element, eventName, events[eventName], capture);
       this._element?.addEventListener(eventName, events[eventName], capture);
     });
   }
 
   _removeEvents() {
-    console.log('this is remove')
     const { events = {} } = this._props;
     Object.keys(events).forEach((eventName) => {
       this._element?.removeEventListener(eventName, events[eventName]);
@@ -225,12 +219,8 @@ class Block implements IBlock {
 
     Object.values(this._children).forEach((child: HTMLElement) => {
       const stub = fragment.content.querySelector(`[data-id="${child.id}"]`);
-
       stub && stub.replaceWith(child.getContent());
     });
-
-    console.log('fr.con', fragment.content)
-
     return fragment.content;
   }
 

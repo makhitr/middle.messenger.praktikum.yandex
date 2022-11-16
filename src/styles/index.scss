@@ -58,7 +58,7 @@ body {
 }
 
 .input-wrapper {
-  position: relative;
+  text-align: left;
 }
 
 .input-wrapper input {
@@ -66,6 +66,7 @@ body {
   padding: 10px 0;
   font-size: 16px;
   color: $pr-font-color;
+  margin-top: 10px;
   margin-bottom: 30px;
   border: none;
   border-bottom: 1px solid $pr-font-color;
@@ -73,26 +74,10 @@ body {
 }
 
 .input-wrapper label {
-  position: absolute;
-  top: 0;
-  left: 0;
   padding: 10px 0;
   font-size: 20px;
   color: $pr-font-color;
   pointer-events: none;
-  transition: 0.6s;
-}
-
-.message-page-wrapper .input-wrapper label {
-  color: $bg-color-dark;
-}
-
-.input-wrapper input:focus ~ label,
-.input-wrapper input:valid ~ label {
-  top: -20px;
-  left: 0;
-  font-size: 14px;
-  color: $sc-font-color;
 }
 
 .input-wrapper input[type="submit"],

@@ -14,16 +14,24 @@ const objValidator: { [key: string]: RegExp } = {
 
 const user: User = {};
 
-const validateOnBlur = (target: HTMLInputElement, message: HTMLElement | null) => {
-  if (!objValidator[target.name].test(target.value)) {
-    target.style.background = "#ea7d7d";
-    if (message !== null) message.style.display = "block";
-  } else {
-    user[target.name as keyof User] = target.value;
+const validateOnBlur = (
+  target: HTMLInputElement,
+  message: HTMLElement | null
+) => {
+  if (target.name !== "submit") {
+    if (!objValidator[target.name].test(target.value)) {
+      target.style.background = "#ea7d7d";
+      if (message !== null) message.style.display = "block";
+    } else {
+      user[target.name as keyof User] = target.value;
+    }
   }
 };
 
-const validateOnFocus = (target: HTMLInputElement, message:  HTMLElement | null) => {
+const validateOnFocus = (
+  target: HTMLInputElement,
+  message: HTMLElement | null
+) => {
   target.style.background = "none";
   if (message !== null) message.style.display = "none";
 };
@@ -45,25 +53,21 @@ const validateOnSubmit = (event: Event, inputsNumber: NodeList) => {
 };
 
 const validateForm = (event: Event) => {
-  console.log(event);
+  const target: HTMLInputElement = event.target as HTMLInputElement;
+  const form = event.currentTarget as HTMLFormElement;
+  const inputsNumber: NodeList = form.querySelectorAll("input") as NodeList;
 
-  // const target: HTMLInputElement = event.target as HTMLInputElement;
-  // const form = event.currentTarget as HTMLFormElement;
-  // const inputsNumber: NodeList = form.querySelectorAll("input") as NodeList;
-
-
-  // if (target.type === "submit") {
-  //   // console.log("submit");
-  //   validateOnSubmit(event, inputsNumber);
-  // } else {
-  //   const message: HTMLElement = target.parentElement
-  //     ?.nextElementSibling as HTMLElement;
-  //   if (event.type === "blur") {
-  //     validateOnBlur(target, message);
-  //   } else if (event.type === "focus") {
-  //     validateOnFocus(target, message);
-  //   }
-  // }
+  if (event.type === "submit") {
+    validateOnSubmit(event, inputsNumber);
+  } else {
+    const message: HTMLElement = target.parentElement
+      ?.nextElementSibling as HTMLElement;
+    if (event.type === "blur") {
+      validateOnBlur(target, message);
+    } else if (event.type === "focus") {
+      validateOnFocus(target, message);
+    }
+  }
 };
 
 const formSubmitEvent = {
@@ -74,10 +78,9 @@ const formSubmitEvent = {
 };
 
 const formEvents = {
-  // blur: validateForm,
-  // focus: validateForm,
+  blur: validateForm,
+  focus: validateForm,
   submit: validateForm,
-  // click: validateForm,
 };
 
 // const changeAvatar = (avatar: HTMLElement, input: HTMLInputElement) => {
