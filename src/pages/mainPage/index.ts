@@ -4,6 +4,7 @@ import { CustomInput } from "../../components/input";
 import { CustomInputs } from "../../components/inputs/inputs";
 import { IndexLayout } from "../../layouts/IndexLayout";
 import { formEvents } from "../../utils/validateForm";
+import { Button } from "../../components/button";
 
 const inputLogin = new CustomInput({
   type: "text",
@@ -33,16 +34,18 @@ const inputSubmit = new CustomInput({
 
 const inputs = new CustomInputs({
   inputLogin: inputLogin,
-  passwordLogin: inputPassword,
-  inputSubmit: inputSubmit,
-  inputLoginTEST: inputLogin,
+  // passwordLogin: inputPassword,
+  // inputSubmit: inputSubmit,
+  // inputLoginTEST: inputLogin,
 });
+
 
 const form = new Form({
   title: "Login Form",
   inputs: inputs,
+ 
   events: formEvents,
-  capture: true,
+  capture: false,
 });
 const content = new Page({ title: "My messenger", form: form });
 
