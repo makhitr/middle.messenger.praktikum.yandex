@@ -1,8 +1,8 @@
-type User = {
+export type User = {
   [key: string]: string;
 };
 
-const objValidator: { [key: string]: RegExp } = {
+export const objValidator: { [key: string]: RegExp } = {
   login: /^[a-zA-Z][a-zA-Z0-9-_.]{3,20}$/,
   password: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,40}$/,
   email: /^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$/,
@@ -14,7 +14,7 @@ const objValidator: { [key: string]: RegExp } = {
 
 const user: User = {};
 
-const validateOnBlur = (
+export const validateOnBlur = (
   target: HTMLInputElement,
   message: HTMLElement | null
 ) => {
@@ -28,7 +28,7 @@ const validateOnBlur = (
   }
 };
 
-const validateOnFocus = (
+export const validateOnFocus = (
   target: HTMLInputElement,
   message: HTMLElement | null
 ) => {
@@ -83,93 +83,13 @@ const formEvents = {
   submit: validateForm,
 };
 
-// const changeAvatar = (avatar: HTMLElement, input: HTMLInputElement) => {
-const changeAvatar = (event) => {
-  event.target.classList.add("change-avatar");
-  event.target.firstElementChild.style.display = "inline";
-};
 
-const changeBtnText = (event: Event) => {
-  if (event.target) {
-    if (event.target.value === "Edit") {
-      event.target.value = "Save";
-    } else {
-      event.target.value = "Edit";
-    }
-  }
-};
 
-const editInputs = (
-  inputs: Array<HTMLInputElement>,
-  labels: Array<HTMLInputElement>
-) => {
-  for (const input of inputs) {
-    input.style.display = input.style.display === "flex" ? "none" : "flex";
-  }
-  for (const label of labels) {
-    label.style.display = label.style.display != "none" ? "none" : "initial";
-  }
-};
 
-const editModeToggle = (
-  e: InputEvent,
-  inputs: Array<HTMLInputElement>,
-  labels: Array<HTMLInputElement>
-) => {
-  editInputs(inputs, labels);
-  changeBtnText(e);
-};
 
-const editInfo = (event: InputEvent): void => {
-  const form = event.currentTarget as HTMLFormElement;
-  const inputs = form.querySelectorAll(".edit-inputs");
-  const labels = form.querySelectorAll(".edit-labels");
-  editModeToggle(event, inputs, labels);
-};
-
-const validateProfileForm = (event: Event) => {
-  event.preventDefault();
-  // console.log(event);
-  // console.log(1);
-  // const form = event.currentTarget as HTMLFormElement;
-  // const target = event.target as HTMLInputElement;
-  // // console.log(target.name)
-  // if (target.name === "submit") {
-  //   editInfo(event);
-  // }
-  //   console.log('ev.type')
-  // } else {
-  //   const message: HTMLElement = target.parentElement
-  //     ?.nextElementSibling as HTMLElement;
-  //   if (event.type === "blur") {
-  //     validateOnBlur(target, message);
-  //   } else if (event.type === "focus") {
-  //     validateOnFocus(target, message);
-  //   }
-  // };
-
-  // if (target.class !== "button") {
-  //   console.log(target.class);
-  //   user[target.name as keyof User] = target.value;
-  // }
-  // console.log(user);
-};
-
-const profileFormEvent = {
-  // focus: validateProfileForm,
-  // blur: validateProfileForm,
-  // submit: validateProfileForm,
-  // focus: validateForm,
-};
-
-// const avatarEvents = {
-//   click: changeAvatar,
-// };
 
 export {
   validateForm,
   formEvents,
   formSubmitEvent,
-  profileFormEvent,
-  // avatarEvents,
 };
