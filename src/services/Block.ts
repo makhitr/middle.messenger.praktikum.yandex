@@ -200,7 +200,7 @@ class Block implements IBlock {
     return element;
   }
 
-  compile(template: any, props?: Props): DocumentFragment {
+  compile(template: any, props?: Props ): DocumentFragment {
     if (typeof props === "undefined") {
       props = this._props;
     }
