@@ -1,9 +1,9 @@
-import { Block } from "../../services/Block";
+import { AllProps, Block } from "../../services/Block";
 import template from './index.hbs'
 
 class MessageLayout extends Block {
 
-  constructor(props: any) {
+  constructor(props: AllProps) {
     super('main', 'main-wrapper', props)
   }
 

@@ -110,7 +110,7 @@ class Block implements IBlock {
 
   _componentDidMount() {
     this.componentDidMount();
-    Object.values(this._children).forEach((child: any) => {
+    Object.values(this._children).forEach((child: Block) => {
       child.dispatchComponentDidMount();
     });
   }
@@ -121,11 +121,11 @@ class Block implements IBlock {
     this._eventBus().emit(EVENTS.FLOW_CDM);
   }
 
-  _componentDidUpdate(oldProps: any, newProps: any) {
+  _componentDidUpdate(oldProps: AllProps, newProps: AllProps) {
     this.componentDidUpdate(oldProps, newProps);
   }
 
-  componentDidUpdate(oldProps: any, newProps: any) {
+  componentDidUpdate(oldProps: AllProps, newProps: AllProps) {
     this._removeEvents();
 
     Object.assign(oldProps, newProps);
@@ -133,7 +133,7 @@ class Block implements IBlock {
     return true;
   }
 
-  setProps = (nextProps: any) => {
+  setProps = (nextProps: AllProps) => {
     if (nextProps === null) {
       return;
     }
@@ -162,7 +162,7 @@ class Block implements IBlock {
   _addEvents() {
     const { events = {} } = this._props;
     const { capture } = this._props;
-    Object.keys(events).forEach((eventName) => {
+    Object.keys(events).forEach((eventName: string) => {
       this._element?.addEventListener(eventName, events[eventName], capture);
     });
   }
@@ -178,14 +178,14 @@ class Block implements IBlock {
     return this.element;
   }
 
-  _makePropsProxy(props: any) {
+  _makePropsProxy(props: AllProps) {
     const proxyProps = new Proxy(props, {
       get(target, property) {
-        const value = target[property];
+        const value = target[property as string] ;
         return typeof value === "function" ? value.bind(target) : value;
       },
       set(target, property, value) {
-        target[property] = value;
+        target[property as string] = value;
         return true;
       },
     });
@@ -200,7 +200,7 @@ class Block implements IBlock {
     return element;
   }
 
-  compile(template: any, props?: Props): any {
+  compile(template: any, props?: Props): DocumentFragment {
     if (typeof props === "undefined") {
       props = this._props;
     }
@@ -217,7 +217,7 @@ class Block implements IBlock {
     ) as HTMLTemplateElement;
     fragment.innerHTML = template(propsAndStubs);
 
-    Object.values(this._children).forEach((child: HTMLElement) => {
+    Object.values(this._children).forEach((child: Block) => {
       const stub = fragment.content.querySelector(`[data-id="${child.id}"]`);
       stub && stub.replaceWith(child.getContent());
     });

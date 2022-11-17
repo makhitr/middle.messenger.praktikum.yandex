@@ -1,7 +1,7 @@
 import { validateOnBlur, validateOnFocus } from "./validateForm";
 
-// import {name, profileName, profilePassword, profileSName } from '../../src/pages/profilePage'
 type UserProfile = {
+  [key: string]: string,
   "avatar": string,
   "first_name": string,
   "second_name": string,
@@ -25,7 +25,6 @@ const userProfile: UserProfile = {
 const changeAvatar = (event: Event) => {  
   const avatar = event.target as HTMLElement
   const avatarInput = avatar.querySelector('input') as HTMLInputElement | null
-  // console.log('avatarInput', avatarInput)
   avatar.classList.add("change-avatar");
   if (avatarInput) avatarInput.style.display = "inline";
 };

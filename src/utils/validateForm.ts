@@ -19,8 +19,8 @@ export const validateOnBlur = (
   target: HTMLInputElement,
   message: HTMLElement | null
 ) => {
-  console.log('blur', target)
-  if (target.name !== "submit") {
+
+ if (target.name !== "submit") {
     if (!objValidator[target.name].test(target.value)) {
       target.style.background = "#ea7d7d";
       if (message !== null) message.style.display = "block";
@@ -72,13 +72,6 @@ const validateForm = (event: Event) => {
   }
 };
 
-const formSubmitEvent = {
-  submit: (event: Event) => {
-    event.preventDefault();
-    console.log(user);
-  },
-};
-
 const formEvents = {
   blur: validateForm,
   focus: validateForm,
@@ -86,12 +79,7 @@ const formEvents = {
 };
 
 
-
-
-
-
 export {
   validateForm,
-  formEvents,
-  formSubmitEvent,
+  formEvents
 };

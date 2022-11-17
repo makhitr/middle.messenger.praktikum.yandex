@@ -1,9 +1,8 @@
-import { Block } from "../../services/Block";
+import { AllProps, Block } from "../../services/Block";
 import template from './index.hbs'
 
-
 class ErrorPage extends Block {
-  constructor(props: any, className = "section-wrapper") {
+  constructor(props: AllProps, className = "section-wrapper") {
     super('section', className, props)
   }
 
