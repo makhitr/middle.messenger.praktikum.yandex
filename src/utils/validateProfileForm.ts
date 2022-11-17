@@ -2,8 +2,9 @@ import { validateOnBlur, validateOnFocus } from "./validateForm";
 
 // import {name, profileName, profilePassword, profileSName } from '../../src/pages/profilePage'
 type UserProfile = {
-  "first-name": string,
-  "second-name": string,
+  "avatar": string,
+  "first_name": string,
+  "second_name": string,
   "login": string,
   "email": string,
   "phone": string,
@@ -11,13 +12,23 @@ type UserProfile = {
 };
 
 
-const userProfile: UserProfile = { }
+const userProfile: UserProfile = {
+  avatar: "",
+  first_name: "",
+  second_name: "",
+  login: "",
+  email: "",
+  phone: "",
+  password: ""
+}
 
-// const changeAvatar = (avatar: HTMLElement, input: HTMLInputElement) => {
-// const changeAvatar = (event) => {
-//   event.target.classList.add("change-avatar");
-//   event.target.firstElementChild.style.display = "inline";
-// };
+const changeAvatar = (event: Event) => {  
+  const avatar = event.target as HTMLElement
+  const avatarInput = avatar.querySelector('input') as HTMLInputElement | null
+  // console.log('avatarInput', avatarInput)
+  avatar.classList.add("change-avatar");
+  if (avatarInput) avatarInput.style.display = "inline";
+};
 
 
 const changeBtnText = (submitBtn: HTMLInputElement) => {
@@ -63,8 +74,6 @@ const editInfo = (event: Event): void => {
 
 const validateProfileForm = (event: Event) => {
   event.preventDefault();
-
-  // const form = event.currentTarget as HTMLFormElement;
   const target = event.target as HTMLInputElement;
   if (event.type === "submit") {
     editInfo(event);
@@ -72,7 +81,6 @@ const validateProfileForm = (event: Event) => {
    else {
     const message: HTMLElement = target.parentElement
       ?.nextElementSibling as HTMLElement;
-      console.log(message)
     if (event.type === "blur") {
       validateOnBlur(target, message);
     } else 
@@ -80,12 +88,6 @@ const validateProfileForm = (event: Event) => {
       validateOnFocus(target, message);
     }
   }
-
-  // if (target.class !== "button") {
-  //   console.log(target.class);
-  //   user[target.name as keyof User] = target.value;
-  // }
-  // console.log(user);
 };
 
 const profileFormEvent = {
@@ -95,7 +97,7 @@ const profileFormEvent = {
 };
 
 const avatarEvents = {
-  // click: changeAvatar,
+  click: changeAvatar,
 };
 
 

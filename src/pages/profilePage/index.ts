@@ -11,7 +11,7 @@ const profileAvatar = new CustomInput(
     className: "input-avatar",
     type: "file",
     value: "image",
-    name: "avatar-img",
+    name: "avatar",
     events: avatarEvents,
   },
   "avatar"
