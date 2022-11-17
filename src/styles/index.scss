@@ -1,19 +1,29 @@
+$bg-color: linear-gradient(#14301a, #6fb878);
+$pr-font-color: #fff;
+$sc-font-color: #02fc55;
+$inner-bg-pr-color: #19a748;
+$inner-bg-sc-color: #0f632b;
+$bg-color-dark: #1d5024;
+$dark-transparent: rgb(0 0 0 / 40%);
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
 html {
   height: 100%;
 }
+
 body {
-  font-family: "Roboto", sans-serif;
-  background: linear-gradient(#14301a, #6fb878);
+  font-family: Roboto, sans-serif;
+  background: $bg-color;
 }
 
 .main-wrapper {
   text-align: center;
-  color: #fff;
+  color: $pr-font-color;
   margin-top: 20px;
 }
 
@@ -28,18 +38,18 @@ body {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 500px;
+  width: 600px;
   padding: 60px;
   transform: translate(-50%, -50%);
-  background: rgba(0, 0, 0, 0.5);
-  box-shadow: 0 12px 22px rgba(0, 0, 0, 0.4);
+  background: rgb(0 0 0 / 50%);
+  box-shadow: 0 12px 22px $dark-transparent;
   border-radius: 8px;
 }
 
 .section-wrapper h2 {
   margin-bottom: 20px;
   text-align: center;
-  color: #fff;
+  color: $pr-font-color;
 }
 
 .page-form {
@@ -48,47 +58,34 @@ body {
 }
 
 .input-wrapper {
-  position: relative;
+  text-align: left;
 }
 
 .input-wrapper input {
   width: 100%;
   padding: 10px 0;
   font-size: 16px;
-  color: #fff;
+  color: $pr-font-color;
+  margin-top: 10px;
   margin-bottom: 30px;
   border: none;
-  border-bottom: 1px solid #fff;
-  outline: none;
+  border-bottom: 1px solid $pr-font-color;
   background: transparent;
 }
 
-
 .input-wrapper label {
-  position: absolute;
-  top: 0;
-  left: 0;
   padding: 10px 0;
   font-size: 20px;
-  color: #fff;
+  color: $pr-font-color;
   pointer-events: none;
-  transition: 0.6s;
 }
 
-.input-wrapper input:focus ~ label,
-.input-wrapper input:valid ~ label {
-  top: -20px;
-  left: 0;
-  font-size: 14px;
-  color: #02fc55;
-}
-
-.input-wrapper input[type=submit],
+.input-wrapper input[type="submit"],
 .button {
   cursor: pointer;
   display: inline-block;
   padding: 10px 20px;
-  color: #02fc55;
+  color: $sc-font-color;
   font-size: 16px;
   text-decoration: none;
   text-transform: uppercase;
@@ -96,31 +93,31 @@ body {
   transition: 0.5s;
   margin-top: 40px;
   letter-spacing: 4px;
-  border: 2px solid #19a748;
+  border: 2px solid $inner-bg-pr-color;
   border-radius: 5px;
   background-color: transparent;
   align-self: flex-start;
 }
 
-
-.input-wrapper input[type=submit]:hover,
+.input-wrapper input[type="submit"]:hover,
 .button:hover {
-  background: #19a748;
-  color: #fff;
-  border: 2px solid #02fc55;
+  background: $inner-bg-pr-color;
+  color: $pr-font-color;
+  border: 2px solid $sc-font-color;
   border-radius: 5px;
 }
-.input-wrapper input[type=submit]:active,
+
+.input-wrapper input[type="submit"]:active,
 .button:active {
-  background: #0f632b;
-  color: #fff;
-  border: 2px solid #1d5024;
+  background: $inner-bg-pr-color;
+  color: $pr-font-color;
+  border: 2px solid $bg-color-dark;
   border-radius: 5px;
 }
 
 .link-btn {
   text-decoration: none;
-  color: #fff;
+  color: $pr-font-color;
   font-size: 14px;
   letter-spacing: 2px;
   align-self: flex-end;
@@ -128,26 +125,26 @@ body {
 
 .link-btn:hover {
   font-size: 16px;
-  color: #02fc55;
+  color: $sc-font-color;
 }
 
 .link-btn:active {
-  color: #1d5024;
+  color: $bg-color-dark;
 }
-/************settings***********/
 
 .settings-wrapper {
   display: flex;
   flex-direction: column;
 }
+
 .avatar {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100px;
   width: 100px;
-  background-color: rgba(0, 0, 0, 0.4);
-  background-image: url('../../static/images/avatar.png');
+  background-color: $dark-transparent;
+  background-image: url("../../static/images/avatar.png");
   background-position: center;
   background-repeat: no-repeat;
   border-radius: 50%;
@@ -161,16 +158,91 @@ body {
   padding: 10px;
   margin-bottom: 20px;
   font-size: 18px;
-  border-bottom: 1px solid #fff;
+  border-bottom: 1px solid $pr-font-color;
 }
 
 .change-avatar {
   background-image: none;
 }
 
-
-/**************/
 .edit-inputs,
 .input-avatar {
   display: none;
+}
+
+.message-page-wrapper {
+  height: 100vh;
+  width: 100vw;
+  color: $bg-color-dark;
+  display: flex;
+}
+
+.message-wrapper {
+  width: 70%;
+  height: 100%;
+  background-color: #73acdd;;
+}
+
+.aside-wrapper {
+  width: 30%;
+  height: 100%;
+  background-color: #259b4d;
+}
+
+.input-wrapper .find-input {
+  border: 1px solid $inner-bg-sc-color;
+}
+
+.message-pr-wrapper {
+  width: 100%;
+  border: 1px solid grey;
+  background-color: lightgray;
+}
+
+.message-unread {
+  width: 20px;
+  height: 20px;
+  background-color: $dark-transparent;
+  border-radius: 50%;
+}
+
+.messages {
+  display: flex;
+  flex-direction: column;
+}
+
+.message-view-wrapper,
+.message-view-wrapper-user {
+  border: 1px solid $inner-bg-sc-color;
+  color: $bg-color-dark;
+  width: 70%;
+  background-color: grey;
+  margin: 20px;
+  padding: 20px;
+  text-align: leflink-btnt;
+  border-radius: 5px;
+  align-self: flex-start;
+}
+
+.message-view-wrapper-user {
+  background-color: rgb(125 198 225);
+  align-self: flex-end;
+  margin-right: 30px;
+}
+
+.form-error-message {
+  display: none;
+  color: rgb(183 26 26);
+  font-size: 85%;
+  text-align: left;
+  margin-top: -20px;
+  margin-bottom: 10px;
+}
+
+.main-navigation {
+  list-style-type: none;
+  display: flex;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
 }
