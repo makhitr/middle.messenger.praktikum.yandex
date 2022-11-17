@@ -1,9 +1,9 @@
-import { Block } from "../../services/Block";
+import { AllProps, Block } from "../../services/Block";
 import template from './index.hbs'
 
 
 class MessageView extends Block {
-  constructor(props: any, className = "message-view-wrapper") {
+  constructor(props: AllProps, className = "message-view-wrapper") {
     super('div', className, props)
   }
   render() {
