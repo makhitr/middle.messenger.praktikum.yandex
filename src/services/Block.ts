@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import { v4 as makeUUID } from "uuid";
 import { EventBus } from "./EventBus";
 
@@ -9,7 +10,7 @@ enum EVENTS {
 }
 
 interface IBlock {
-  _element: null | HTMLDivElement | any;
+  _element: null | HTMLDivElement | HTMLElement;
   _meta: null | Meta;
   _id: null | string;
   _eventBus: () => EventBus;
@@ -36,8 +37,8 @@ type Meta = {
   props: { [key: string]: string };
 };
 
-class Block implements IBlock {
-  _element: null | HTMLDivElement | any;
+class Block implements IBlock { 
+  _element: null | HTMLDivElement | HTMLElement;
   _meta;
   _id;
   _eventBus;
@@ -152,19 +153,21 @@ class Block implements IBlock {
   _render() {
     const block = this.render();
     this._removeEvents();
+   if (this._element) {
     this._element.innerHTML = "";
     this._element.appendChild(block);
+   }
     this._addEvents();
   }
 
-  render() {}
+  render() {
+   
+  }
 
   _addEvents() {
     const { events = {} } = this._props;
     const { capture } = this._props;
-    Object.keys(events).forEach((eventName: string) => {
-      this._element?.addEventListener(eventName, events[eventName], capture);
-    });
+    Object.keys(events).forEach((eventName: string) => this._element?.addEventListener(eventName, events[eventName], capture));
   }
 
   _removeEvents() {

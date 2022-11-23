@@ -5,7 +5,7 @@ import template from './index.hbs'
 class MessageForm extends Form {
   constructor(props: { [x: string]: any; }, id = 'mss-form') {
     super(props, 'message-form')
-    this._element.setAttribute('id', id)
+   if (this._element) this._element.setAttribute('id', id)
   }
 
   render() {

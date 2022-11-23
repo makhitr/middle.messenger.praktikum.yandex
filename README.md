@@ -1,4 +1,4 @@
-# sprint_2
+# sprint_3
 
 https://www.figma.com/file/3zK3lcJ9JKegcB1jct0xhm/messenger?node-id=0%3A1
 
