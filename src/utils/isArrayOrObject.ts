@@ -1,8 +1,8 @@
-import { isArray } from "./isArray";
-import {isPlainObject, PlainObject} from "./isPlainObject";
+import isArray from "./isArray";
+import isPlainObject, { PlainObject } from "./isPlainObject";
 
 function isArrayOrObject(value: unknown): value is [] | PlainObject {
   return isPlainObject(value) || isArray(value);
 }
 
-export { isArrayOrObject };
+export default isArrayOrObject;

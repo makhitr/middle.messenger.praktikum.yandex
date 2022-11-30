@@ -11,4 +11,6 @@ function isPlainObject(value: unknown): value is PlainObject {
   );
 }
 
-export { isPlainObject };
+
+
+export default isPlainObject

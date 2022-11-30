@@ -1,4 +1,4 @@
-import { isArrayOrObject } from "./isArrayOrObject";
+import isArrayOrObject from "./isArrayOrObject";
 import { PlainObject } from "./isPlainObject";
 
 function isEqual(lhs: PlainObject, rhs: PlainObject) {
@@ -26,4 +26,4 @@ function isEqual(lhs: PlainObject, rhs: PlainObject) {
   return true;
 }
 
-export { isEqual };
+export default isEqual;

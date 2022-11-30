@@ -1,3 +1,5 @@
+import * as UserActions from "../services/Store/actions/UserActions";
+
 export type User = {
   [key: string]: string;
 };
@@ -19,8 +21,7 @@ export const validateOnBlur = (
   target: HTMLInputElement,
   message: HTMLElement | null
 ) => {
-
- if (target.name !== "submit") {
+  if (target.name !== "submit") {
     if (!objValidator[target.name].test(target.value)) {
       target.style.background = "#ea7d7d";
       if (message !== null) message.style.display = "block";
@@ -40,6 +41,7 @@ export const validateOnFocus = (
 
 const validateOnSubmit = (event: Event, inputsNumber: NodeList) => {
   event.preventDefault();
+
   if (inputsNumber.length - 1 === Object.keys(user).length) {
     console.log("form is submitted");
   } else {
@@ -50,11 +52,13 @@ const validateOnSubmit = (event: Event, inputsNumber: NodeList) => {
         if (el) el.style.display = "block";
       }
     });
-    console.log(user);
   }
+
+
 };
 
 const validateForm = (event: Event) => {
+
   const target: HTMLInputElement = event.target as HTMLInputElement;
   const form = event.currentTarget as HTMLFormElement;
   const inputsNumber: NodeList = form.querySelectorAll("input") as NodeList;
@@ -72,14 +76,17 @@ const validateForm = (event: Event) => {
   }
 };
 
-const formEvents = {
-  blur: validateForm,
-  focus: validateForm,
-  submit: validateForm,
-};
+
+const submitForm = (event: Event) => {
+  validateForm(event);
+  UserActions.registerUser(user);
+}
+
+const submitLoginForm = (event: Event) => {
+  validateForm(event)
+  UserActions.loginUser(user);
+  
+}
 
 
-export {
-  validateForm,
-  formEvents
-};
+export { validateForm, submitForm , submitLoginForm};

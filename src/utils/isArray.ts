@@ -2,4 +2,4 @@ function isArray(value: unknown): value is [] {
   return Array.isArray(value);
 }
 
-export { isArray };
+export default isArray;
