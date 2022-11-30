@@ -1,3 +1,5 @@
+import * as UserActions from "../../services/Store/actions/UserActions";
+import { Button } from "../../components/button";
 import { Form } from "../../components/form";
 import { CustomInput } from "../../components/input";
 import { CustomInputs } from "../../components/inputs/inputs";
@@ -31,6 +33,15 @@ const userMessage = new MessageView(
   "message-view-wrapper-user"
 );
 
+const logout = () => {
+  //  UserActions.getUser()
+  UserActions.logoutUser();
+};
+
+const handleClick = {
+  click: logout,
+};
+
 class MessagePage extends MessageLayout {
   constructor() {
     const input = new CustomInput({
@@ -53,6 +64,8 @@ class MessagePage extends MessageLayout {
     const inputs = new CustomInputs({ input: input, inputSubmit: inputSubmit });
     const messageForm = new MessageForm({});
     const findForm = new Form({ inputs: inputs });
+    const signOutBtn = new Button({ text: "logout", events: handleClick });
+
     const content = new Page(
       {
         title: "Messenger text",
@@ -64,7 +77,12 @@ class MessagePage extends MessageLayout {
     );
 
     const asideContent = new Page(
-      { title: "Aside", form: findForm, messages: messages },
+      {
+        title: "Aside",
+        form: findForm,
+        messages: messages,
+        signOutBtn: signOutBtn,
+      },
       "aside-wrapper"
     );
 

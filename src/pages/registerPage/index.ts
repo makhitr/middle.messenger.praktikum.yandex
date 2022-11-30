@@ -3,7 +3,7 @@ import { Form } from "../../components/form";
 import { CustomInput } from "../../components/input";
 import { CustomInputs } from "../../components/inputs/inputs";
 import { IndexLayout } from "../../layouts/indexLayout";
-import { formEvents } from "../../utils/validateForm";
+import { submitForm, validateForm } from "../../utils/validateForm";
 
 class RegisterPage extends IndexLayout {
   constructor() {
@@ -69,10 +69,16 @@ class RegisterPage extends IndexLayout {
       inputSName: inputSName,
       inputLogin: inputLogin,
       inputEmail: inputEmail,
-      inputPassword: inputPassword,
       inputPhone: inputPhone,
+      inputPassword: inputPassword,
       inputSubmit: inputSubmit,
     });
+
+    const formEvents = {
+      blur: validateForm,
+      focus: validateForm,
+      submit: submitForm,
+    };
 
     const form = new Form({
       title: "Register Form",

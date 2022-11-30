@@ -8,7 +8,6 @@ type PageProps = {
 class Page extends Block {
   constructor(props: PageProps, className = "section-wrapper") {
     super('section', className, props)
-    console.log(props)
   }
 
   render() {

@@ -1,10 +1,12 @@
+import { Button } from "../../components/button";
+import * as UserActions from "../../services/Store/actions/UserActions";
+
 import { Form } from "../../components/form";
 import { CustomInput } from "../../components/input";
 import { CustomInputs } from "../../components/inputs/inputs";
 import { Page } from "../../components/page";
 import { IndexLayout } from "../../layouts/indexLayout";
-import { formEvents } from "../../utils/validateForm";
-
+import { submitLoginForm, validateForm } from "../../utils/validateForm";
 
 class MainPage extends IndexLayout {
   constructor() {
@@ -37,13 +39,34 @@ class MainPage extends IndexLayout {
       inputSubmit: inputSubmit,
     });
 
+    const logout = () => {
+      UserActions.logoutUser();
+    };
+
+    const handleClick = {
+      click: logout,
+    };
+
+    const signOutBtn = new Button({ text: "logout", events: handleClick });
+    
+    // const signinEvent = (event: Event) => {
+    //   validateForm(event);
+    //   submitLoginForm()
+    // };
+ 
+    const formEvents = {
+      blur: validateForm,
+      focus: validateForm,
+      submit: submitLoginForm,
+    };
+
     const form = new Form({
       title: "Login Form",
       inputs: inputs,
       events: formEvents,
       capture: true,
     });
-    const content = new Page({ title: "My messenger", form: form });
+    const content = new Page({ title: "My messenger", form: form, signOutBtn });
     super({
       title: "Login Page",
       content: content,

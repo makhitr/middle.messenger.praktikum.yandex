@@ -4,8 +4,8 @@ import { ProfilePage } from "./pages/profilePage";
 import { MessagePage } from "./pages/messagePage";
 import { ErrorPage404 } from "./pages/errorPage404";
 import { ErrorPage500 } from "./pages/errorPage500";
+import { Router } from "./services/Router/Router";
 
-import { Router } from "./services/Router";
 
 const router = new Router("#root");
 router
