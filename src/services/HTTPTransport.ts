@@ -42,7 +42,6 @@ class HTTPTransport {
   };
 
   post = (url: string, options: OptionsWithoutMethod = {}) => {
-    console.log(`${API_URL}${url}`);
     return this.request(
       `${API_URL}${url}`,
       { ...options, method: METHOD.POST },
@@ -52,7 +51,7 @@ class HTTPTransport {
 
   put = (url: string, options: OptionsWithoutMethod = {}) => {
     return this.request(
-      url,
+      `${API_URL}${url}`,
       { ...options, method: METHOD.PUT },
       options.timeout
     );

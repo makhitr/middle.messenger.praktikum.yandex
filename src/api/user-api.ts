@@ -10,34 +10,24 @@ class UserApi extends BaseAPI {
   //   return userAPIInstance.get(`/${id}`);
   // }
 
-  static signin(userInfo: User) {
-    const { login, password } = userInfo;
-    return userAPIInstance.post("auth/signin", {
-      headers: {
-        "content-type": "application/json",
-      },
-      data: { login, password },
-    });
-  }
-
   static getUser() {
-    return userAPIInstance.get("auth/user");
+    return userAPIInstance
+      .get("auth/user")
+      .then((data: XMLHttpRequest) => data.response);
   }
 
-  static logout() {
-    return userAPIInstance.post("auth/logout");
-  }
-
-  static create(userInfo: User) {
-    return userAPIInstance.post("auth/signup", {
-      headers: {
-        "content-type": "application/json",
-      },
-      data: userInfo,
-    });
-    // И то, только в случае, если уверены в результате,
-    // иначе контроллер проверит все сам дальше
-    // .then({user: {info}} => info);
+  static changeProfile(user: User) {
+    return userAPIInstance
+      .put("user/profile", {
+        headers: {
+          "content-type": "application/json",
+        },
+        data: {
+          ...user,
+          display_name: "test",
+        },
+      })
+      .then((data: XMLHttpRequest) => data.response);
   }
 }
 

@@ -1,5 +1,5 @@
 import { Button } from "../../components/button";
-import * as UserActions from "../../services/Store/actions/UserActions";
+import * as AuthActions from "../../services/Store/actions/AuthActions";
 
 import { Form } from "../../components/form";
 import { CustomInput } from "../../components/input";
@@ -40,7 +40,7 @@ class MainPage extends IndexLayout {
     });
 
     const logout = () => {
-      UserActions.logoutUser();
+      AuthActions.logoutUser();
     };
 
     const handleClick = {

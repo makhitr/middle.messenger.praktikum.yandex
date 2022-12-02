@@ -1,4 +1,4 @@
-import * as UserActions from "../../services/Store/actions/UserActions";
+import * as AuthActions from "../../services/Store/actions/AuthActions";
 import { Button } from "../../components/button";
 import { Form } from "../../components/form";
 import { CustomInput } from "../../components/input";
@@ -35,7 +35,7 @@ const userMessage = new MessageView(
 
 const logout = () => {
   //  UserActions.getUser()
-  UserActions.logoutUser();
+  AuthActions.logoutUser();
 };
 
 const handleClick = {
