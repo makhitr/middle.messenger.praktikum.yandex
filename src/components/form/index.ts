@@ -4,7 +4,7 @@ import template from "./index.hbs";
 class Form extends Block {
   constructor(props: AllProps, className = "page-form", method = "post") {
     super("form", className, props);
-    this._element.setAttribute("method", method);
+    this._element?.setAttribute("method", method);
   }
 
   render() {

@@ -1,8 +1,8 @@
-import { AllProps, Block } from "../../services/Block";
+import {  Block } from "../../services/Block";
 import template from './index.hbs'
 
 class IndexLayout extends Block {
-  constructor(props) {
+  constructor(props = {}) {
     super('main', 'main-wrapper', props)
   }
 

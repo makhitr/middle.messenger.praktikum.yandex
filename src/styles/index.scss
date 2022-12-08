@@ -81,7 +81,9 @@ body {
 }
 
 .input-wrapper input[type="submit"],
-.button {
+.input-wrapper input[type="button"],
+.button,
+.submit-btn {
   cursor: pointer;
   display: inline-block;
   padding: 10px 20px;
@@ -97,6 +99,7 @@ body {
   border-radius: 5px;
   background-color: transparent;
   align-self: flex-start;
+  width: 100%;
 }
 
 .input-wrapper input[type="submit"]:hover,
@@ -166,8 +169,13 @@ body {
 }
 
 .edit-inputs,
-.input-avatar {
+.input-avatar,
+.page-form button[type="submit"] {
   display: none;
+}
+
+.edit-labels {
+  display: flex;
 }
 
 .message-page-wrapper {
@@ -180,7 +188,7 @@ body {
 .message-wrapper {
   width: 70%;
   height: 100%;
-  background-color: #73acdd;;
+  background-color: #73acdd;
 }
 
 .aside-wrapper {

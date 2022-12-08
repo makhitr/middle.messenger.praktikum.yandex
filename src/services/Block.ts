@@ -37,7 +37,7 @@ type Meta = {
   props: { [key: string]: string };
 };
 
-class Block implements IBlock { 
+class Block implements IBlock {
   _element: null | HTMLDivElement | HTMLElement;
   _meta;
   _id;
@@ -58,8 +58,10 @@ class Block implements IBlock {
   ) {
     const eventBus: EventBus = new EventBus();
     const { children, props } = this._getChildren(propsAndChildren);
+    // console.log("🚀 ~ Block ~ props", props)
+    // console.log("🚀 ~ Block ~ children", children)
 
-    this._children = children;
+    this._children = this._makePropsProxy(children);
     this._props = this._makePropsProxy({ ...props, __id: this._id });
 
     this._meta = {
@@ -123,14 +125,20 @@ class Block implements IBlock {
   }
 
   _componentDidUpdate(oldProps: AllProps, newProps: AllProps) {
-    this.componentDidUpdate(oldProps, newProps);
+    // this.componentDidUpdate(oldProps, newProps);
+    const isReRender = this.componentDidUpdate(oldProps, newProps);
+    // console.log(isReRender, "isRerender");
+    if (isReRender) {
+      this._removeEvents();
+      this._eventBus().emit(EVENTS.FLOW_RENDER);
+    }
   }
 
   componentDidUpdate(oldProps: AllProps, newProps: AllProps) {
-    this._removeEvents();
+    // this._removeEvents();
 
-    Object.assign(oldProps, newProps);
-    this._eventBus().emit(EVENTS.FLOW_RENDER);
+    // Object.assign(oldProps, newProps);
+    // this._eventBus().emit(EVENTS.FLOW_RENDER);
     return true;
   }
 
@@ -138,12 +146,21 @@ class Block implements IBlock {
     if (nextProps === null) {
       return;
     }
-    if (
-      JSON.stringify(Object.entries(this._props)) !==
-      JSON.stringify(Object.entries(nextProps))
-    ) {
-      this._eventBus().emit(EVENTS.FLOW_CDU, this._props, nextProps);
-    }
+    // console.log("🚀 ~ Block ~ nextProps", nextProps)
+
+    // if (
+    //   JSON.stringify(Object.entries(this._props)) !==
+    //   JSON.stringify(Object.entries(nextProps))
+    // ) {
+    //   this._eventBus().emit(EVENTS.FLOW_CDU, this._props, nextProps);
+    // }
+    const { children, props } = this._getChildren(nextProps);
+    // console.log("🚀 ~ Block ~ props", props);
+    // console.log("🚀 ~ Block ~ children", children)
+
+    if (Object.values(children).length) Object.assign(this._children, children);
+
+    if (Object.values(props).length) Object.assign(this._props, props);
   };
 
   get element() {
@@ -151,23 +168,27 @@ class Block implements IBlock {
   }
 
   _render() {
+    // console.log('this', this)
+    // console.log("_render");
     const block = this.render();
+    // console.log("🚀 ~ Block ~ block", block)
     this._removeEvents();
-   if (this._element) {
-    this._element.innerHTML = "";
-    this._element.appendChild(block);
-   }
+    if (this._element) {
+      // console.log(this.element)
+      this._element.innerHTML = "";
+      this._element.appendChild(block);
+    }
     this._addEvents();
   }
 
-  render() {
-   
-  }
+  render() {}
 
   _addEvents() {
     const { events = {} } = this._props;
     const { capture } = this._props;
-    Object.keys(events).forEach((eventName: string) => this._element?.addEventListener(eventName, events[eventName], capture));
+    Object.keys(events).forEach((eventName: string) =>
+      this._element?.addEventListener(eventName, events[eventName], capture)
+    );
   }
 
   _removeEvents() {
@@ -184,11 +205,18 @@ class Block implements IBlock {
   _makePropsProxy(props: AllProps) {
     const proxyProps = new Proxy(props, {
       get(target, property) {
-        const value = target[property as string] ;
+        const value = target[property as string];
         return typeof value === "function" ? value.bind(target) : value;
       },
-      set(target, property, value) {
+      set: (target, property, value) => {
+        // console.log("🚀 ~ Block ~ target", target);
+
+        const oldValue = { ...target };
+        // target[property as string] = value;
+        // // return true;
+        // console.log('oldValue',oldValue)
         target[property as string] = value;
+        this._eventBus().emit(EVENTS.FLOW_CDU, oldValue, target);
         return true;
       },
     });
@@ -203,7 +231,7 @@ class Block implements IBlock {
     return element;
   }
 
-  compile(template: any, props?: Props ): DocumentFragment {
+  compile(template: any, props?: Props): DocumentFragment {
     if (typeof props === "undefined") {
       props = this._props;
     }

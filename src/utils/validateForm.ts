@@ -1,4 +1,4 @@
-import * as UserActions from "../services/Store/actions/UserActions";
+import * as AuthActions from "../services/Store/actions/AuthActions";
 
 export type User = {
   [key: string]: string;
@@ -15,28 +15,42 @@ export const objValidator: { [key: string]: RegExp } = {
   message: /[\w]{5}/,
 };
 
-const user: User = {};
+export const user: User = {};
 
-export const validateOnBlur = (
-  target: HTMLInputElement,
-  message: HTMLElement | null
-) => {
-  if (target.name !== "submit") {
+export const validateOnBlur = (event: Event) => {
+  const target = event.target as HTMLInputElement;
+  const message = target.parentElement
+    ?.nextElementSibling as HTMLElement | null;
+
+  if (target.tagName.toLowerCase() !== "button") {
     if (!objValidator[target.name].test(target.value)) {
       target.style.background = "#ea7d7d";
-      if (message !== null) message.style.display = "block";
+      if (message) message.style.display = "block";
     } else {
       user[target.name as keyof User] = target.value;
     }
+    console.log(user)
   }
+  // if (target.name !== "submit") {
+  //   if (!objValidator[target.name].test(target.value)) {
+  //     target.style.background = "#ea7d7d";
+  //     if (message !== null) message.style.display = "block";
+  //   } else {
+  //     user[target.name as keyof User] = target.value;
+  //   }
+  // }
 };
 
-export const validateOnFocus = (
-  target: HTMLInputElement,
-  message: HTMLElement | null
-) => {
-  target.style.background = "none";
-  if (message !== null) message.style.display = "none";
+export const validateOnFocus = (event: FocusEvent) => {
+  const target = event.target as HTMLInputElement;
+  const message = target.parentElement
+    ?.nextElementSibling as HTMLElement | null;
+
+  if (target.tagName.toLowerCase() !== "button") {
+    target.style.background = "#fff";
+
+    if (message) message.style.display = "none";
+  }
 };
 
 const validateOnSubmit = (event: Event, inputsNumber: NodeList) => {
@@ -53,12 +67,9 @@ const validateOnSubmit = (event: Event, inputsNumber: NodeList) => {
       }
     });
   }
-
-
 };
 
 const validateForm = (event: Event) => {
-
   const target: HTMLInputElement = event.target as HTMLInputElement;
   const form = event.currentTarget as HTMLFormElement;
   const inputsNumber: NodeList = form.querySelectorAll("input") as NodeList;
@@ -76,17 +87,14 @@ const validateForm = (event: Event) => {
   }
 };
 
-
 const submitForm = (event: Event) => {
   validateForm(event);
-  UserActions.registerUser(user);
-}
+  AuthActions.registerUser(user);
+};
 
 const submitLoginForm = (event: Event) => {
-  validateForm(event)
-  UserActions.loginUser(user);
-  
-}
+  validateForm(event);
+  AuthActions.loginUser(user);
+};
 
-
-export { validateForm, submitForm , submitLoginForm};
+export { validateForm, submitForm, submitLoginForm };

@@ -1,3 +1,5 @@
+import { IndexLayout } from "../../layouts/indexLayout";
+import { Block } from "../Block";
 import { Route } from "./Route";
 
 class Router {
@@ -19,8 +21,11 @@ class Router {
     Router.__instance = this;
   }
 
-  use(pathname: string, block) {
-    const route = new Route(pathname, block, { rootQuery: this._rootQuery });
+  use(pathname: string, block, props = {}) {
+    const route = new Route(pathname, block, {
+      ...props,
+      rootQuery: this._rootQuery,
+    });
     this.routes.push(route);
     return this;
   }
@@ -29,7 +34,6 @@ class Router {
     window.onpopstate = (event) => {
       this._onRoute(event.currentTarget.location.pathname);
     };
-
     this._onRoute(window.location.pathname);
   }
 
@@ -39,7 +43,7 @@ class Router {
       return;
     }
 
-    if (this._currentRoute  && this._currentRoute !== route) {
+    if (this._currentRoute && this._currentRoute !== route) {
       this._currentRoute.leave();
     }
 

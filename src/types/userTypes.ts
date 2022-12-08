@@ -1,6 +1,6 @@
 export type User = {
-  "first-name": string;
-  "second-name": string;
+  "first_name": string;
+  "second_name": string;
   login: string;
   password: string;
   phone: string;

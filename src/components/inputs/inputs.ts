@@ -7,9 +7,9 @@ class CustomInputs extends Block  {
     super('div', 'inputs-wrapper', props)
   }
 
+
   render() {
     return this.compile(template);
-
   }
 } 
 

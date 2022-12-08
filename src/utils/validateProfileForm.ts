@@ -1,106 +1,91 @@
-import { validateOnBlur, validateOnFocus } from "./validateForm";
+import { objValidator, validateOnBlur, validateOnFocus } from "./validateForm";
+import * as UserActions from "../services/Store/actions/UserActions";
 
-type UserProfile = {
-  [key: string]: string,
-  "avatar": string,
-  "first_name": string,
-  "second_name": string,
-  "login": string,
-  "email": string,
-  "phone": string,
-  "password": string
-};
-
-
-const userProfile: UserProfile = {
-  avatar: "",
-  first_name: "",
-  second_name: "",
-  login: "",
-  email: "",
-  phone: "",
-  password: ""
-}
-
-const changeAvatar = (event: Event) => {  
-  const avatar = event.target as HTMLElement
-  const avatarInput = avatar.querySelector('input') as HTMLInputElement | null
+const changeAvatar = (event: Event) => {
+  const avatar = event.target as HTMLElement;
+  const avatarInput = avatar.querySelector("input") as HTMLInputElement | null;
   avatar.classList.add("change-avatar");
   if (avatarInput) avatarInput.style.display = "inline";
 };
 
-
-const changeBtnText = (submitBtn: HTMLInputElement) => {
-  if (submitBtn.value === "Edit") {
-    submitBtn.value = "Save";
-  } else {
-    submitBtn.value = "Edit";
-  }
+const showElement = (el: HTMLElement) => {
+  el.style.display = "flex";
+};
+const hideElement = (el: HTMLElement) => {
+  el.style.display = "none";
 };
 
-const editInputs = (
-  inputs: Array<HTMLInputElement>,
-  labels: Array<HTMLInputElement>
-) => {
-
-  for (const input of inputs) {
-    userProfile[input.name] = input.value
-    input.style.display = input.style.display === "flex" ? "none" : "flex";
-  }
-  for (const label of labels) {
-    label.style.display = label.style.display != "none" ? "none" : "initial";
-  }
-  console.log(userProfile)
-};
-
-const editModeToggle = (
-  e: InputEvent,
-  inputs: Array<HTMLInputElement>,
-  labels: Array<HTMLInputElement>,
-  submitBtn: HTMLInputElement
-) => {
-  editInputs(inputs, labels);
-  changeBtnText(submitBtn);
-};
-
-const editInfo = (event: Event): void => {
-  const form = event.currentTarget as HTMLFormElement;
+function editFormElements(form: HTMLFormElement) {
   const inputs = form.querySelectorAll(".edit-inputs");
-  const labels = form.querySelectorAll(".edit-labels");
-  const submitBtn = form.querySelector(".input-submit");
-  editModeToggle(event, inputs, labels, submitBtn);
+  const profileInfo = form.querySelectorAll(".edit-labels");
+  inputs.forEach(showElement);
+  profileInfo.forEach(hideElement);
+}
+
+const validateInput = (input: HTMLInputElement) => {
+  if (!objValidator[input.name].test(input.value)) {
+    input.style.background = "#ea7d7d";
+    return false;
+  } else {
+    input.style.background = "#fff";
+    return true;
+  }
 };
 
-const validateProfileForm = (event: Event) => {
-  event.preventDefault();
-  const target = event.target as HTMLInputElement;
-  if (event.type === "submit") {
-    editInfo(event);
-   } 
-   else {
-    const message: HTMLElement = target.parentElement
-      ?.nextElementSibling as HTMLElement;
-    if (event.type === "blur") {
-      validateOnBlur(target, message);
-    } else 
-    if (event.type === "focus") {
-      validateOnFocus(target, message);
+const validateOnSubmit = (form: HTMLFormElement) => {
+  const object = {};
+  const errors = [];
+  for (let i = 1; i < form.length; i++) {
+    const element = form[i] as HTMLInputElement;
+    if (element.tagName.toLowerCase() === "input") {
+      if (validateInput(element)) {
+        object[element.name] = element.value;
+      } else {
+        errors.push(element.value);
+      }
     }
+  }
+
+  if (errors.length === 0) {
+    return object;
+  }
+  return false;
+};
+
+const submitHandler = (event: Event) => {
+  event.preventDefault();
+  const submitBtn = document.querySelector(".submit-btn") as HTMLElement;
+  const editBtn = submitBtn.previousElementSibling as HTMLElement;
+
+  const validateData = validateOnSubmit(event.target as HTMLFormElement);
+  if (validateData !== false) {
+    UserActions.updateProfile(validateData);
+    hideElement(submitBtn);
+    showElement(editBtn);
+  }
+};
+
+const clickHandler = (event: Event) => {
+  const element = event.target as HTMLButtonElement;
+  const submitBtn = document.querySelector(".submit-btn") as HTMLButtonElement;
+  const form = document.querySelector("form") as HTMLFormElement;
+
+  if (element.type?.toLowerCase() === "button") {
+     hideElement(element);
+    showElement(submitBtn);
+    editFormElements(form);
   }
 };
 
 const profileFormEvent = {
-  focus: validateProfileForm,
-  blur: validateProfileForm,
-  submit: validateProfileForm,
+  focus: validateOnFocus,
+  blur: validateOnBlur,
+  submit: submitHandler,
+  click: clickHandler,
 };
 
 const avatarEvents = {
   click: changeAvatar,
 };
 
-
-export {
-  profileFormEvent,
-  avatarEvents,
-};
+export { profileFormEvent, avatarEvents };

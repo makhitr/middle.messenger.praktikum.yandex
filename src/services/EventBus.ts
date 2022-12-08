@@ -1,10 +1,9 @@
 type Listeners = {
-  [key: string]: Array<Function>
-}
-
+  [key: string]: Array<Function>;
+};
 
 class EventBus {
-  listeners: Listeners 
+  listeners: Listeners;
 
   constructor() {
     this.listeners = {};
@@ -26,7 +25,7 @@ class EventBus {
     );
   }
 
-  emit<T >(event: string, ...args: T[]) {
+  emit<T>(event: string, ...args: T[]) {
     if (!this.listeners[event]) {
       throw new Event(`Нет события: ${event}`);
     }
@@ -36,5 +35,4 @@ class EventBus {
   }
 }
 
-export {EventBus};
-
+export { EventBus };
