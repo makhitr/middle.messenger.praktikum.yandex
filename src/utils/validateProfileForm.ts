@@ -8,17 +8,25 @@ import * as UserActions from "../services/Store/actions/UserActions";
 const changeAvatar = (event: Event) => {
   const avatar = event.target as HTMLElement;
   const avatarInput = avatar.querySelector("input") as HTMLInputElement | null;
-  showElement(avatarInput)
-  avatarInput?.addEventListener("change", function () {
-    const reader = new FileReader();
-    reader.addEventListener("load", () => {
-      const uploaded_image = reader.result;
-      avatar.style.backgroundImage = `url(${uploaded_image})`;
-      avatar.style.backgroundSize = "cover";
-      hideElement(avatarInput)
+  if (avatarInput !== null) {
+    showElement(avatarInput);
+    avatarInput.addEventListener("change", function () {
+      const reader = new FileReader();
+      reader.addEventListener("loadend", () => {
+        const uploadedImage = reader.result;
+        avatar.style.backgroundImage = `url(${uploadedImage})`;
+        avatar.style.backgroundSize = "cover";
+        hideElement(avatarInput);
+
+        const formData = new FormData();
+        formData.append("avatar", avatarInput.files[0]);
+         UserActions.updateAvatar(formData);
+    
+      });
+
+      reader.readAsDataURL(avatarInput.files[0]);
     });
-    reader.readAsDataURL(this.files[0]);
-  });
+  }
 };
 
 const showElement = (el: HTMLElement) => {

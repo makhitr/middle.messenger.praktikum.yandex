@@ -14,4 +14,9 @@ const updateProfile = async (user) => {
   );
 };
 
-export { getUser, updateProfile };
+const updateAvatar = async (data: string) => {
+  await UserApi.changeAvatar(data)
+};
+
+export { getUser, updateProfile, updateAvatar };
+

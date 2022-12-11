@@ -6,7 +6,7 @@ export type User = {
 };
 
 export const objValidator: { [key: string]: RegExp } = {
-  avatar: /\s|(([a-zA-Z0-9\s_\\.\-():])+(.jpg|.JPG))$/,
+  avatar: /^\s*$|(([a-zA-Z0-9\s_\\.\-():])+(.jpg|.JPG|.jpeg|.JPEG))$/,
   login: /^[a-zA-Z][a-zA-Z0-9-_.]{3,20}$/,
   password: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,40}$/,
   email: /^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$/,
@@ -19,7 +19,6 @@ export const objValidator: { [key: string]: RegExp } = {
 export const user: User = {};
 
 const validateOnBlur = (event: Event) => {
-
   const target = event.target as HTMLInputElement;
   const message = target.parentElement
     ?.nextElementSibling as HTMLElement | null;
@@ -50,18 +49,20 @@ const validateOnSubmit = (form: HTMLFormElement) => {
   }
 
   if (errors.length === 0) {
-   
     return object;
   }
+ 
   return false;
 };
 
 const validateInput = (input: HTMLInputElement) => {
   if (!objValidator[input.name].test(input.value)) {
+    console.log(objValidator[input.name])
+    console.log("🚀 ~ input.value", input.value)
     input.style.background = "#ea7d7d";
     return false;
   } else {
-    input.style.background = "#fff";
+    input.style.background = "transparent";
     return true;
   }
 };
@@ -72,7 +73,7 @@ const validateOnFocus = (event: FocusEvent) => {
     ?.nextElementSibling as HTMLElement | null;
 
   if (target.tagName.toLowerCase() !== "button") {
-    target.style.background = "#fff";
+    target.style.background = "transparent";
 
     if (message) message.style.display = "none";
   }
@@ -127,4 +128,4 @@ const submitLoginForm = (event: Event) => {
 };
 
 // export { validateForm, submitForm, submitLoginForm };
-export { submitLoginForm , validateOnBlur, validateOnFocus, validateOnSubmit};
+export { submitLoginForm, validateOnBlur, validateOnFocus, validateOnSubmit };

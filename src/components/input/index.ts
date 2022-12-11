@@ -5,7 +5,7 @@ class CustomInput extends Block {
   constructor(props: AllProps, className = "input-wrapper") {
     super("div", className, props);
   }
-  
+
   componentDidUpdate(oldProps: AllProps, newProps: AllProps): boolean {
     return true;
   }

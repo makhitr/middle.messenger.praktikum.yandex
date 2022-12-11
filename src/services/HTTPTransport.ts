@@ -107,7 +107,11 @@ class HTTPTransport {
       if (isGet || data === "undefined") {
         xhr.send();
       } else {
-        xhr.send(JSON.stringify(data));
+        if (data instanceof FormData && data.has("avatar")) {
+          xhr.send(data);
+        } else {
+          xhr.send(JSON.stringify(data));
+        }
       }
     });
   };
