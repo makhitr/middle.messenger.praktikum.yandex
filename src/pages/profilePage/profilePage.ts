@@ -1,5 +1,5 @@
 import { Page } from "../../components/page";
-import Form from "../../components/form";
+import ProfileForm from "../../components/profileForm";
 import template from "./index.hbs";
 import { profileFormEvent } from "../../utils/validateProfileForm";
 
@@ -7,7 +7,7 @@ class ProfilePage extends Page {
   constructor() {
     super({
       title: "My messenger",
-      form: new Form({ events: profileFormEvent, capture: true }),
+      form: new ProfileForm({ events: profileFormEvent, capture: true }),
     });
   }
 

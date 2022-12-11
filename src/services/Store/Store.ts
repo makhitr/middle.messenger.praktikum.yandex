@@ -1,20 +1,15 @@
 import { EventBus } from "../EventBus";
 
-type Indexed<T = unknown> = {
-  [k in string | symbol]: T;
-};
-
-export enum StoreEvents {
-  Updated = "updated",
-}
+// enum StoreEvents {
+//   EVENT_UPDATE = "event_update",
+// }
 
 class Store extends EventBus {
-  static EVENT_UPDATE = "";
+  static EVENT_UPDATE = "event_update";
   static STORE_NAME = "myAppStore";
-  
+
   static _instance: Store;
-  static isAuth = false;
-  _state: Indexed = {};
+  _state = {};
 
   constructor() {
     // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
@@ -31,6 +26,7 @@ class Store extends EventBus {
     this.on(Store.EVENT_UPDATE, () => {
       localStorage.setItem(Store.STORE_NAME, JSON.stringify(this._state));
     });
+    
   }
 
   getState() {
@@ -44,8 +40,6 @@ class Store extends EventBus {
   // }
 
   set(id: string, value: object) {
-    console.log('id', id, 'value', value)
-
     this._state[id] = value;
     this.emit(Store.EVENT_UPDATE);
     return this;

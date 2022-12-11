@@ -11,7 +11,7 @@ export default Connect(ProfileForm, (state) => {
       {
         className: "input-avatar",
         type: "file",
-        value: "image",
+        value: "",
         name: "avatar",
         events: avatarEvents,
       },
@@ -19,9 +19,9 @@ export default Connect(ProfileForm, (state) => {
     ),
     inputName: new CustomInput(
       {
-        profileText: state.user.first_name,
+        profileText: state.user?.first_name ?? "",
         type: "text",
-        value: state.user.first_name,
+        value: state.user?.first_name  ?? "",
         text: "First Name",
         className: "edit-inputs",
         name: "first_name",
@@ -30,9 +30,9 @@ export default Connect(ProfileForm, (state) => {
     ),
     inputSName: new CustomInput(
       {
-        profileText: state.user.second_name,
+        profileText: state.user?.second_name ?? '' ,
         type: "text",
-        value: state.user.second_name,
+        value: state.user?.second_name ?? '',
         text: "Second Name",
         className: "edit-inputs",
         name: "second_name",
@@ -41,9 +41,9 @@ export default Connect(ProfileForm, (state) => {
     ),
     inputLogin: new CustomInput(
       {
-        profileText: state.user.login,
+        profileText: state.user?.login ?? '',
         type: "text",
-        value: state.user.login,
+        value: state.user?.login ?? '',
         text: "Login",
         className: "edit-inputs",
         name: "login",
@@ -53,9 +53,9 @@ export default Connect(ProfileForm, (state) => {
 
     inputEmail: new CustomInput(
       {
-        profileText: state.user.email,
+        profileText: state.user?.email ?? '',
         type: "email",
-        value: state.user.email,
+        value: state.user?.email ?? '',
         text: "E-mail",
         className: "edit-inputs",
         name: "email",
@@ -64,9 +64,9 @@ export default Connect(ProfileForm, (state) => {
     ),
     inputPhone: new CustomInput(
       {
-        profileText: state.user.phone,
+        profileText: state.user?.phone ?? '',
         type: "phone",
-        value: state.user.phone,
+        value: state.user?.phone ?? '',
         text: "Phone",
         className: "edit-inputs",
         name: "phone",

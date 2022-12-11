@@ -1,4 +1,3 @@
-
 import isEqual from "../../utils/isEqual";
 import { renderDOM } from "../../utils/renderDOM";
 import { Block } from "../Block";
@@ -8,8 +7,8 @@ class Route {
   _blockClass;
   _block: Block | null;
   _props;
-  
-  constructor(pathname: string, view: any, props: { rootQuery: string; }) {
+
+  constructor(pathname: string, view, props = {}) {
     this._pathname = pathname;
     this._blockClass = view;
     this._block = null;
@@ -35,7 +34,7 @@ class Route {
 
   render() {
     if (!this._block) {
-      this._block = new this._blockClass();
+      this._block = new this._blockClass(this._props);
       renderDOM(this._props.rootQuery, this._block);
       return;
     }

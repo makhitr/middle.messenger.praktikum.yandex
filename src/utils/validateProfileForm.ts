@@ -1,4 +1,4 @@
-import { objValidator, validateOnBlur, validateOnFocus } from "./validateForm";
+import { validateOnBlur, validateOnFocus, validateOnSubmit } from "./validateForm";
 import * as UserActions from "../services/Store/actions/UserActions";
 
 const changeAvatar = (event: Event) => {
@@ -22,36 +22,6 @@ function editFormElements(form: HTMLFormElement) {
   profileInfo.forEach(hideElement);
 }
 
-const validateInput = (input: HTMLInputElement) => {
-  if (!objValidator[input.name].test(input.value)) {
-    input.style.background = "#ea7d7d";
-    return false;
-  } else {
-    input.style.background = "#fff";
-    return true;
-  }
-};
-
-const validateOnSubmit = (form: HTMLFormElement) => {
-  const object = {};
-  const errors = [];
-  for (let i = 1; i < form.length; i++) {
-    const element = form[i] as HTMLInputElement;
-    if (element.tagName.toLowerCase() === "input") {
-      if (validateInput(element)) {
-        object[element.name] = element.value;
-      } else {
-        errors.push(element.value);
-      }
-    }
-  }
-
-  if (errors.length === 0) {
-    return object;
-  }
-  return false;
-};
-
 const submitHandler = (event: Event) => {
   event.preventDefault();
   const submitBtn = document.querySelector(".submit-btn") as HTMLElement;
@@ -71,7 +41,7 @@ const clickHandler = (event: Event) => {
   const form = document.querySelector("form") as HTMLFormElement;
 
   if (element.type?.toLowerCase() === "button") {
-     hideElement(element);
+    hideElement(element);
     showElement(submitBtn);
     editFormElements(form);
   }
@@ -85,7 +55,7 @@ const profileFormEvent = {
 };
 
 const avatarEvents = {
-  click: changeAvatar,
+  click: changeAvatar
 };
 
 export { profileFormEvent, avatarEvents };
