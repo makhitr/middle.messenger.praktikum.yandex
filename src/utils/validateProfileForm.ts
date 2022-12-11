@@ -4,6 +4,8 @@ import {
   validateOnSubmit,
 } from "./validateForm";
 import * as UserActions from "../services/Store/actions/UserActions";
+import Store from "../services/Store/Store";
+const store = new Store();
 
 const changeAvatar = (event: Event) => {
   const avatar = event.target as HTMLElement;
@@ -15,13 +17,12 @@ const changeAvatar = (event: Event) => {
       reader.addEventListener("loadend", () => {
         const uploadedImage = reader.result;
         avatar.style.backgroundImage = `url(${uploadedImage})`;
-        avatar.style.backgroundSize = "cover";
         hideElement(avatarInput);
+        store.set("avatar", uploadedImage);
 
         const formData = new FormData();
         formData.append("avatar", avatarInput.files[0]);
-         UserActions.updateAvatar(formData);
-    
+        UserActions.updateAvatar(formData);
       });
 
       reader.readAsDataURL(avatarInput.files[0]);
