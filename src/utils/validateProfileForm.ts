@@ -1,11 +1,24 @@
-import { validateOnBlur, validateOnFocus, validateOnSubmit } from "./validateForm";
+import {
+  validateOnBlur,
+  validateOnFocus,
+  validateOnSubmit,
+} from "./validateForm";
 import * as UserActions from "../services/Store/actions/UserActions";
 
 const changeAvatar = (event: Event) => {
   const avatar = event.target as HTMLElement;
   const avatarInput = avatar.querySelector("input") as HTMLInputElement | null;
-  avatar.classList.add("change-avatar");
-  if (avatarInput) avatarInput.style.display = "inline";
+  showElement(avatarInput)
+  avatarInput?.addEventListener("change", function () {
+    const reader = new FileReader();
+    reader.addEventListener("load", () => {
+      const uploaded_image = reader.result;
+      avatar.style.backgroundImage = `url(${uploaded_image})`;
+      avatar.style.backgroundSize = "cover";
+      hideElement(avatarInput)
+    });
+    reader.readAsDataURL(this.files[0]);
+  });
 };
 
 const showElement = (el: HTMLElement) => {
@@ -55,7 +68,7 @@ const profileFormEvent = {
 };
 
 const avatarEvents = {
-  click: changeAvatar
+  click: changeAvatar,
 };
 
 export { profileFormEvent, avatarEvents };

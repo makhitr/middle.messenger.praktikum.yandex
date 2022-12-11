@@ -165,14 +165,15 @@ body {
   border-bottom: 1px solid $pr-font-color;
 }
 
-.change-avatar {
-  background-image: none;
-}
-
 .edit-inputs,
 .input-avatar,
 .profile-form button[type="submit"] {
   display: none;
+}
+
+.input-avatar {
+  position: relative;
+  left: 100px;
 }
 
 .edit-labels {

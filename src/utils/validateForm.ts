@@ -18,7 +18,8 @@ export const objValidator: { [key: string]: RegExp } = {
 
 export const user: User = {};
 
-export const validateOnBlur = (event: Event) => {
+const validateOnBlur = (event: Event) => {
+
   const target = event.target as HTMLInputElement;
   const message = target.parentElement
     ?.nextElementSibling as HTMLElement | null;
@@ -34,7 +35,7 @@ export const validateOnBlur = (event: Event) => {
   }
 };
 
-export const validateOnSubmit = (form: HTMLFormElement) => {
+const validateOnSubmit = (form: HTMLFormElement) => {
   const object = {};
   const errors = [];
   for (let i = 0; i < form.length; i++) {
@@ -65,7 +66,7 @@ const validateInput = (input: HTMLInputElement) => {
   }
 };
 
-export const validateOnFocus = (event: FocusEvent) => {
+const validateOnFocus = (event: FocusEvent) => {
   const target = event.target as HTMLInputElement;
   const message = target.parentElement
     ?.nextElementSibling as HTMLElement | null;
@@ -126,4 +127,4 @@ const submitLoginForm = (event: Event) => {
 };
 
 // export { validateForm, submitForm, submitLoginForm };
-export { submitLoginForm };
+export { submitLoginForm , validateOnBlur, validateOnFocus, validateOnSubmit};

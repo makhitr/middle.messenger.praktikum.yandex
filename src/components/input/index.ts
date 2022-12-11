@@ -7,10 +7,6 @@ class CustomInput extends Block {
   }
   
   componentDidUpdate(oldProps: AllProps, newProps: AllProps): boolean {
-    console.log("🚀 ~ CustomInput ~ newProps", newProps)
-    console.log("🚀 ~ CustomInput ~ oldProps", oldProps)
-    console.log("🚀 ~ CustomInput ~ componentDidUpdate CustomInput");
-
     return true;
   }
   render() {
