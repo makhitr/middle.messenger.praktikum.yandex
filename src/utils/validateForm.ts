@@ -1,9 +1,4 @@
 import * as AuthActions from "../services/Store/actions/AuthActions";
-import { Router } from "../services/Router/Router";
-
-export type User = {
-  [key: string]: string;
-};
 
 export const objValidator: { [key: string]: RegExp } = {
   avatar: /^\s*$|(([a-zA-Z0-9\s_\\.\-():])+(.jpg|.JPG|.jpeg|.JPEG))$/,
@@ -15,8 +10,6 @@ export const objValidator: { [key: string]: RegExp } = {
   phone: /^(\+|\d)[\d]{10,15}$/,
   message: /[\w]{5}/,
 };
-
-export const user: User = {};
 
 const validateOnBlur = (event: Event) => {
   const target = event.target as HTMLInputElement;
@@ -71,7 +64,7 @@ const validateInput = (input: HTMLInputElement) => {
 
     return false;
   } else {
-    input.style.background = "transparent";
+    input.style.background = "#fff";
     return true;
   }
 };
@@ -82,50 +75,11 @@ const validateOnFocus = (event: FocusEvent) => {
     ?.nextElementSibling as HTMLElement | null;
 
   if (target.tagName.toLowerCase() !== "button") {
-    target.style.background = "transparent";
+    target.style.background = "#fff";
 
     if (message) message.style.display = "none";
   }
 };
-
-// const validateOnSubmit = (event: Event, inputsNumber: NodeList) => {
-//   event.preventDefault();
-
-//   if (inputsNumber.length - 1 === Object.keys(user).length) {
-//     console.log("form is submitted");
-//   } else {
-//     inputsNumber.forEach((input: HTMLInputElement) => {
-//       if (!(input.name in user)) {
-//         const el = input.parentElement
-//           ?.nextElementSibling as HTMLElement | null;
-//         if (el) el.style.display = "block";
-//       }
-//     });
-//   }
-// };
-
-// const validateForm = (event: Event) => {
-//   const target: HTMLInputElement = event.target as HTMLInputElement;
-//   const form = event.currentTarget as HTMLFormElement;
-//   const inputsNumber: NodeList = form.querySelectorAll("input") as NodeList;
-
-//   if (event.type === "submit") {
-//     validateOnSubmit(event, inputsNumber);
-//   } else {
-//     const message: HTMLElement = target.parentElement
-//       ?.nextElementSibling as HTMLElement;
-//     if (event.type === "blur") {
-//       validateOnBlur(target, message);
-//     } else if (event.type === "focus") {
-//       validateOnFocus(target, message);
-//     }
-//   }
-// };
-
-// const submitForm = (event: Event) => {
-//   validateForm(event);
-//   AuthActions.registerUser(user);
-// };
 
 const submitLoginForm = (event: Event) => {
   event.preventDefault();
@@ -136,4 +90,19 @@ const submitLoginForm = (event: Event) => {
   }
 };
 
-export { submitLoginForm, validateOnBlur, validateOnFocus, validateOnSubmit };
+const submitRegisterForm = (event: Event) => {
+  event.preventDefault();
+  const validateData = validateOnSubmit(event.target as HTMLFormElement);
+  if (validateData !== false) {
+    AuthActions.registerUser(validateData);
+    // router.go("/messenger");
+  }
+};
+
+export {
+  submitLoginForm,
+  validateOnBlur,
+  validateOnFocus,
+  validateOnSubmit,
+  submitRegisterForm,
+};

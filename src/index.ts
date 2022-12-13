@@ -1,16 +1,19 @@
+import { IndexLayout } from "./layouts/indexLayout";
 import MainPage from "./pages/mainPage";
-import { RegisterPage } from "./pages/registerPage";
+import ProfilePage from "./pages/profilePage/";
+import RegisterPage from "./pages/registerPage";
 import { MessagePage } from "./pages/messagePage";
 import { ErrorPage404 } from "./pages/errorPage404";
 import { ErrorPage500 } from "./pages/errorPage500";
 import { Router } from "./services/Router/Router";
-import { IndexLayout } from "./layouts/indexLayout";
-import ProfilePage from "./pages/profilePage/";
 
 const router = new Router("#root");
 router
   .use("/", IndexLayout, { title: "Main Page", content: new MainPage() })
-  .use("/sign-up", RegisterPage)
+  .use("/sign-up", IndexLayout, {
+    title: "Register Page",
+    content: new RegisterPage(),
+  })
   .use("/settings", IndexLayout, {
     title: "Profile Page",
     content: new ProfilePage(),
