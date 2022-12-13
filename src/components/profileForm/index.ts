@@ -1,11 +1,12 @@
 import { Connect } from "../../services/Store/Connect";
+import { IState } from "../../types/stateTypes";
 import { avatarEvents } from "../../utils/validateProfileForm";
 import { Button } from "../button";
 import { CustomInput } from "../input";
 import { CustomInputs } from "../inputs/inputs";
 import { ProfileForm } from "./profileForm";
 
-export default Connect(ProfileForm, (state) => {
+export default Connect(ProfileForm, (state: IState) => {
   const inputs = new CustomInputs({
     profileAvatar: new CustomInput(
       {
@@ -16,7 +17,7 @@ export default Connect(ProfileForm, (state) => {
         events: avatarEvents,
       },
       "avatar",
-      state.avatar ?? "" 
+      state.avatar ?? ""
     ),
     inputName: new CustomInput(
       {
@@ -74,7 +75,6 @@ export default Connect(ProfileForm, (state) => {
       },
       "info-field"
     ),
-    // inputPassword: profilePassword,
   });
 
   return {

@@ -24,13 +24,16 @@ const validateOnBlur = (event: Event) => {
     ?.nextElementSibling as HTMLElement | null;
 
   if (target.tagName.toLowerCase() !== "button") {
-    if (!objValidator[target.name].test(target.value)) {
+    let key = target.name;
+
+    if (target.name.toLowerCase().includes("password")) {
+      key = target.type;
+    }
+
+    if (!objValidator[key].test(target.value)) {
       target.style.background = "#ea7d7d";
       if (message) message.style.display = "block";
-    } else {
-      user[target.name as keyof User] = target.value;
     }
-    console.log(user);
   }
 };
 
@@ -51,15 +54,21 @@ const validateOnSubmit = (form: HTMLFormElement) => {
   if (errors.length === 0) {
     return object;
   }
- 
+
   return false;
 };
 
 const validateInput = (input: HTMLInputElement) => {
-  if (!objValidator[input.name].test(input.value)) {
-    console.log(objValidator[input.name])
-    console.log("🚀 ~ input.value", input.value)
+  let key = input.name;
+  const message = input.parentElement?.nextElementSibling as HTMLElement | null;
+
+  if (input.name.toLowerCase().includes("password")) {
+    key = input.type;
+  }
+  if (!objValidator[key].test(input.value)) {
     input.style.background = "#ea7d7d";
+    if (message) message.style.display = "block";
+
     return false;
   } else {
     input.style.background = "transparent";
@@ -127,5 +136,4 @@ const submitLoginForm = (event: Event) => {
   }
 };
 
-// export { validateForm, submitForm, submitLoginForm };
 export { submitLoginForm, validateOnBlur, validateOnFocus, validateOnSubmit };

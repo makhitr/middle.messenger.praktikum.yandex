@@ -69,6 +69,14 @@ const clickHandler = (event: Event) => {
   }
 };
 
+const changePassword = (event: Event) => {
+  event.preventDefault();
+  const form = event.target;
+  const validateData = validateOnSubmit(form as HTMLFormElement);
+
+  UserActions.updatePassword(validateData);
+};
+
 const profileFormEvent = {
   focus: validateOnFocus,
   blur: validateOnBlur,
@@ -76,8 +84,14 @@ const profileFormEvent = {
   click: clickHandler,
 };
 
+const passwordEvent = {
+  blur: validateOnBlur,
+  focus: validateOnFocus,
+  submit: changePassword,
+};
+
 const avatarEvents = {
   click: changeAvatar,
 };
 
-export { profileFormEvent, avatarEvents };
+export { profileFormEvent, avatarEvents, passwordEvent };
