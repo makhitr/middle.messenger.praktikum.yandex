@@ -1,4 +1,6 @@
 import * as AuthActions from "../services/Store/actions/AuthActions";
+import { Router } from '../services/Router/Router'
+const router = new Router("#root");
 
 export const objValidator: { [key: string]: RegExp } = {
   avatar: /^\s*$|(([a-zA-Z0-9\s_\\.\-():])+(.jpg|.JPG|.jpeg|.JPEG))$/,
@@ -86,7 +88,7 @@ const submitLoginForm = (event: Event) => {
   const validateData = validateOnSubmit(event.target as HTMLFormElement);
   if (validateData !== false) {
     AuthActions.loginUser(validateData);
-    // router.go("/messenger");
+    router.go("/messenger");
   }
 };
 

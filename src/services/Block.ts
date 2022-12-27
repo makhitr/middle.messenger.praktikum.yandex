@@ -58,9 +58,6 @@ class Block implements IBlock {
   ) {
     const eventBus: EventBus = new EventBus();
     const { children, props } = this._getChildren(propsAndChildren);
-    // console.log("🚀 ~ Block ~ props", props)
-    // console.log("🚀 ~ Block ~ children", children)
-
     this._children = this._makePropsProxy(children);
     this._props = this._makePropsProxy({ ...props, __id: this._id });
 
@@ -83,6 +80,18 @@ class Block implements IBlock {
     const props: Props = {};
 
     Object.entries(propsAndChildren).forEach(([key, value]) => {
+      if (
+        Array.isArray(value) &&
+        value.length > 0 &&
+        value.every((v) => v instanceof Block)
+      ) {
+        children[key as string] = value;
+      } else if (value instanceof Block) {
+        children[key as string] = value;
+      } else {
+        props[key] = value;
+      }
+
       if (value instanceof Block) {
         children[key] = value;
       } else {
@@ -113,21 +122,30 @@ class Block implements IBlock {
 
   _componentDidMount() {
     this.componentDidMount();
-    Object.values(this._children).forEach((child: Block) => {
-      child.dispatchComponentDidMount();
-    });
+    // Object.values(this._children).forEach((child: Block) => {
+    //   child.dispatchComponentDidMount();
+    // });
   }
 
   componentDidMount() {}
 
   dispatchComponentDidMount() {
     this._eventBus().emit(EVENTS.FLOW_CDM);
+
+    Object.values(this._children).forEach((child) => {
+      if (Array.isArray(child)) {
+        child.forEach((ch) => {
+          ch.dispatchComponentDidMount();
+        });
+      } else {
+        child.dispatchComponentDidMount();
+      }
+    });
   }
 
   _componentDidUpdate(oldProps: AllProps, newProps: AllProps) {
     // this.componentDidUpdate(oldProps, newProps);
     const isReRender = this.componentDidUpdate(oldProps, newProps);
-    // console.log(isReRender, "isRerender");
     if (isReRender) {
       this._removeEvents();
       this._eventBus().emit(EVENTS.FLOW_RENDER);
@@ -146,7 +164,6 @@ class Block implements IBlock {
     if (nextProps === null) {
       return;
     }
-    // console.log("🚀 ~ Block ~ nextProps", nextProps)
 
     // if (
     //   JSON.stringify(Object.entries(this._props)) !==
@@ -154,10 +171,9 @@ class Block implements IBlock {
     // ) {
     //   this._eventBus().emit(EVENTS.FLOW_CDU, this._props, nextProps);
     // }
-    const { children, props } = this._getChildren(nextProps);
-    // console.log("🚀 ~ Block ~ props", props);
-    // console.log("🚀 ~ Block ~ children", children)
 
+    const { children, props } = this._getChildren(nextProps);
+  
     if (Object.values(children).length) Object.assign(this._children, children);
 
     if (Object.values(props).length) Object.assign(this._props, props);
@@ -168,13 +184,10 @@ class Block implements IBlock {
   }
 
   _render() {
-    // console.log('this', this)
-    // console.log("_render");
     const block = this.render();
-    // console.log("🚀 ~ Block ~ block", block)
+
     this._removeEvents();
     if (this._element) {
-      // console.log(this.element)
       this._element.innerHTML = "";
       this._element.appendChild(block);
     }
@@ -209,7 +222,6 @@ class Block implements IBlock {
         return typeof value === "function" ? value.bind(target) : value;
       },
       set: (target, property, value) => {
-        // console.log("🚀 ~ Block ~ target", target);
 
         const oldValue = { ...target };
         // target[property as string] = value;
@@ -231,15 +243,28 @@ class Block implements IBlock {
     return element;
   }
 
-  compile(template: any, props?: Props): DocumentFragment {
+  compile(template: any, props?: Props) {
     if (typeof props === "undefined") {
       props = this._props;
     }
 
     const propsAndStubs: any = { ...props };
 
+    if (this._element?.className === "chat-wrapper") {
+      console.log("props-stubs-chat-wr", propsAndStubs);
+    } else if (this._element?.className === "list-wrapper") {
+      console.log("props-stubs-list-wr", propsAndStubs);
+    }
+
     Object.entries(this._children).forEach(([key, child]: any) => {
-      propsAndStubs[key] = `<div data-id="${child.id}"></div>`;
+      if (Array.isArray(child)) {
+        console.log("🚀 ~ Block ~ child", child);
+        propsAndStubs[key] = child.map(
+          (ch) => `<div data-id="${ch.id}"></div>`
+        );
+      } else {
+        propsAndStubs[key] = `<div data-id="${child.id}"></div>`;
+      }
     });
 
     const fragment = this._createDocumentElement(
@@ -248,10 +273,27 @@ class Block implements IBlock {
     ) as HTMLTemplateElement;
     fragment.innerHTML = template(propsAndStubs);
 
+    const replaceStub = (block: Block) => {
+      const stub = fragment.content.querySelector(`[data-id="${block.id}"]`);
+      if (!stub) {
+        return;
+      }
+      block.getContent()?.append(...Array.from(stub.childNodes));
+
+      stub.replaceWith(block.getContent()!);
+    };
+
     Object.values(this._children).forEach((child: Block) => {
-      const stub = fragment.content.querySelector(`[data-id="${child.id}"]`);
-      stub && stub.replaceWith(child.getContent());
+      if (Array.isArray(child)) {
+        child.forEach(replaceStub);
+      } else {
+        replaceStub(child);
+      }
+
+      // const stub = fragment.content.querySelector(`[data-id="${child.id}"]`);
+      // stub && stub.replaceWith(child.getContent());
     });
+
     return fragment.content;
   }
 
