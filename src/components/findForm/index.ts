@@ -1,9 +1,9 @@
 import { Form } from "../form";
 import template from "./index.hbs";
 
-class MessageForm extends Form {
-  constructor(props, id = "mss-form") {
-    super(props, "message-form");
+class FindForm extends Form {
+  constructor(props: { [x: string]: any }, id: string) {
+    super(props, "find-form");
     if (this._element) this._element.setAttribute("id", id);
   }
 
@@ -12,4 +12,4 @@ class MessageForm extends Form {
   }
 }
 
-export { MessageForm };
+export { FindForm };

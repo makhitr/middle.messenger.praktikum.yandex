@@ -6,7 +6,6 @@ import template from "./index.hbs";
 class MainPage extends Page {
   constructor() {
     super({
-      title: "Login Page",
       form: new LoginForm({
         events: {
           blur: validateOnBlur,

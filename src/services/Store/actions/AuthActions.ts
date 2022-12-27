@@ -1,8 +1,5 @@
 import { AuthApi } from "../../../api/auth-api";
 import { UserApi } from "../../../api/user-api";
-import { IndexLayout } from "../../../layouts/indexLayout";
-import { ProfilePage } from "../../../pages/profilePage/profilePage";
-import { User } from "../../../types/userTypes";
 import { Router } from "../../Router/Router";
 import Store from "../Store";
 
@@ -12,7 +9,6 @@ const router = new Router("#root");
 const logoutUser = () => {
   AuthApi.logout().then((response: XMLHttpRequest) => {
     if (response.status === 200) {
-      store.set("auth", { isAuth: false });
       router.go("/");
     } else {
       console.log("something went wrong");
@@ -21,8 +17,6 @@ const logoutUser = () => {
 };
 
 const loginUser = (userInfo) => {
-  console.log(userInfo);
-
   AuthApi.signin(userInfo)
     .then((response: XMLHttpRequest) => {
       if (response.status === 200) {
@@ -38,16 +32,10 @@ const loginUser = (userInfo) => {
     });
 };
 
-const registerUser = (userInfo: User) => {
+const registerUser = (userInfo) => {
   AuthApi.create(userInfo).then((response: XMLHttpRequest) => {
     if (response.status === 200) {
-      store.set("auth", { isAuth: true });
       store.set("user", userInfo);
-      // router.use("/settings", IndexLayout, {
-      //     title: "Profile Page",
-      //     content: new ProfilePage(),
-      //   })
-      // router.go("/messenger");
     } else {
       console.log("something went wrong");
     }
