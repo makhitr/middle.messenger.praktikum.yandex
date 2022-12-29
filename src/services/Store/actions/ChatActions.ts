@@ -1,4 +1,4 @@
-import { addUsersData, ChatApi, CreateChatData } from "../../../api/chat-api";
+import { addUsersData, ChatApi } from "../../../api/chat-api";
 import Store from "../Store";
 const chatApi = new ChatApi();
 
@@ -15,8 +15,11 @@ const getAllChats = () => {
   .then((data: XMLHttpRequest) => {
     store.set("chats", JSON.parse(data.response));
   })
-
 };
+
+const selectChat = (chatId: number) => {
+  store.set("selectedChat", chatId);
+}
 
 const addUsersToChat = (data: addUsersData) => {
   chatApi
@@ -24,4 +27,4 @@ const addUsersToChat = (data: addUsersData) => {
     .then((data: XMLHttpRequest) => console.log(data.response));
 };
 
-export { createChat, getAllChats, addUsersToChat };
+export { createChat, getAllChats, addUsersToChat, selectChat };

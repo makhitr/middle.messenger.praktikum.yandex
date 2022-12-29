@@ -173,7 +173,7 @@ class Block implements IBlock {
     // }
 
     const { children, props } = this._getChildren(nextProps);
-  
+
     if (Object.values(children).length) Object.assign(this._children, children);
 
     if (Object.values(props).length) Object.assign(this._props, props);
@@ -222,7 +222,6 @@ class Block implements IBlock {
         return typeof value === "function" ? value.bind(target) : value;
       },
       set: (target, property, value) => {
-
         const oldValue = { ...target };
         // target[property as string] = value;
         // // return true;
@@ -250,15 +249,8 @@ class Block implements IBlock {
 
     const propsAndStubs: any = { ...props };
 
-    if (this._element?.className === "chat-wrapper") {
-      console.log("props-stubs-chat-wr", propsAndStubs);
-    } else if (this._element?.className === "list-wrapper") {
-      console.log("props-stubs-list-wr", propsAndStubs);
-    }
-
     Object.entries(this._children).forEach(([key, child]: any) => {
       if (Array.isArray(child)) {
-        console.log("🚀 ~ Block ~ child", child);
         propsAndStubs[key] = child.map(
           (ch) => `<div data-id="${ch.id}"></div>`
         );

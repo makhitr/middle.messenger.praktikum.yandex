@@ -1,4 +1,6 @@
-<div class="avatar">{{{chatAvatar}}}</div>
-<p>title - {{{title}}}</p>
-<p>unread  - {{{count}}}</p>
-{{{previewText}}}
+<div class="{{#if isSelected }}selected{{/if}} ">
+  <div class="avatar">{{{chatAvatar}}}</div>
+  <p>title - {{{title}}}</p>
+  <p>unread - {{{count}}}</p>
+  {{{previewText}}}
+</div>

@@ -1,25 +1,26 @@
 import { Connect } from "../../services/Store/Connect";
 import { ChatsList } from "./chatsList";
 import { IState } from "../../types/stateTypes";
-import  Chat  from "../chat";
+import * as ChatActions from "../../services/Store/actions/ChatActions";
+import Chat from "../chat";
 
-
-export default Connect(ChatsList, (state: IState) => { 
-  // return state.chats ?? {}
-
-
-  // // const chats = new Chat({})
-  // // const chats = [new Chat({}), new Chat({})]
-  const numbers = [1, 2, 3, 4]
-  const chats = state.chats.map(
-    (chat) => {
-      // console.log(chat)
-        return new Chat({title: chat.title, count: chat.unread_count})}
-  );
+export default Connect(ChatsList, (state: IState) => {
+ 
+  const chats = state.chats.map((chat) => {
+    console.log('chat from new Chat', chat)
+    return new Chat({
+      title: chat.title,
+      count: chat.unread_count,
+      id: chat.id,
+      events: {
+        click: () => {
+          ChatActions.selectChat(chat.id);
+        },
+      },
+    });
+  });
 
   return {
-  //   // form: form,
     chats: chats,
-    nums: numbers
   };
 });

@@ -39,7 +39,7 @@ class Store extends EventBus {
   //   this.emit(StoreEvents.Updated);
   // }
 
-  set(id: string, value: object) {
+  set(id: string, value: object | number) {
     this._state[id] = value;
     this.emit(Store.EVENT_UPDATE);
     return this;
