@@ -1,8 +1,8 @@
 import { EventBus } from "../EventBus";
 
-// enum StoreEvents {
-//   EVENT_UPDATE = "event_update",
-// }
+export enum StoreEvents {
+  EVENT_UPDATE = "event_update",
+}
 
 class Store extends EventBus {
   static EVENT_UPDATE = "event_update";
@@ -51,3 +51,5 @@ class Store extends EventBus {
   }
 }
 export default Store;
+
+// 

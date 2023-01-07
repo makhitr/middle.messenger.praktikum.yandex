@@ -7,6 +7,16 @@ import { CustomInput } from "../input";
 import template from "./index.hbs";
 import * as ChatActions from "../../services/Store/actions/ChatActions";
 
+import { Form } from "../form";
+
+const handleSubmit = (event: Event) => {
+  event.preventDefault();
+  ChatActions.createChat(event.target[0].value);
+};
+
+const submitForm = {
+  submit: handleSubmit,
+};
 
 class AsideList extends Block {
   constructor(props: {} | undefined) {
@@ -26,7 +36,21 @@ class AsideList extends Block {
         },
         "id-find-form"
       ),
-      chatsList: new ChatsList({}),
+      addChatForm: new Form(
+        {
+          inputs: new CustomInput({
+            type: "text",
+            value: "",
+            text: "",
+            name: "title",
+            className: "input",
+          }),
+          button: new Button({ text: "Create Chat" }, "submit", "submit-btn"),
+          events: submitForm,
+        },
+        "chat-form"
+      ),
+          chatsList: new ChatsList({}),
       getChatsBtn: new Button({
         text: "Get All Chats",
         events: {

@@ -1,5 +1,4 @@
 import { UserApi } from "../../../api/user-api";
-import { Form } from "../../../components/form";
 import Store from "../Store";
 const store = new Store();
 
@@ -15,7 +14,7 @@ const updateProfile = async (user) => {
   );
 };
 
-const updateAvatar = async (data: string) => {
+const updateAvatar = async (data: FormData) => {
   await UserApi.changeAvatar(data)
 };
 

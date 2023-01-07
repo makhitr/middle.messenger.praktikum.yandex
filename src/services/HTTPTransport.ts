@@ -110,7 +110,6 @@ class HTTPTransport {
         if (data instanceof FormData && data.has("avatar")) {
           xhr.send(data);
         } else {
-          console.log(data)
           xhr.send(JSON.stringify(data));
         }
       }

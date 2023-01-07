@@ -13,20 +13,20 @@ export interface addUsersData {
 }
 
 class ChatApi extends BaseAPI {
+  
   create(data: CreateChatData) {
     return chatApiInstanse
       .post("chats", {
         headers: {
           "content-type": "application/json",
         },
-        data: { "title": data },
+        data: { title: data },
       })
-      .then((data: XMLHttpRequest) => data.response)
-    
+      .then((data: XMLHttpRequest) => data.response);
   }
 
   request() {
-    return chatApiInstanse.get("/chats");
+    return chatApiInstanse.get("chats");
   }
 
   addUsers(data: addUsersData) {
@@ -36,6 +36,19 @@ class ChatApi extends BaseAPI {
       },
       data: data,
     });
+  }
+
+  getToken(chatId: number) {
+    console.log("getToken", chatId);
+    return chatApiInstanse
+      .post(`chats/token/${chatId}`)
+      .then((res: XMLHttpRequest) => {
+        return JSON.parse(res.response);
+      })
+      .then((data) => {
+        console.log(data.token);
+        return data.token;
+      });
   }
 }
 
