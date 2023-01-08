@@ -1,5 +1,6 @@
 import * as AuthActions from "../services/Store/actions/AuthActions";
 import { Router } from '../services/Router/Router'
+import { SigninData, SignupData } from "../api/auth-api";
 const router = new Router("#root");
 
 export const objValidator: { [key: string]: RegExp } = {
@@ -87,8 +88,7 @@ const submitLoginForm = (event: Event) => {
   event.preventDefault();
   const validateData = validateOnSubmit(event.target as HTMLFormElement);
   if (validateData !== false) {
-    AuthActions.loginUser(validateData);
-    router.go("/messenger");
+    AuthActions.loginUser(validateData as SigninData);
   }
 };
 
@@ -96,8 +96,7 @@ const submitRegisterForm = (event: Event) => {
   event.preventDefault();
   const validateData = validateOnSubmit(event.target as HTMLFormElement);
   if (validateData !== false) {
-    AuthActions.registerUser(validateData);
-    // router.go("/messenger");
+    AuthActions.registerUser(validateData as SignupData);
   }
 };
 

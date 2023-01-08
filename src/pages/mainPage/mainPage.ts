@@ -1,6 +1,12 @@
+import { Button } from "../../components/button";
 import LoginForm from "../../components/LoginForm";
 import { Page } from "../../components/page";
-import { submitLoginForm, validateOnBlur, validateOnFocus } from "../../utils/validateForm";
+import * as AuthActions from "../../services/Store/actions/AuthActions";
+import {
+  submitLoginForm,
+  validateOnBlur,
+  validateOnFocus,
+} from "../../utils/validateForm";
 import template from "./index.hbs";
 
 class MainPage extends Page {
@@ -13,6 +19,12 @@ class MainPage extends Page {
           submit: submitLoginForm,
         },
         capture: true,
+      }),
+      logoutBtn: new Button({
+        text: "logout",
+        events: {
+          click: () => AuthActions.logoutUser(),
+        },
       }),
     });
 
@@ -30,14 +42,6 @@ class MainPage extends Page {
     //   validateForm(event);
     //   submitLoginForm()
     // };
-  }
-
-  componentDidUpdate(oldProps, newProps) {
-    // console.log("🚀 ~ ProfilePage ~ newProps", newProps);
-    // console.log("🚀 ~ ProfilePage ~ oldProps", oldProps);
-    // return !(oldProps['text'] == newProps['text']);
-
-    return false;
   }
 
   render(): DocumentFragment {

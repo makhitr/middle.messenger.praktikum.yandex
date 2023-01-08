@@ -1,27 +1,32 @@
 import { HTTPTransport } from "../services/HTTPTransport";
 import { BaseAPI } from "./base-api";
-import { User } from "../types/userTypes";
+
+export interface SignupData {
+  first_name: string;
+  second_name: string;
+  login: string;
+  email: string;
+  password: string;
+  phone: string;
+}
+
+export interface SigninData {
+  login: string;
+  password: string;
+}
 
 const authAPIInstance = new HTTPTransport();
 
 class AuthApi extends BaseAPI {
-
-  static create(userInfo: User) {
+  static create(data: SignupData) {
     return authAPIInstance.post("auth/signup", {
-      headers: {
-        "content-type": "application/json",
-      },
-      data: userInfo,
+      data: data,
     });
   }
 
- static signin(userInfo: User) {
-    const { login, password } = userInfo;
+  static signin(data: SigninData) {
     return authAPIInstance.post("auth/signin", {
-      headers: {
-        "content-type": "application/json",
-      },
-      data: { login, password },
+      data: data,
     });
   }
 

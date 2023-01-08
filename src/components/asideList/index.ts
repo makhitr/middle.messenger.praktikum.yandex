@@ -4,8 +4,9 @@ import ChatsList from "../../components/chatsList";
 
 import { FindForm } from "../findForm";
 import { CustomInput } from "../input";
-import template from "./index.hbs";
 import * as ChatActions from "../../services/Store/actions/ChatActions";
+import * as AuthActions from "../../services/Store/actions/AuthActions";
+import template from "./index.hbs";
 
 import { Form } from "../form";
 
@@ -50,7 +51,7 @@ class AsideList extends Block {
         },
         "chat-form"
       ),
-          chatsList: new ChatsList({}),
+      chatsList: new ChatsList({}),
       getChatsBtn: new Button({
         text: "Get All Chats",
         events: {
@@ -63,10 +64,14 @@ class AsideList extends Block {
           click: () => ChatActions.addUsersToChat({ users, chatId }),
         },
       }),
-    
+      logoutBtn: new Button({
+        text: "logout",
+        events: {
+          click: () => AuthActions.logoutUser(),
+        },
+      }),
     });
   }
-
 
   render() {
     return this.compile(template);

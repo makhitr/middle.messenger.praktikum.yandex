@@ -1,45 +1,36 @@
-import { AuthApi } from "../../../api/auth-api";
-import { UserApi } from "../../../api/user-api";
+import { AuthApi, SigninData, SignupData } from "../../../api/auth-api";
 import { Router } from "../../Router/Router";
-import Store from "../Store";
+import * as UserActions from "../../Store/actions/UserActions";
 
-const store = new Store();
 const router = new Router("#root");
 
-const logoutUser = () => {
-  AuthApi.logout().then((response: XMLHttpRequest) => {
-    if (response.status === 200) {
-      router.go("/");
-    } else {
-      console.log("something went wrong");
-    }
-  });
+const logoutUser = async () => {
+  try {
+    await AuthApi.logout();
+    router.go("/");
+  } catch (e: any) {
+    console.error(e.reason);
+  }
 };
 
-const loginUser = (userInfo) => {
-  AuthApi.signin(userInfo)
-    .then((response: XMLHttpRequest) => {
-      if (response.status === 200) {
-        store.set("auth", { isAuth: true });
-      } else {
-        console.log("something went wrong");
-      }
-    })
-    .then(() => {
-      UserApi.getUser().then((response) =>
-        store.set("user", JSON.parse(response))
-      );
-    });
+const loginUser = async (data: SigninData) => {
+  try {
+    await AuthApi.signin(data);
+    await UserActions.getUser();
+    router.go("/messenger");
+  } catch (e: any) {
+    console.error(e.reason);
+  }
 };
 
-const registerUser = (userInfo) => {
-  AuthApi.create(userInfo).then((response: XMLHttpRequest) => {
-    if (response.status === 200) {
-      store.set("user", userInfo);
-    } else {
-      console.log("something went wrong");
-    }
-  });
+const registerUser = async (data: SignupData) => {
+  try {
+    await AuthApi.create(data);
+    await UserActions.getUser();
+    router.go("/messenger");
+  } catch (e: any) {
+    console.error(e.reason);
+  }
 };
 
 export { registerUser, loginUser, logoutUser };
