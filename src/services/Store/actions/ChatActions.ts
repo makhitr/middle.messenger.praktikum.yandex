@@ -4,20 +4,23 @@ import Store from "../Store";
 const chatApi = new ChatApi();
 const store = new Store();
 
-const createChat = async (data) => {
-  await chatApi.create(data);
+const createChat = async (title: string) => {
+  await chatApi.create(title);
   getAllChats();
 };
 
 const getAllChats = async () => {
   //добавить обработку параметров
-  const data = await chatApi.request();
-  const chats = JSON.parse(data.response);
+  let chats = await chatApi.request();
 
-  chats.map(async (chat) => {
-    const token = await chatApi.getToken(chat.id);
-    await MessagesActions.connect(chat.id, token);
-  });
+  if (Array.isArray(chats)) {
+    chats.map(async (chat) => {
+      const token = await getToken(chat.id);
+      await MessagesActions.connect(chat.id, token);
+    });
+  } else {
+    chats = [];
+  }
   store.set("chats", chats);
 };
 
@@ -32,8 +35,8 @@ const addUsersToChat = (data: addUsersData) => {
 };
 
 const getToken = async (id: number) => {
-  console.log("get token id", id);
-  await chatApi.getToken(id);
+  const data = await chatApi.getToken(id);
+  return data.token;
 };
 
 export { createChat, getAllChats, addUsersToChat, selectChat, getToken };

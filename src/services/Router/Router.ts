@@ -1,5 +1,3 @@
-import { IndexLayout } from "../../layouts/indexLayout";
-import { Block } from "../Block";
 import { Route } from "./Route";
 
 class Router {

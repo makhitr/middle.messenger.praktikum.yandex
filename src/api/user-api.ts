@@ -10,44 +10,32 @@ class UserApi extends BaseAPI {
   // }
 
   static getUser() {
-    return userAPIInstance
-      .get("auth/user")
-      .then((data: XMLHttpRequest) => data.response);
+    return userAPIInstance.get("auth/user");
   }
 
   static changeProfile(user: User) {
-    return userAPIInstance
-      .put("user/profile", {
-        headers: {
-          "content-type": "application/json",
-        },
-        data: {
-          ...user,
-          display_name: "test",
-        },
-      })
-      .then((data: XMLHttpRequest) => data.response);
+    return userAPIInstance.put("user/profile", {
+      data: {
+        ...user,
+        display_name: "test",
+      },
+    });
   }
 
   static changeAvatar(data) {
-    return userAPIInstance
-      .put("user/profile/avatar", { data: data })
-      .then((data: XMLHttpRequest) => data.response);
+    return userAPIInstance.put("user/profile/avatar", { data: data });
   }
 
   static changePassword(passwords) {
     return userAPIInstance
       .put("user/password", {
-        headers: {
-          "content-type": "application/json",
-        },
         data: passwords,
       })
       .then((data: XMLHttpRequest) => {
         if (data.status === 200) {
-          alert("password was changed") 
+          alert("password was changed");
         } else {
-          alert(data.response) 
+          alert(data.response);
         }
       });
   }

@@ -3,9 +3,8 @@ import Store from "../Store";
 const store = new Store();
 
 const getUser = async () => {
-  await UserApi.getUser().then((data) => {
-    return JSON.parse(data);
-  });
+  const user =  await UserApi.getUser()
+  store.set('user', user)
 };
 
 const updateProfile = async (user) => {

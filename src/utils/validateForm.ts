@@ -1,7 +1,5 @@
 import * as AuthActions from "../services/Store/actions/AuthActions";
-import { Router } from '../services/Router/Router'
 import { SigninData, SignupData } from "../api/auth-api";
-const router = new Router("#root");
 
 export const objValidator: { [key: string]: RegExp } = {
   avatar: /^\s*$|(([a-zA-Z0-9\s_\\.\-():])+(.jpg|.JPG|.jpeg|.JPEG))$/,

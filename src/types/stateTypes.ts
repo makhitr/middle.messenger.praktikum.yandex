@@ -4,5 +4,7 @@ export interface  IState  {
   chats?: string[];
   avatar?: string,
   user?: User,
-  selectedChat?: number
+  selectedChat?: number,
+  transport?: [],
+  messages?: []
 }

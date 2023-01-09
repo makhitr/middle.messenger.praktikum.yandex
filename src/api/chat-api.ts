@@ -3,26 +3,16 @@ import { BaseAPI } from "./base-api";
 
 const chatApiInstanse = new HTTPTransport();
 
-export interface CreateChatData {
-  title: string;
-}
-
 export interface addUsersData {
   users: [];
   chatId: number;
 }
 
 class ChatApi extends BaseAPI {
-  
-  create(data: CreateChatData) {
-    return chatApiInstanse
-      .post("chats", {
-        headers: {
-          "content-type": "application/json",
-        },
-        data: { title: data },
-      })
-      .then((data: XMLHttpRequest) => data.response);
+  create(title: string) {
+    return chatApiInstanse.post("chats", {
+      data: { title },
+    });
   }
 
   request() {
@@ -31,25 +21,13 @@ class ChatApi extends BaseAPI {
 
   addUsers(data: addUsersData) {
     return chatApiInstanse.put("chats/users", {
-      headers: {
-        "content-type": "application/json",
-      },
-      data: data,
+      data,
     });
   }
 
-  getToken(chatId: number) {
-    console.log("getToken", chatId);
-    return chatApiInstanse
-      .post(`chats/token/${chatId}`)
-      .then((res: XMLHttpRequest) => {
-        return JSON.parse(res.response);
-      })
-      .then((data) => {
-        console.log(data.token);
-        return data.token;
-      });
-  }
+  async getToken(chatId: number) {
+    return chatApiInstanse.post(`chats/token/${chatId}`);
+   }
 }
 
 export { ChatApi };

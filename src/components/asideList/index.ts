@@ -45,6 +45,7 @@ class AsideList extends Block {
             text: "",
             name: "title",
             className: "input",
+            placeholder: "chat"
           }),
           button: new Button({ text: "Create Chat" }, "submit", "submit-btn"),
           events: submitForm,

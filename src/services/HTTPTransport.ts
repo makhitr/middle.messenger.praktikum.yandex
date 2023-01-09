@@ -80,7 +80,7 @@ class HTTPTransport {
 
       const xhr = new XMLHttpRequest();
       xhr.withCredentials = true;
-      xhr.responseType = 'json';
+      xhr.responseType = "json";
       const isGet = method === METHOD.GET;
 
       xhr.open(
@@ -90,13 +90,12 @@ class HTTPTransport {
         //     ? `${url}${queryStringify(data)}`
         //     : url,
       );
-      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.setRequestHeader("Content-Type", "application/json");
       Object.keys(headers).forEach((key) => {
         xhr.setRequestHeader(key, headers[key]);
       });
 
       xhr.onreadystatechange = (e) => {
-
         if (xhr.readyState === XMLHttpRequest.DONE) {
           if (xhr.status < 400) {
             resolve(xhr.response);
@@ -105,10 +104,11 @@ class HTTPTransport {
           }
         }
       };
-      
-      xhr.onabort = () => reject({reason: 'abort'});
-      xhr.onerror = () => reject({reason: 'network error'});
-      xhr.ontimeout = () => reject({reason: 'timeout'});
+
+      xhr.timeout = timeout;
+      xhr.onabort = () => reject({ reason: "abort" });
+      xhr.onerror = () => reject({ reason: "network error" });
+      xhr.ontimeout = () => reject({ reason: "timeout" });
 
       if (isGet || data === "undefined") {
         xhr.send();
@@ -122,4 +122,5 @@ class HTTPTransport {
     });
   };
 }
+
 export { HTTPTransport };
