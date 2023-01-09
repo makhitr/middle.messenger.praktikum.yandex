@@ -1,3 +1,4 @@
+import { set } from "../../utils/set";
 import { EventBus } from "../EventBus";
 
 export enum StoreEvents {
@@ -39,10 +40,20 @@ class Store extends EventBus {
   //   this.emit(StoreEvents.Updated);
   // }
 
-  set(id: string, value: object | number) {
-    this._state[id] = value;
-    this.emit(Store.EVENT_UPDATE);
-    return this;
+  // set(id: string, value: object | number) {
+  //   this._state[id] = value;
+  //   this.emit(Store.EVENT_UPDATE);
+  //   return this;
+  // }
+
+  public set(keypath: string, data: unknown) {
+    set(this._state, keypath, data);
+
+    this.emit(Store.EVENT_UPDATE, this.getState());
+  }
+
+  remove(id: string) {
+    delete this._state[id];
   }
 
   removeState() {
@@ -52,4 +63,4 @@ class Store extends EventBus {
 }
 export default Store;
 
-// 
+//

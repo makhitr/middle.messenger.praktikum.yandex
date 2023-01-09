@@ -6,6 +6,7 @@ import { FindForm } from "../findForm";
 import { CustomInput } from "../input";
 import * as ChatActions from "../../services/Store/actions/ChatActions";
 import * as AuthActions from "../../services/Store/actions/AuthActions";
+import * as MessagesActions from "../../services/Store/actions/MessagesActions";
 import template from "./index.hbs";
 
 import { Form } from "../form";
@@ -57,6 +58,12 @@ class AsideList extends Block {
         text: "Get All Chats",
         events: {
           click: () => ChatActions.getAllChats(),
+        },
+      }),
+      getMessagesBtn: new Button({
+        text: "Get All Messages",
+        events: {
+          click: () => MessagesActions.getOldMessages(635),
         },
       }),
       addUsersToChat: new Button({

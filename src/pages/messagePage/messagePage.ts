@@ -2,7 +2,7 @@ import { Page } from "../../components/page";
 import template from "./index.hbs";
 import { Messages } from "../../components/messages";
 import { AsideList } from "../../components/asideList";
-
+import * as ChatActions from "../../services/Store/actions/ChatActions";
 
 class MessagePage extends Page {
   constructor() {
@@ -14,10 +14,8 @@ class MessagePage extends Page {
       },
       "message-page-wrapper"
     );
-  }
-
-  componentDidUpdate(oldProps, newProps) {
-    return true;
+  
+    ChatActions.getAllChats()
   }
 
   render(): DocumentFragment {

@@ -1,3 +1,4 @@
+import { Message } from "./messegeTypes";
 import { User } from "./userTypes";
 
 export interface  IState  {
@@ -5,6 +6,6 @@ export interface  IState  {
   avatar?: string,
   user?: User,
   selectedChat?: number,
-  transport?: [],
-  messages?: []
+  transports?: [],//??? like messages
+  messages?: Record<number, Message[]>
 }
