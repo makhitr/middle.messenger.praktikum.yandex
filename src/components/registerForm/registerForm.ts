@@ -1,4 +1,4 @@
-import { AllProps, Block } from "../../services/Block";
+import { Block } from "../../services/Block";
 import template from "./index.hbs";
 
 class RegisterForm extends Block {
@@ -7,12 +7,7 @@ class RegisterForm extends Block {
     this._element?.setAttribute("method", method);
   }
 
-  componentDidUpdate(oldProps: AllProps, newProps: AllProps): boolean {
-
-    return true;
-  }
   render() {
-
     return this.compile(template);
   }
 }

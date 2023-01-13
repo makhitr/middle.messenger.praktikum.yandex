@@ -2,7 +2,7 @@ import { Connect } from "../../services/Store/Connect";
 import { ChatsList } from "./chatsList";
 import { IState } from "../../types/stateTypes";
 import * as ChatActions from "../../services/Store/actions/ChatActions";
-// import * as MessagesActions from "../../services/Store/actions/MessagesActions";
+import * as MessagesActions from "../../services/Store/actions/MessagesActions";
 import Chat from "../chat";
 
 export default Connect(ChatsList, (state: IState) => {
@@ -16,8 +16,9 @@ export default Connect(ChatsList, (state: IState) => {
       events: {
         click: () => {
           ChatActions.selectChat(chat.id);
+          // MessagesActions.getOldMessages(chat.id)
           // ChatActions.getToken(chat.id);
-          // MessagesActions.connect(chat.id);
+      
         },
       },
     });

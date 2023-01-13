@@ -1,10 +1,9 @@
 import { Connect } from "../../services/Store/Connect";
 import { IState } from "../../types/stateTypes";
-import { Messages } from "./messages";
-
+import { Message } from "./message";
 
 // export default Connect(Chat, (state: IState) => state.selectedChat ?? {});
-export default Connect(Messages, (state: IState) => {
+export default Connect(Message, (state: IState) => {
   
 
 return  ({

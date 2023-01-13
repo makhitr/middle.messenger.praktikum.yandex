@@ -7,24 +7,41 @@ const store = new Store();
 
 const connect = async (chatId: number, token: string) => {
   const state: IState = store.getState();
-  // console.log(state, "state");
 
-  const userId = state.user?.id;
-  // const transports = state.transports ?? new Map();
+  // if (state.transports && state.transports[chatId]) {
+  //   return;
+  // } 
+    const userId = state.user?.id;
 
-  const wsTransport = new WSTransport(
-    `wss://ya-praktikum.tech/ws/chats/${userId}/${chatId}/${token}`
-  );
+    // const transports = state.transports ?? new Map();
 
-  await wsTransport.connect();
-  wsTransport.on(SocketEvent.Message, (message) =>
-    receivedMessage(chatId, message)
-  );
+    const wsTransport = new WSTransport(
+      `wss://ya-praktikum.tech/ws/chats/${userId}/${chatId}/${token}`
+    );
 
-  store.set(`transports.${chatId}`, wsTransport);
+    await wsTransport.connect();
+
+    // wsTransport.on(SocketEvent.Message, (message) =>
+    //   onMessageReceived(chatId, message)
+    // );
+    wsTransport.on(SocketEvent.Message, (message) =>
+      onMessageReceived(chatId, message)
+    );
+
+    wsTransport.on(SocketEvent.Close, () => onConnectionClosed(chatId));
+
+    store.set(`transports.${chatId}`, wsTransport);
+    console.log(state, "state from connect");
+  
 };
 
-const receivedMessage = (chatId: number, message: Message | Message[]) => {
+const onConnectionClosed = (id: number) => {
+  store.remove(`transports${[id]}`);
+};
+
+const onMessageReceived = (chatId: number, message: Message | Message[]) => {
+  console.log("🚀 ~ onMessageReceived", onMessageReceived);
+
   const state: IState = store.getState();
   let type;
 
@@ -59,18 +76,34 @@ const getOldMessages = (chatId: number) => {
   if (!state.transports) {
     throw new Error("Connection is not established yet");
   }
+
   const transport: WSTransport = state.transports[chatId];
+
   transport.send({ type: "get old", content: "0" });
 };
 
-const sendMessage = (chatId: number, content: string) => {
+const sendMessage = (content: string) => {
   const state: IState = store.getState();
+  const chatId = state.selectedChat;
+
   if (!state.transports) {
     throw new Error("Connection is not established yet");
   }
-  const transport: WSTransport = state.transports[chatId];
 
+  const transport: WSTransport = state.transports[chatId as number];
+  console.log("🚀 ~ transport", transport);
+  console.log("if class", transport instanceof WSTransport);
   transport.send({ type: "message", content });
 };
 
-export { connect, receivedMessage, getOldMessages, sendMessage };
+const closeAll = () => {
+  store.removeState();
+  // const state: IState = store.getState();
+
+  // Object.values(state.transports).forEach((transport) => {
+
+  //   return transport.close()
+  // });
+};
+
+export { connect, onMessageReceived, getOldMessages, sendMessage, closeAll };

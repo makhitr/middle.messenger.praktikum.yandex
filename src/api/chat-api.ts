@@ -4,7 +4,7 @@ import { BaseAPI } from "./base-api";
 const chatApiInstanse = new HTTPTransport();
 
 export interface addUsersData {
-  users: [];
+  users: number[];
   chatId: number;
 }
 
@@ -27,7 +27,7 @@ class ChatApi extends BaseAPI {
 
   async getToken(chatId: number) {
     return chatApiInstanse.post(`chats/token/${chatId}`);
-   }
+  }
 }
 
 export { ChatApi };

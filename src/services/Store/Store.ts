@@ -27,7 +27,6 @@ class Store extends EventBus {
     this.on(Store.EVENT_UPDATE, () => {
       localStorage.setItem(Store.STORE_NAME, JSON.stringify(this._state));
     });
-    
   }
 
   getState() {
@@ -48,7 +47,6 @@ class Store extends EventBus {
 
   public set(keypath: string, data: unknown) {
     set(this._state, keypath, data);
-
     this.emit(Store.EVENT_UPDATE, this.getState());
   }
 

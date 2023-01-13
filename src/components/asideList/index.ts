@@ -6,7 +6,6 @@ import { FindForm } from "../findForm";
 import { CustomInput } from "../input";
 import * as ChatActions from "../../services/Store/actions/ChatActions";
 import * as AuthActions from "../../services/Store/actions/AuthActions";
-import * as MessagesActions from "../../services/Store/actions/MessagesActions";
 import template from "./index.hbs";
 
 import { Form } from "../form";
@@ -14,6 +13,10 @@ import { Form } from "../form";
 const handleSubmit = (event: Event) => {
   event.preventDefault();
   ChatActions.createChat(event.target[0].value);
+};
+const addUser = (event: Event) => {
+  event.preventDefault();
+  ChatActions.addUsersToChat(event.target[0].value);
 };
 
 const submitForm = {
@@ -46,32 +49,32 @@ class AsideList extends Block {
             text: "",
             name: "title",
             className: "input",
-            placeholder: "chat"
+            placeholder: "chat",
           }),
           button: new Button({ text: "Create Chat" }, "submit", "submit-btn"),
           events: submitForm,
         },
         "chat-form"
       ),
+      addUsersToChat: new Form(
+        {
+          inputs: new CustomInput({
+            type: "text",
+            value: "",
+            text: "",
+            name: "title",
+            className: "input",
+            placeholder: "userNumber",
+          }),
+          button: new Button({ text: "Add User To Chat" }, "submit", "submit-btn"),
+          events: {
+            // submit: (event) => ChatActions.addUsersToChat(event.target[0].value),
+            submit:  addUser,
+          },
+        },
+        "chat-form"
+      ),
       chatsList: new ChatsList({}),
-      getChatsBtn: new Button({
-        text: "Get All Chats",
-        events: {
-          click: () => ChatActions.getAllChats(),
-        },
-      }),
-      getMessagesBtn: new Button({
-        text: "Get All Messages",
-        events: {
-          click: () => MessagesActions.getOldMessages(635),
-        },
-      }),
-      addUsersToChat: new Button({
-        text: "Add User to Chats",
-        events: {
-          click: () => ChatActions.addUsersToChat({ users, chatId }),
-        },
-      }),
       logoutBtn: new Button({
         text: "logout",
         events: {
