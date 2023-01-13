@@ -6,7 +6,7 @@ import  MessagesList  from "../messagesList";
 
 class Messages extends Block {
   constructor(props: {} | undefined) {
-    super("section", "message-page-wrapper", {
+    super("section", "message-section-wrapper", {
       ...props,
       messages: new MessagesList(),
       form: new MessageForm({

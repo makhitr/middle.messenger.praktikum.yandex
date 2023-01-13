@@ -7,8 +7,11 @@ interface MessageProps {
 }
 
 class Message extends Block<MessageProps> {
-  constructor(props:MessageProps) {
-    super('div', "message-wrapper", props)
+  constructor(props: MessageProps) {
+    const { isMine } = props
+    const className = isMine ? "message-view-wrapper-user" : "message-view-wrapper"
+    
+    super('div', className, props)
   }
   
   render() {

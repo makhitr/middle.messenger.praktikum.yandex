@@ -8,7 +8,6 @@ class MessagePage extends Page {
   constructor() {
     super(
       {
-        title: "Message Page",
         asideList: new AsideList({}),
         messages: new Messages({}),
       },
