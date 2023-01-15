@@ -1,106 +1,97 @@
-import { validateOnBlur, validateOnFocus } from "./validateForm";
+import {
+  validateOnBlur,
+  validateOnFocus,
+  validateOnSubmit,
+} from "./validateForm";
+import * as UserActions from "../services/Store/actions/UserActions";
+import Store from "../services/Store/Store";
+const store = new Store();
 
-type UserProfile = {
-  [key: string]: string,
-  "avatar": string,
-  "first_name": string,
-  "second_name": string,
-  "login": string,
-  "email": string,
-  "phone": string,
-  "password": string
+const changeAvatar = (event: Event) => {
+  const avatar = event.target as HTMLElement;
+  const avatarInput = avatar.querySelector("input") as HTMLInputElement | null;
+  if (avatarInput !== null) {
+    showElement(avatarInput);
+    avatarInput.addEventListener("change", function () {
+      const reader = new FileReader();
+      reader.addEventListener("loadend", () => {
+        const uploadedImage = reader.result;
+        avatar.style.backgroundImage = `url(${uploadedImage})`;
+        hideElement(avatarInput);
+        store.set("avatar", uploadedImage);
+
+        const formData = new FormData();
+        formData.append("avatar", avatarInput.files[0]);
+        UserActions.updateAvatar(formData);
+      });
+
+      reader.readAsDataURL(avatarInput.files[0]);
+    });
+  }
 };
 
+const showElement = (el: HTMLElement) => {
+  el.style.display = "flex";
+};
+const hideElement = (el: HTMLElement) => {
+  el.style.display = "none";
+};
 
-const userProfile: UserProfile = {
-  avatar: "",
-  first_name: "",
-  second_name: "",
-  login: "",
-  email: "",
-  phone: "",
-  password: ""
+function editFormElements(form: HTMLFormElement) {
+  const inputs = form.querySelectorAll(".edit-inputs");
+  const profileInfo = form.querySelectorAll(".edit-labels");
+  inputs.forEach(showElement);
+  profileInfo.forEach(hideElement);
 }
 
-const changeAvatar = (event: Event) => {  
-  const avatar = event.target as HTMLElement
-  const avatarInput = avatar.querySelector('input') as HTMLInputElement | null
-  avatar.classList.add("change-avatar");
-  if (avatarInput) avatarInput.style.display = "inline";
-};
-
-
-const changeBtnText = (submitBtn: HTMLInputElement) => {
-  if (submitBtn.value === "Edit") {
-    submitBtn.value = "Save";
-  } else {
-    submitBtn.value = "Edit";
-  }
-};
-
-const editInputs = (
-  inputs: Array<HTMLInputElement>,
-  labels: Array<HTMLInputElement>
-) => {
-
-  for (const input of inputs) {
-    userProfile[input.name] = input.value
-    input.style.display = input.style.display === "flex" ? "none" : "flex";
-  }
-  for (const label of labels) {
-    label.style.display = label.style.display != "none" ? "none" : "initial";
-  }
-  console.log(userProfile)
-};
-
-const editModeToggle = (
-  e: InputEvent,
-  inputs: Array<HTMLInputElement>,
-  labels: Array<HTMLInputElement>,
-  submitBtn: HTMLInputElement
-) => {
-  editInputs(inputs, labels);
-  changeBtnText(submitBtn);
-};
-
-const editInfo = (event: Event): void => {
-  const form = event.currentTarget as HTMLFormElement;
-  const inputs = form.querySelectorAll(".edit-inputs");
-  const labels = form.querySelectorAll(".edit-labels");
-  const submitBtn = form.querySelector(".input-submit");
-  editModeToggle(event, inputs, labels, submitBtn);
-};
-
-const validateProfileForm = (event: Event) => {
+const submitHandler = (event: Event) => {
   event.preventDefault();
-  const target = event.target as HTMLInputElement;
-  if (event.type === "submit") {
-    editInfo(event);
-   } 
-   else {
-    const message: HTMLElement = target.parentElement
-      ?.nextElementSibling as HTMLElement;
-    if (event.type === "blur") {
-      validateOnBlur(target, message);
-    } else 
-    if (event.type === "focus") {
-      validateOnFocus(target, message);
-    }
+  const submitBtn = document.querySelector(".submit-btn") as HTMLElement;
+  const editBtn = submitBtn.previousElementSibling as HTMLElement;
+
+  const validateData = validateOnSubmit(event.target as HTMLFormElement);
+  if (validateData !== false) {
+    UserActions.updateProfile(validateData);
+    hideElement(submitBtn);
+    showElement(editBtn);
   }
+};
+
+const clickHandler = (event: Event) => {
+  const element = event.target as HTMLButtonElement;
+  const submitBtn = document.querySelector(".submit-btn") as HTMLButtonElement;
+  const form = document.querySelector("form") as HTMLFormElement;
+
+  if (element.type?.toLowerCase() === "button") {
+    hideElement(element);
+    showElement(submitBtn);
+    editFormElements(form);
+  }
+};
+
+const changePassword = (event: Event) => {
+  event.preventDefault();
+  const form = event.target;
+  const validateData = validateOnSubmit(form as HTMLFormElement);
+
+  UserActions.updatePassword(validateData);
 };
 
 const profileFormEvent = {
-  focus: validateProfileForm,
-  blur: validateProfileForm,
-  submit: validateProfileForm,
+  focus: validateOnFocus,
+  blur: validateOnBlur,
+  submit: submitHandler,
+  click: clickHandler,
+};
+
+const passwordEvent = {
+  blur: validateOnBlur,
+  focus: validateOnFocus,
+  submit: changePassword,
 };
 
 const avatarEvents = {
   click: changeAvatar,
 };
 
-
-export {
-  profileFormEvent,
-  avatarEvents,
-};
+export { profileFormEvent, avatarEvents, passwordEvent };

@@ -1,16 +1,10 @@
-import { Block } from "../../services/Block";
-import template from './index.hbs'
+import { Connect } from "../../services/Store/Connect";
+import { IState } from "../../types/stateTypes";
+import MessagesList  from "../messagesList";
+import { Messages } from "./messages";
 
-class Messages extends Block  {
-  
-  constructor(props: {} | undefined) {
-    super('div', 'messages-wrapper', props)
-  }
-
-  render() {
-    return this.compile(template);
-
-  }
-} 
-
-export {Messages};
+export default Connect(Messages, (state: IState) => {
+  return {
+    messages: new MessagesList(),
+  } 
+});

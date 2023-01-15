@@ -52,7 +52,8 @@ body {
   color: $pr-font-color;
 }
 
-.page-form {
+.profile-form,
+.login-form {
   display: flex;
   flex-direction: column;
 }
@@ -65,12 +66,12 @@ body {
   width: 100%;
   padding: 10px 0;
   font-size: 16px;
-  color: $pr-font-color;
+  color: #8c8c8c;
   margin-top: 10px;
   margin-bottom: 30px;
   border: none;
   border-bottom: 1px solid $pr-font-color;
-  background: transparent;
+  background: #8ce88c;
 }
 
 .input-wrapper label {
@@ -81,7 +82,9 @@ body {
 }
 
 .input-wrapper input[type="submit"],
-.button {
+.input-wrapper input[type="button"],
+.button,
+.submit-btn {
   cursor: pointer;
   display: inline-block;
   padding: 10px 20px;
@@ -97,6 +100,7 @@ body {
   border-radius: 5px;
   background-color: transparent;
   align-self: flex-start;
+  width: 100%;
 }
 
 .input-wrapper input[type="submit"]:hover,
@@ -146,10 +150,16 @@ body {
   background-color: $dark-transparent;
   background-image: url("../../static/images/avatar.png");
   background-position: center;
+
   background-repeat: no-repeat;
   border-radius: 50%;
   margin: 0 auto;
   cursor: pointer;
+}
+.avatar.small {
+  height: 50px;
+  width: 50px;
+  background-size: 30px;
 }
 
 .info-field {
@@ -161,36 +171,35 @@ body {
   border-bottom: 1px solid $pr-font-color;
 }
 
-.change-avatar {
-  background-image: none;
-}
-
 .edit-inputs,
-.input-avatar {
+.input-avatar,
+.profile-form button[type="submit"] {
   display: none;
 }
 
-.message-page-wrapper {
-  height: 100vh;
-  width: 100vw;
-  color: $bg-color-dark;
+.input-avatar {
+  position: relative;
+  left: 100px;
+}
+
+.edit-labels {
   display: flex;
 }
 
-.message-wrapper {
-  width: 70%;
-  height: 100%;
-  background-color: #73acdd;;
+.message-page-wrapper {
+  display: flex;
 }
 
 .aside-wrapper {
   width: 30%;
   height: 100%;
   background-color: #259b4d;
+  padding: 14px;
 }
 
 .input-wrapper .find-input {
   border: 1px solid $inner-bg-sc-color;
+  background-color: #fff;
 }
 
 .message-pr-wrapper {
@@ -209,6 +218,15 @@ body {
 .messages {
   display: flex;
   flex-direction: column;
+  margin-bottom: 50px;
+}
+
+.message-section-wrapper {
+  width: 70%;
+}
+
+.message-wrapper {
+  display: flex;
 }
 
 .message-view-wrapper,
@@ -245,4 +263,17 @@ body {
   gap: 10px;
   margin: 0;
   padding: 0;
+}
+
+.chat-wrapper {
+  background-color: rgb(169, 202, 127);
+  border: 2px solid $inner-bg-sc-color;
+  cursor: pointer;
+}
+
+.selected {
+  background: #73acdd;
+}
+.chat-form button {
+  margin-top: initial;
 }

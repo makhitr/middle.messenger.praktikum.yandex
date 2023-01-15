@@ -1,26 +1,27 @@
-import { mainPage } from "./pages/mainPage";
-import { registerPage } from "./pages/registerPage";
-import { renderDOM } from "./utils/renderDOM";
-import { profilePage } from "./pages/profilePage";
-import { messagePage } from "./pages/messagePage";
-import { errorPage404 } from "./pages/errorPage404";
-import { errorPage500 } from "./pages/errorPage500";
+import { IndexLayout } from "./layouts/indexLayout";
+import MainPage from "./pages/mainPage";
+import ProfilePage from "./pages/profilePage/";
+import RegisterPage from "./pages/registerPage";
+import MessagePage from "./pages/messagePage";
+import { ErrorPage404 } from "./pages/errorPage404";
+import { ErrorPage500 } from "./pages/errorPage500";
+import { Router } from "./services/Router/Router";
+import { MessageLayout } from "./layouts/messageLayout";
 
-window.addEventListener("DOMContentLoaded", () => {
-  const { href } = window.location;
+const router = new Router("#root");
 
-  if (href.includes("register")) {
-    renderDOM("#root", registerPage);
-  } else if (href.includes("profile")) {
-    renderDOM("#root", profilePage);
-  } else if (href.includes("message")) {
-    renderDOM("#root", messagePage);
-  } else if (href.includes("404")) {
-    renderDOM("#root", errorPage404);
-  } else if (href.includes("500")) {
-    renderDOM("#root", errorPage500);
-  } else {
-    renderDOM("#root", mainPage);
-  }
-});
+router
+  .use("/", IndexLayout, { title: "Main Page", content: new MainPage() })
+  .use("/sign-up", IndexLayout, {
+    title: "Register Page",
+    content: new RegisterPage(),
+  })
+  .use("/settings", IndexLayout, {
+    title: "Profile Page",
+    content: new ProfilePage(),
+  })
+  .use("/messenger", MessageLayout, {title: "Messages", content: new MessagePage()})
+  .use("/404", ErrorPage404)
+  .use("/500", ErrorPage500);
 
+router.start();

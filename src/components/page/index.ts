@@ -1,8 +1,8 @@
-import { AllProps, Block } from "../../services/Block";
+import {  Block } from "../../services/Block";
 import template from './index.hbs'
 
 type PageProps = {
-  [key: string]: string | Block
+  [key: string]: string | Block 
 }
 
 class Page extends Block {
@@ -11,7 +11,7 @@ class Page extends Block {
   }
 
   render() {
-    return this.compile(template)
+       return this.compile(template)
   }
 }
 

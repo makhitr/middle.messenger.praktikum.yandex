@@ -1,9 +1,8 @@
-export type User = {
-  [key: string]: string;
-};
+import * as AuthActions from "../services/Store/actions/AuthActions";
+import { SigninData, SignupData } from "../api/auth-api";
 
 export const objValidator: { [key: string]: RegExp } = {
-  avatar: / /,
+  avatar: /^\s*$|(([a-zA-Z0-9\s_\\.\-():])+(.jpg|.JPG|.jpeg|.JPEG))$/,
   login: /^[a-zA-Z][a-zA-Z0-9-_.]{3,20}$/,
   password: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,40}$/,
   email: /^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$/,
@@ -13,73 +12,96 @@ export const objValidator: { [key: string]: RegExp } = {
   message: /[\w]{5}/,
 };
 
-const user: User = {};
+const validateOnBlur = (event: Event) => {
+  const target = event.target as HTMLInputElement;
+  const message = target.parentElement
+    ?.nextElementSibling as HTMLElement | null;
 
-export const validateOnBlur = (
-  target: HTMLInputElement,
-  message: HTMLElement | null
-) => {
+  if (target.tagName.toLowerCase() !== "button") {
+    let key = target.name;
 
- if (target.name !== "submit") {
-    if (!objValidator[target.name].test(target.value)) {
+    if (target.name.toLowerCase().includes("password")) {
+      key = target.type;
+    }
+
+    if (!objValidator[key].test(target.value)) {
       target.style.background = "#ea7d7d";
-      if (message !== null) message.style.display = "block";
-    } else {
-      user[target.name as keyof User] = target.value;
+      if (message) message.style.display = "block";
     }
   }
 };
 
-export const validateOnFocus = (
-  target: HTMLInputElement,
-  message: HTMLElement | null
-) => {
-  target.style.background = "none";
-  if (message !== null) message.style.display = "none";
-};
-
-const validateOnSubmit = (event: Event, inputsNumber: NodeList) => {
-  event.preventDefault();
-  if (inputsNumber.length - 1 === Object.keys(user).length) {
-    console.log("form is submitted");
-  } else {
-    inputsNumber.forEach((input: HTMLInputElement) => {
-      if (!(input.name in user)) {
-        const el = input.parentElement
-          ?.nextElementSibling as HTMLElement | null;
-        if (el) el.style.display = "block";
+const validateOnSubmit = (form: HTMLFormElement) => {
+  const object = {};
+  const errors = [];
+  for (let i = 0; i < form.length; i++) {
+    const element = form[i] as HTMLInputElement;
+    if (element.tagName.toLowerCase() === "input") {
+      if (validateInput(element)) {
+        object[element.name] = element.value;
+      } else {
+        errors.push(element.value);
       }
-    });
-    console.log(user);
-  }
-};
-
-const validateForm = (event: Event) => {
-  const target: HTMLInputElement = event.target as HTMLInputElement;
-  const form = event.currentTarget as HTMLFormElement;
-  const inputsNumber: NodeList = form.querySelectorAll("input") as NodeList;
-
-  if (event.type === "submit") {
-    validateOnSubmit(event, inputsNumber);
-  } else {
-    const message: HTMLElement = target.parentElement
-      ?.nextElementSibling as HTMLElement;
-    if (event.type === "blur") {
-      validateOnBlur(target, message);
-    } else if (event.type === "focus") {
-      validateOnFocus(target, message);
     }
   }
+
+  if (errors.length === 0) {
+    return object;
+  }
+
+  return false;
 };
 
-const formEvents = {
-  blur: validateForm,
-  focus: validateForm,
-  submit: validateForm,
+const validateInput = (input: HTMLInputElement) => {
+  let key = input.name;
+  const message = input.parentElement?.nextElementSibling as HTMLElement | null;
+
+  if (input.name.toLowerCase().includes("password")) {
+    key = input.type;
+  }
+  if (!objValidator[key].test(input.value)) {
+    input.style.background = "#ea7d7d";
+    if (message) message.style.display = "block";
+
+    return false;
+  } else {
+    input.style.background = "#fff";
+    return true;
+  }
 };
 
+const validateOnFocus = (event: FocusEvent) => {
+  const target = event.target as HTMLInputElement;
+  const message = target.parentElement
+    ?.nextElementSibling as HTMLElement | null;
+
+  if (target.tagName.toLowerCase() !== "button") {
+    target.style.background = "#fff";
+
+    if (message) message.style.display = "none";
+  }
+};
+
+const submitLoginForm = (event: Event) => {
+  event.preventDefault();
+  const validateData = validateOnSubmit(event.target as HTMLFormElement);
+  if (validateData !== false) {
+    AuthActions.loginUser(validateData as SigninData);
+  }
+};
+
+const submitRegisterForm = (event: Event) => {
+  event.preventDefault();
+  const validateData = validateOnSubmit(event.target as HTMLFormElement);
+  if (validateData !== false) {
+    AuthActions.registerUser(validateData as SignupData);
+  }
+};
 
 export {
-  validateForm,
-  formEvents
+  submitLoginForm,
+  validateOnBlur,
+  validateOnFocus,
+  validateOnSubmit,
+  submitRegisterForm,
 };
