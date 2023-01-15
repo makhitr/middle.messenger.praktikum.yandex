@@ -1,4 +1,3 @@
-import { IndexLayout } from "./layouts/indexLayout";
 import MainPage from "./pages/mainPage";
 import ProfilePage from "./pages/profilePage/";
 import RegisterPage from "./pages/registerPage";
@@ -6,7 +5,9 @@ import MessagePage from "./pages/messagePage";
 import { ErrorPage404 } from "./pages/errorPage404";
 import { ErrorPage500 } from "./pages/errorPage500";
 import { Router } from "./services/Router/Router";
+import { IndexLayout } from "./layouts/indexLayout";
 import { MessageLayout } from "./layouts/messageLayout";
+
 
 const router = new Router("#root");
 
