@@ -2,36 +2,50 @@ import { Connect } from "../../services/Store/Connect";
 import { MessagesList } from "./messagesList";
 import { IState } from "../../types/stateTypes";
 import { Message } from "../message/message";
+import { MessageForm } from "../messageForm";
+import * as MessagesActions from "../../services/Store/actions/MessagesActions";
 
 export default Connect(MessagesList, (state: IState) => {
-  console.log(state);
   const chatId = state.selectedChat; //635
-  // console.log(state.messages)
 
-  // if (typeof state.messages === "undefined") {
-  //   return;
-  // }
 
-  const stateMessages = state.messages ?? {}
+  const stateMessages = state.messages ?? {};
 
   if (!chatId) {
     return {
       messages: [],
-      // selectedChat: undefined,
-      // userId: state.user.id
     };
   }
 
   const allChats = stateMessages[chatId] ?? [];
 
-  // const messages = (state.messages[chatId] || []).map((message) => {
-  const messages = allChats.map((message) => {
-    return new Message({ isMine: +message.user_id === state.user?.id, content: message.content });
-  });
+  let messages;
 
-  // console.log(chatId, messages);
+  if (allChats.length === 0) {
+    return {
+      messages: null,
+    };
+  } else {
+    messages = allChats.map((message) => {
+      return new Message({
+        isMine: +message.user_id === state.user?.id,
+        content: message.content,
+      });
+    });
+  }
   return {
     messages: messages,
-    chatId: chatId,
+    form: new MessageForm({
+      events: {
+        submit: (event: Event) => {
+          const form = event.target as HTMLFormElement;
+          const value = (form[1] as HTMLInputElement).value;
+          event.preventDefault();
+          MessagesActions.sendMessage(value);
+          form.reset();
+        },
+      },
+    }),
+    selectedChat: state.selectedChat,
   };
 });

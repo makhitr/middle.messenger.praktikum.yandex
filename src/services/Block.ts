@@ -9,41 +9,19 @@ enum EVENTS {
   FLOW_RENDER = "flow:render",
 }
 
-interface IBlock {
-  _element: null | HTMLDivElement | HTMLElement;
-  _meta: null | Meta;
-  _id: null | string;
-  _eventBus: () => EventBus;
-  _props: Props;
-  _children: Children;
-}
-type PropsEvents = {
-  [key: string]: (e: Event) => void;
-};
-
-type Props = {
-  [key: string]: string | boolean;
-};
-
-type Children = {
-  [key: string]: Block;
-};
-
-export type AllProps = Props | Children | PropsEvents;
-
 type Meta = {
   tagName: string;
   className: string;
   props: { [key: string]: string };
 };
 
-class Block implements IBlock {
-  _element: null | HTMLDivElement | HTMLElement;
-  _meta;
+class Block<P extends Record<string, any> = any> {
+  _element: null | HTMLElement;
+  _meta: Meta;
   _id;
-  _eventBus;
-  _props;
-  _children;
+  _eventBus: () => EventBus;
+  _props: P;
+  _children: Record<string, Block | Block[]>;
 
   /** JSDoc
    * @param {string} tagName
@@ -51,11 +29,7 @@ class Block implements IBlock {
    *
    * @returns {void}
    */
-  constructor(
-    tagName = "div",
-    className: string,
-    propsAndChildren: AllProps = {}
-  ) {
+  constructor(tagName = "div", className: string, propsAndChildren: P) {
     const eventBus: EventBus = new EventBus();
     const { children, props } = this._getChildren(propsAndChildren);
     this._children = this._makePropsProxy(children);
@@ -75,9 +49,9 @@ class Block implements IBlock {
     eventBus.emit(EVENTS.INIT);
   }
 
-  _getChildren(propsAndChildren: AllProps): { [key: string]: any } {
-    const children: Children = {};
-    const props: Props = {};
+  _getChildren(propsAndChildren:  Record<string, Block | Block[]>) {
+    const children = {};
+    const props = {};
 
     Object.entries(propsAndChildren).forEach(([key, value]) => {
       if (
@@ -143,7 +117,7 @@ class Block implements IBlock {
     });
   }
 
-  _componentDidUpdate(oldProps: AllProps, newProps: AllProps) {
+  _componentDidUpdate(oldProps: P, newProps:P) {
     // this.componentDidUpdate(oldProps, newProps);
     const isReRender = this.componentDidUpdate(oldProps, newProps);
     if (isReRender) {
@@ -152,7 +126,7 @@ class Block implements IBlock {
     }
   }
 
-  componentDidUpdate(oldProps: AllProps, newProps: AllProps) {
+  componentDidUpdate(oldProps: P, newProps: P) {
     // this._removeEvents();
 
     // Object.assign(oldProps, newProps);
@@ -160,7 +134,7 @@ class Block implements IBlock {
     return true;
   }
 
-  setProps = (nextProps: AllProps) => {
+  setProps = (nextProps: P) => {
     if (nextProps === null) {
       return;
     }
@@ -174,9 +148,9 @@ class Block implements IBlock {
 
     const { children, props } = this._getChildren(nextProps);
 
-    if (Object.values(children).length) Object.assign(this._children, children);
+    if (Object.values(children).length !== 0) Object.assign(this._children, children);
 
-    if (Object.values(props).length) Object.assign(this._props, props);
+    if (Object.values(props).length !== 0) Object.assign(this._props, props);
   };
 
   get element() {
@@ -215,7 +189,7 @@ class Block implements IBlock {
     return this.element;
   }
 
-  _makePropsProxy(props: AllProps) {
+  _makePropsProxy(props) {
     const proxyProps = new Proxy(props, {
       get(target, property) {
         const value = target[property as string];
@@ -242,7 +216,7 @@ class Block implements IBlock {
     return element;
   }
 
-  compile(template: any, props?: Props) {
+  compile(template: any, props?: P) {
     if (typeof props === "undefined") {
       props = this._props;
     }

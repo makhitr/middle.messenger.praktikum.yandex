@@ -1,4 +1,10 @@
-{{#each messages}}
-  {{{this}}}
-{{/each}}
-
+ {{#if selectedChat }}
+{{#if messages }}
+  {{#each messages}}
+    {{{this}}}
+  {{/each}}
+  {{/if}}
+  {{{form}}}
+ {{else}}
+  <div class="section-title">Выберете чат и добавьте пользователя</div>  
+{{/if}}    

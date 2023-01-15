@@ -7,6 +7,11 @@ export enum SocketEvent {
   Error = "error",
 }
 
+enum MessageDataType {
+  PONG = "pong",
+  USER_CONNECTED = "user connected",
+}
+
 class WSTransport extends EventBus {
   private socket: WebSocket | null = null;
   private interval = 0;
@@ -25,7 +30,6 @@ class WSTransport extends EventBus {
       this.on(SocketEvent.Connected, () => {
         resolve();
       });
-      console.log("🚀 ~ WSTransport ~ this.socket", this.socket);
     });
   }
 
@@ -63,19 +67,16 @@ class WSTransport extends EventBus {
     });
 
     socket.addEventListener("message", (message) => {
-      console.log("message");
       const data = JSON.parse(message.data);
-
-      if (data.type && data.type === "pong") {
+      if ((Boolean(data.type)) && (data.type === MessageDataType.PONG || data.type === MessageDataType.USER_CONNECTED)
+      ) {
         return;
       }
-
       this.emit(SocketEvent.Message, data);
     });
   }
 
   public close() {
-    console.log(", close", close);
     this.socket?.close();
   }
 }

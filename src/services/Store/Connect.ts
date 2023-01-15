@@ -4,10 +4,12 @@ const Connect = (Block, mapStateToProps: (arg0: object) => object) => {
   //callback mapStateToProps -  (state) => state.user ?? {}
   // mapStateToProps((store.getState() = {auth:..., user:...})
 
+
   return class extends Block {
+ 
     constructor(props = {}) {
       const store = new Store();
-
+      
       super({ ...props, ...mapStateToProps(store.getState()) });
       // { ...props, ...state.user}
 

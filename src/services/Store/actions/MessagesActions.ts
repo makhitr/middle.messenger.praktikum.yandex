@@ -2,6 +2,9 @@ import { Message } from "../../../types/messegeTypes";
 import { IState } from "../../../types/stateTypes";
 import { SocketEvent, WSTransport } from "../../../utils/WSTransport";
 import Store from "../Store";
+enum MessageType {
+  USER_CONNECTED = "user connected",
+}
 
 const store = new Store();
 
@@ -10,29 +13,27 @@ const connect = async (chatId: number, token: string) => {
 
   // if (state.transports && state.transports[chatId]) {
   //   return;
-  // } 
-    const userId = state.user?.id;
+  // }
+  const userId = state.user?.id;
 
-    // const transports = state.transports ?? new Map();
+  // const transports = state.transports ?? new Map();
 
-    const wsTransport = new WSTransport(
-      `wss://ya-praktikum.tech/ws/chats/${userId}/${chatId}/${token}`
-    );
+  const wsTransport = new WSTransport(
+    `wss://ya-praktikum.tech/ws/chats/${userId}/${chatId}/${token}`
+  );
 
-    await wsTransport.connect();
+  await wsTransport.connect();
 
-    // wsTransport.on(SocketEvent.Message, (message) =>
-    //   onMessageReceived(chatId, message)
-    // );
-    wsTransport.on(SocketEvent.Message, (message) =>
-      onMessageReceived(chatId, message)
-    );
+  wsTransport.on(SocketEvent.Message, (message) => {
+    if (message.type !== MessageType.USER_CONNECTED) {
+      onMessageReceived(chatId, message);
+    }
+    return;
+  });
 
-    wsTransport.on(SocketEvent.Close, () => onConnectionClosed(chatId));
+  wsTransport.on(SocketEvent.Close, () => onConnectionClosed(chatId));
 
-    store.set(`transports.${chatId}`, wsTransport);
-    console.log(state, "state from connect");
-  
+  store.set(`transports.${chatId}`, wsTransport);
 };
 
 const onConnectionClosed = (id: number) => {
@@ -40,8 +41,6 @@ const onConnectionClosed = (id: number) => {
 };
 
 const onMessageReceived = (chatId: number, message: Message | Message[]) => {
-  console.log("🚀 ~ onMessageReceived", onMessageReceived);
-
   const state: IState = store.getState();
   let type;
 
@@ -51,8 +50,7 @@ const onMessageReceived = (chatId: number, message: Message | Message[]) => {
     type = message.type;
   }
 
-  const messagesState = state.messages;
-  const oldMessages = messagesState ? messagesState[chatId] : [];
+  const oldMessages = (state.messages || {})[chatId] || [];
 
   switch (type) {
     case "message": {
@@ -91,8 +89,6 @@ const sendMessage = (content: string) => {
   }
 
   const transport: WSTransport = state.transports[chatId as number];
-  console.log("🚀 ~ transport", transport);
-  console.log("if class", transport instanceof WSTransport);
   transport.send({ type: "message", content });
 };
 
