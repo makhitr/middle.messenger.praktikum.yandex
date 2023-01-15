@@ -5,13 +5,12 @@ import template from "./index.hbs";
 interface MessagesListProps {
   messages: [] | null;
   form: Form;
-  selectedChat: number
+  selectedChat: number;
 }
 
 class MessagesList extends Block<MessagesListProps> {
   constructor(props: MessagesListProps) {
     super("div", "messages", props);
-    console.log('props', props)
   }
 
   render() {

@@ -8,9 +8,18 @@ import * as MessagesActions from "../../services/Store/actions/MessagesActions";
 export default Connect(MessagesList, (state: IState) => {
   const chatId = state.selectedChat; //635
 
-
   const stateMessages = state.messages ?? {};
-
+  const form = new MessageForm({
+    events: {
+      submit: (event: Event) => {
+        const form = event.target as HTMLFormElement;
+        const value = (form[1] as HTMLInputElement).value;
+        event.preventDefault();
+        MessagesActions.sendMessage(value);
+        form.reset();
+      },
+    },
+  })
   if (!chatId) {
     return {
       messages: [],
@@ -24,6 +33,8 @@ export default Connect(MessagesList, (state: IState) => {
   if (allChats.length === 0) {
     return {
       messages: null,
+      form: form,
+      selectedChat: state.selectedChat,
     };
   } else {
     messages = allChats.map((message) => {
@@ -35,17 +46,7 @@ export default Connect(MessagesList, (state: IState) => {
   }
   return {
     messages: messages,
-    form: new MessageForm({
-      events: {
-        submit: (event: Event) => {
-          const form = event.target as HTMLFormElement;
-          const value = (form[1] as HTMLInputElement).value;
-          event.preventDefault();
-          MessagesActions.sendMessage(value);
-          form.reset();
-        },
-      },
-    }),
+    form: form,
     selectedChat: state.selectedChat,
   };
 });

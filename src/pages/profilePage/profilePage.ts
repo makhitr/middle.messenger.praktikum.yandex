@@ -13,13 +13,6 @@ class ProfilePage extends Page {
     });
   }
 
-  componentDidUpdate(oldProps, newProps) {
-    // console.log("🚀 ~ ProfilePage ~ newProps", newProps);
-    // console.log("🚀 ~ ProfilePage ~ oldProps", oldProps);
-    // return !(oldProps['text'] == newProps['text']);
-
-    return true;
-  }
 
   render(): DocumentFragment {
     return this.compile(template);

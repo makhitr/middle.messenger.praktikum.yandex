@@ -37,7 +37,6 @@ const addUsersToChat = async (userId: number) => {
   const state = store.getState();
   const chatId = state.selectedChat;
   const users = [+userId];
-
   await chatApi.addUsers({ users, chatId });
 };
 
