@@ -4,11 +4,9 @@ import * as ChatActions from "../../services/Store/actions/ChatActions";
 
 class MessagePage extends Page {
   constructor(props) {
-    super(props,
-      "message-page-wrapper"
-    );
-  
-   ChatActions.getAllChats()
+    super(props);
+
+    ChatActions.getAllChats();
   }
 
   render(): DocumentFragment {

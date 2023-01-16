@@ -27,21 +27,6 @@ class MainPage extends Page {
         },
       }),
     });
-
-    // const logout = () => {
-    //   AuthActions.logoutUser();
-    // };
-
-    // const handleClick = {
-    //   click: logout,
-    // };
-
-    // const signOutBtn = new Button({ text: "logout", events: handleClick });
-
-    // const signinEvent = (event: Event) => {
-    //   validateForm(event);
-    //   submitLoginForm()
-    // };
   }
 
   render(): DocumentFragment {
