@@ -1,10 +1,10 @@
-import { Page } from "../../components/page";
 import template from "./index.hbs";
 import * as ChatActions from "../../services/Store/actions/ChatActions";
+import { Page } from "../../components/page";
 
 class MessagePage extends Page {
-  constructor(props) {
-    super(props);
+  constructor(props = {}) {
+    super(props, "main-wrapper");
 
     ChatActions.getAllChats();
   }
