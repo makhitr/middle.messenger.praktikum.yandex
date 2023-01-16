@@ -1,7 +1,7 @@
 import { ErrorPage } from "../../components/errorPage";
-import { IndexLayout } from "../../layouts/indexLayout";
+import { Page } from "../../components/page";
 
-class ErrorPage500 extends IndexLayout {
+class ErrorPage500 extends Page {
   constructor() {
     const content = new ErrorPage({
       title: "500",

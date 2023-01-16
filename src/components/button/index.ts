@@ -2,7 +2,8 @@ import {  Block } from "../../services/Block";
 import template from "./index.hbs";
 
 interface ButtonProps {
-  text: string
+  text: string,
+  events: Record<string, () => Promise<void>>
 }
 
 class Button extends Block<ButtonProps> {
