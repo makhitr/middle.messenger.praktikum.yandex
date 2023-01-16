@@ -2,7 +2,7 @@ import { AsideList } from "../../components/asideList";
 import  Messages  from "../../components/messages";
 import { Connect } from "../../services/Store/Connect";
 import { IState } from "../../types/stateTypes";
-import { MessagePage } from "./MessagePage";
+import { MessagePage } from "./messagePage";
 
 
 export default Connect(MessagePage, (state: IState) => {
