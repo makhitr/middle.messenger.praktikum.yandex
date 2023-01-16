@@ -1,5 +1,5 @@
 import { Button } from "../../components/button";
-import LoginForm from "../../components/LoginForm";
+import LoginForm from "../../components/loginForm";
 import { Page } from "../../components/page";
 import * as AuthActions from "../../services/Store/actions/AuthActions";
 import {
