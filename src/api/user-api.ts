@@ -22,7 +22,7 @@ class UserApi extends BaseAPI {
     });
   }
 
-  static changeAvatar(data) {
+  static changeAvatar(data: FormData) {
     return userAPIInstance.put("user/profile/avatar", { data: data });
   }
 

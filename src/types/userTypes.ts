@@ -6,4 +6,5 @@ export type User = {
   password: string;
   phone: string;
   email: string;
+  avatar: string
 };

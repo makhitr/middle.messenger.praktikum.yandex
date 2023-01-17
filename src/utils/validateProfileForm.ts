@@ -4,27 +4,20 @@ import {
   validateOnSubmit,
 } from "./validateForm";
 import * as UserActions from "../services/Store/actions/UserActions";
-import Store from "../services/Store/Store";
-const store = new Store();
 
 const changeAvatar = (event: Event) => {
   const avatar = event.target as HTMLElement;
   const avatarInput = avatar.querySelector("input") as HTMLInputElement | null;
   if (avatarInput !== null) {
     showElement(avatarInput);
-    avatarInput.addEventListener("change", function () {
+      avatarInput.addEventListener("change", () => {
       const reader = new FileReader();
-      reader.addEventListener("loadend", () => {
-        const uploadedImage = reader.result;
-        avatar.style.backgroundImage = `url(${uploadedImage})`;
+      reader.addEventListener("loadend", async () => {
         hideElement(avatarInput);
-        store.set("avatar", uploadedImage);
-
         const formData = new FormData();
         formData.append("avatar", avatarInput.files[0]);
-        UserActions.updateAvatar(formData);
+        await UserActions.updateAvatar(formData);
       });
-
       reader.readAsDataURL(avatarInput.files[0]);
     });
   }

@@ -90,7 +90,7 @@ class HTTPTransport {
         //     ? `${url}${queryStringify(data)}`
         //     : url,
       );
-      xhr.setRequestHeader("Content-Type", "application/json");
+
       Object.keys(headers).forEach((key) => {
         xhr.setRequestHeader(key, headers[key]);
       });
@@ -113,9 +113,10 @@ class HTTPTransport {
       if (isGet || data === "undefined") {
         xhr.send();
       } else {
-        if (data instanceof FormData && data.has("avatar")) {
+        if (data instanceof FormData) {
           xhr.send(data);
         } else {
+          xhr.setRequestHeader("Content-Type", "application/json");
           xhr.send(JSON.stringify(data));
         }
       }

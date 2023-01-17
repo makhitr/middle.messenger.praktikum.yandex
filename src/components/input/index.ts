@@ -1,19 +1,15 @@
-import { AllProps, Block } from "../../services/Block";
+import { Block } from "../../services/Block";
 import template from "./index.hbs";
 
 class CustomInput extends Block {
-  constructor(props: AllProps, className = "input-wrapper", image?: string) {
+  constructor(props = {}, className = "input-wrapper", image?: string) {
     super("div", className, props);
-
-    if (this._element) {
-      this._element.style.backgroundImage = `url(${image})`;
-      this._element.style.backgroundSize = "cover";
+    if (image) {
+      this.element!.style.backgroundImage = `url("https://ya-praktikum.tech/api/v2/resources${image}")`;
+      this.element!.style.backgroundSize = '100px'
     }
   }
 
-  componentDidUpdate(oldProps: AllProps, newProps: AllProps): boolean {
-    return true;
-  }
   render() {
     return this.compile(template);
   }

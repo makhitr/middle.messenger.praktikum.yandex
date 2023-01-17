@@ -17,7 +17,7 @@ export default Connect(ProfileForm, (state: IState) => {
         events: avatarEvents,
       },
       "avatar",
-      state.avatar ?? ""
+      state.user?.avatar
     ),
     inputName: new CustomInput(
       {

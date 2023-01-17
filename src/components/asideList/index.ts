@@ -68,7 +68,6 @@ class AsideList extends Block {
           }),
           button: new Button({ text: "Add User To Chat" }, "submit", "submit-btn"),
           events: {
-            // submit: (event) => ChatActions.addUsersToChat(event.target[0].value),
             submit:  addUser,
           },
         },

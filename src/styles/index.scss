@@ -38,7 +38,7 @@ body {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 600px;
+  width: 730px;
   padding: 60px;
   transform: translate(-50%, -50%);
   background: rgb(0 0 0 / 50%);
@@ -263,6 +263,14 @@ body {
   gap: 10px;
   margin: 0;
   padding: 0;
+  background-color: $inner-bg-sc-color;
+  height: 50px;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.main-navigation li {
+  padding: 15px;
 }
 
 .chat-wrapper {
@@ -276,4 +284,20 @@ body {
 }
 .chat-form button {
   margin-top: initial;
+}
+
+.message-text-area {
+  border: $bg-color-dark;
+  width: 80%;
+}
+
+.message-submit {
+  width: 200px;
+  height: 40px;
+  font-size: 14px;
+}
+
+.message-form .form-error-message {
+  margin-top: 10px;
+  margin-left: 20px;
 }

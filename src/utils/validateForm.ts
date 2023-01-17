@@ -36,7 +36,7 @@ const validateOnSubmit = (form: HTMLFormElement) => {
   const errors = [];
   for (let i = 0; i < form.length; i++) {
     const element = form[i] as HTMLInputElement;
-    if (element.tagName.toLowerCase() === "input") {
+       if (element.tagName.toLowerCase() === "input") {
       if (validateInput(element)) {
         object[element.name] = element.value;
       } else {
@@ -72,12 +72,14 @@ const validateInput = (input: HTMLInputElement) => {
 
 const validateOnFocus = (event: FocusEvent) => {
   const target = event.target as HTMLInputElement;
+
   const message = target.parentElement
     ?.nextElementSibling as HTMLElement | null;
 
   if (target.tagName.toLowerCase() !== "button") {
     target.style.background = "#fff";
 
+   
     if (message) message.style.display = "none";
   }
 };
