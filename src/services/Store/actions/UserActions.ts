@@ -1,25 +1,26 @@
 import { UserApi } from "../../../api/user-api";
+import { IState } from "../../../types/stateTypes";
 import Store from "../Store";
 const store = new Store();
 
 const getUser = async () => {
-  const user =  await UserApi.getUser()
-  store.set('user', user)
+  const user = await UserApi.getUser();
+  store.set("user", user);
 };
 
 const updateProfile = async (user) => {
-  await UserApi.changeProfile(user).then((response) =>
-    store.set("user", JSON.parse(response))
-  );
+  const data = await UserApi.changeProfile(user);
+  store.set("user", data);
 };
 
 const updateAvatar = async (data: FormData) => {
-  await UserApi.changeAvatar(data)
+ const user = await UserApi.changeAvatar(data);
+ store.set("user", user);
 };
 
 const updatePassword = async (data) => {
-  await UserApi.changePassword(data)
+  await UserApi.changePassword(data);
 };
 
-export { getUser, updateProfile, updateAvatar, updatePassword };
 
+export { getUser, updateProfile, updateAvatar, updatePassword };

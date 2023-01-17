@@ -4,22 +4,36 @@ import { IState } from "../../types/stateTypes";
 import { Message } from "../message/message";
 import { MessageForm } from "../messageForm";
 import * as MessagesActions from "../../services/Store/actions/MessagesActions";
+import { validateOnFocus } from "../../utils/validateForm";
 
 export default Connect(MessagesList, (state: IState) => {
   const chatId = state.selectedChat; //635
 
   const stateMessages = state.messages ?? {};
+
+  const submitForm = (event: Event) => {
+    event.preventDefault();
+    const form = event.target as HTMLFormElement;
+    const input = form[0] as HTMLInputElement;
+
+    if (input.value === "") {
+      const errorMessage = input.parentElement
+        ?.nextElementSibling as HTMLElement;
+      errorMessage.style.display = "block";
+      input.style.background = "#ea7d7d";
+    } else {
+      MessagesActions.sendMessage(input.value);
+      form.reset();
+    }
+  };
+
   const form = new MessageForm({
     events: {
-      submit: (event: Event) => {
-        const form = event.target as HTMLFormElement;
-        const value = (form[1] as HTMLInputElement).value;
-        event.preventDefault();
-        MessagesActions.sendMessage(value);
-        form.reset();
-      },
+      focus: validateOnFocus,
+      submit: submitForm,
     },
-  })
+    capture: true,
+  });
   if (!chatId) {
     return {
       messages: [],
@@ -32,7 +46,7 @@ export default Connect(MessagesList, (state: IState) => {
 
   if (allChats.length === 0) {
     return {
-      messages: null,
+      messages: false,
       form: form,
       selectedChat: state.selectedChat,
     };

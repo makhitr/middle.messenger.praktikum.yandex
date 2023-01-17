@@ -67,12 +67,19 @@ class WSTransport extends EventBus {
     });
 
     socket.addEventListener("message", (message) => {
-      const data = JSON.parse(message.data);
-      if ((Boolean(data.type)) && (data.type === MessageDataType.PONG || data.type === MessageDataType.USER_CONNECTED)
-      ) {
-        return;
+      try {
+        const data = JSON.parse(message.data);
+        if (
+          Boolean(data.type) &&
+          (data.type === MessageDataType.PONG ||
+            data.type === MessageDataType.USER_CONNECTED)
+        ) {
+          return;
+        }
+        this.emit(SocketEvent.Message, data);
+      } catch (e) {
+        console.log(e.reason);
       }
-      this.emit(SocketEvent.Message, data);
     });
   }
 

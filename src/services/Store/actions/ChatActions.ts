@@ -13,7 +13,6 @@ const getAllChats = async () => {
 
   try {
     let chats = await chatApi.request();
-
     if (Array.isArray(chats)) {
       chats.map(async (chat) => {
         const token = await getToken(chat.id);
@@ -26,7 +25,6 @@ const getAllChats = async () => {
   } catch (e: any) {
     console.error(e.reason);
   }
-  //добавить обработку параметров
 };
 
 const selectChat = (chatId: number) => {

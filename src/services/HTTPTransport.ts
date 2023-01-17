@@ -1,3 +1,5 @@
+import { queryStringify } from "../utils/queryStringify";
+
 enum METHOD {
   GET = "GET",
   POST = "POST",
@@ -17,18 +19,6 @@ type Options = {
 };
 
 type OptionsWithoutMethod = Omit<Options, "method">;
-
-function queryStringify(data: Data) {
-  //вынести отсюда
-  if (typeof data !== "object") {
-    throw new Error("Data must be object");
-  }
-
-  const keys = Object.keys(data);
-  return keys.reduce((result, key, index) => {
-    return `${result}${key}=${data[key]}${index < keys.length - 1 ? "&" : ""}`;
-  }, "?");
-}
 
 const API_URL = "https://ya-praktikum.tech/api/v2/";
 
@@ -85,12 +75,9 @@ class HTTPTransport {
 
       xhr.open(
         method,
-        url
-        // isGet && !!(data)
-        //     ? `${url}${queryStringify(data)}`
-        //     : url,
+        isGet && !!data ? `${url}${queryStringify(data)}` : url
       );
-      xhr.setRequestHeader("Content-Type", "application/json");
+
       Object.keys(headers).forEach((key) => {
         xhr.setRequestHeader(key, headers[key]);
       });
@@ -113,9 +100,10 @@ class HTTPTransport {
       if (isGet || data === "undefined") {
         xhr.send();
       } else {
-        if (data instanceof FormData && data.has("avatar")) {
+        if (data instanceof FormData) {
           xhr.send(data);
         } else {
+          xhr.setRequestHeader("Content-Type", "application/json");
           xhr.send(JSON.stringify(data));
         }
       }

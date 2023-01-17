@@ -3,7 +3,7 @@ import template from "./index.hbs";
 
 interface ButtonProps {
   text: string,
-  events: Record<string, () => Promise<void>>
+  events?: Record<string, () => Promise<void>>
 }
 
 class Button extends Block<ButtonProps> {
