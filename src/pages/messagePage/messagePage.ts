@@ -4,7 +4,7 @@ import { Page } from "../../components/page";
 
 class MessagePage extends Page {
   constructor(props = {}) {
-    super(props, "main-wrapper");
+    super(props, "messenger-wrapper");
 
     ChatActions.getAllChats();
   }

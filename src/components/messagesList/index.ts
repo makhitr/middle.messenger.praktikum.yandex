@@ -46,7 +46,7 @@ export default Connect(MessagesList, (state: IState) => {
 
   if (allChats.length === 0) {
     return {
-      messages: null,
+      messages: false,
       form: form,
       selectedChat: state.selectedChat,
     };
