@@ -11,7 +11,6 @@ interface MessagesListProps {
 class MessagesList extends Block<MessagesListProps> {
   constructor(props: MessagesListProps) {
     super("div", "messages", props);
-    console.log(props)
   }
 
   render() {
