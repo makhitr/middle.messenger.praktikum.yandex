@@ -1,3 +1,5 @@
 /dist
 /node_modules
 .parcel-cache
+/not-for-git
+package-lock.json
